@@ -49,9 +49,9 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'techline';
-$db['default']['password'] = 'its_techline';
-$db['default']['database'] = 'techline';
+$db['default']['username'] = 'wbworks';
+$db['default']['password'] = 'waverly13';
+$db['default']['database'] = 'wartburg_works';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
