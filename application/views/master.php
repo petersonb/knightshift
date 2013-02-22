@@ -6,9 +6,16 @@
   <?php
     if (isset($content))
       {
-	foreach ($content as $c_view)
+	if (is_array($content))
 	  {
-	    $this->load->view('content/'.$c_view);
+	    foreach ($content as $c_view)
+	      {
+		$this->load->view('content/'.$c_view);
+	      }
+	  }
+	else
+	  {
+	    $this->load->view('content/'.$content);
 	  }
       }
   ?>

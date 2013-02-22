@@ -5,7 +5,6 @@ class Main extends CI_Controller {
   public function __construct()
   {
     parent::__construct();
-    echo $this->session->userdata('admin');
   }
 
   public function index()
