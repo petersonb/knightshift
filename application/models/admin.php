@@ -4,18 +4,10 @@ class Admin extends DataMapper {
 
   var $validation = array (
 			   array(
-				 'field' => 'firstname',
-				 'label' => 'Firstname',
-				 'rules' => array('required','trim')
-				 ),
-			   array(
-				 'field' => 'lastname',
-				 'label' => 'Lastname',
-				 'rules' => array('required','trim')
-				 ),
-			   array('field' => 'password',
+				 'field' => 'password',
 				 'label' => 'Password',
-				 'rules' => array('required','trim', 'min_length' => 6, 'encrypt')
+				 'rules' => array('encrypt'),
+				 'type'  => 'password'
 				 )
 			   );
     
@@ -25,14 +17,34 @@ class Admin extends DataMapper {
     parent::__construct($id);
   }
 
+  function login() 
+  {
+    $email = $this->email;
+
+    $a = new Admin();
+
+    $a->where('email',$email)->get();
+    $pass = $a->password;
+    $passFrag = explode(':',$pass);
+    $this->salt = $passFrag[0];
+    $this->validate()->get();
+
+    if ($this->exists())
+      return TRUE;
+    else
+      return FALSE;
+  }
+
   function _encrypt($field)
   {
     if (!empty($this->{$field}))
       {
-	$this->salt = md5(uniqid(rand(), true));
+	if (empty($this->salt))
+	  {
+	    $this->salt = uniqid();
+	  }
+	$this->{$field} = $this->salt . ':' . hash('sha256', $this->salt . $this->{$field});
       }
-
-    $this->{$field} = sha1($this->salt . $this->{$field});
   }
 }
 
