@@ -27,7 +27,7 @@ class Register extends CI_Controller {
 	$admin->firstname = $this->input->post('firstname');
 	$admin->lastname  = $this->input->post('lastname');
 	$admin->email     = $this->input->post('email');
-	$admin->password  = $this->encrypt->encode($this->input->post('password'));
+	$admin->password  = $this->input->post('password');
 	$admin->save();
 	
 	redirect('main');
