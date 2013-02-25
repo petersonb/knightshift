@@ -1,6 +1,6 @@
 <?php
 
-class Admin extends DataMapper {
+class Employee extends DataMapper {
 
   var $validation = array (
 			   array(
@@ -21,10 +21,10 @@ class Admin extends DataMapper {
   {
     $email = $this->email;
 
-    $a = new Admin();
+    $e = new Employee();
 
-    $a->where('email',$email)->get();
-    $pass = $a->password;
+    $e->where('email',$email)->get();
+    $pass = $e->password;
     $passFrag = explode(':',$pass);
     $this->salt = $passFrag[0];
     $this->validate()->get();
@@ -48,5 +48,5 @@ class Admin extends DataMapper {
   }
 }
 
-/* End of file admin.php */
-/* Location: ./application/models/admin.php */
+/* End of file employee.php */
+/* Location: ./application/models/employee.php */

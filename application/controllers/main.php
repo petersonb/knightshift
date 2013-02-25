@@ -28,6 +28,17 @@ class Main extends CI_Controller {
 	$this->session->set_userdata('admin_id',$a->id);
 	redirect('admin');
       }
+    else {
+      $e = new Employee();
+      
+      $e->email = $this->input->post('email');
+      $e->password = $this->input->post('password');
+      if ($e->login())
+	{
+	  $this->session->set_userdata('employee_id', $e->id);
+	  redirect('employee');
+	}
+    }
     redirect('main');
   }
 
