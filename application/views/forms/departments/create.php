@@ -1,4 +1,4 @@
-<?php echo form_open('department/create'); ?>
+<?php echo form_open('departments/create'); ?>
 Department Name: <input type="text" name="name" />
 <br />
 Department ID: <input type="text" name="id" />

@@ -1,6 +1,6 @@
 <?php
 
-class Admin extends DataMapper {
+class Department extends DataMapper {
 
   var $validation = array (
 			   array(
@@ -10,9 +10,11 @@ class Admin extends DataMapper {
 				 'type'  => 'password'
 				 )
 			   );
-    
-  var $has_many = array('department'=>array('join_table'=>'admins_departments'));
 
+  var $has_many = array(
+			'admin' => array('join_table' => 'admins_departments')
+			);
+    
   function __construct($id = NULL)
   {
     parent::__construct($id);
@@ -20,16 +22,16 @@ class Admin extends DataMapper {
 
   function login() 
   {
-    $email = $this->email;
+    $name = $this->name;
 
-    $a = new Admin();
+    $d = new Department();
 
-    $a->where('email',$email)->get();
-    $pass = $a->password;
+    $d->where('name',$name)->get();
+    $pass = $d->password;
     $passFrag = explode(':',$pass);
     $this->salt = $passFrag[0];
     $this->validate()->get();
-
+    
     if ($this->exists())
       return TRUE;
     else
@@ -49,5 +51,5 @@ class Admin extends DataMapper {
   }
 }
 
-/* End of file admin.php */
-/* Location: ./application/models/admin.php */
+/* End of file department.php */
+/* Location: ./application/models/department.php */

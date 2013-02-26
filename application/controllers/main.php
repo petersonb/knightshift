@@ -18,33 +18,53 @@ class Main extends CI_Controller {
 
   public function login()
   {
+    $this->logout();
     $this->load->helper(array('url'));
-    $a = new Admin();
-
-    $a->email = $this->input->post('email');
-    $a->password = $this->input->post('password');
-    if ($a->login())
+    
+    $e = new Employee();
+    
+    $e->email = $this->input->post('email');
+    $e->password = $this->input->post('password');
+    
+    if ($e->login())
       {
-	$this->session->set_userdata('admin_id',$a->id);
-	redirect('admin');
+	$this->session->set_userdata('employee_id', $e->id);
+	redirect('employees');
       }
-    else {
-      $e = new Employee();
-      
-      $e->email = $this->input->post('email');
-      $e->password = $this->input->post('password');
-      if ($e->login())
-	{
-	  $this->session->set_userdata('employee_id', $e->id);
-	  redirect('employee');
-	}
+    else 
+      {
+	$a = new Admin();
+	
+	$a->email = $this->input->post('email');
+	$a->password = $this->input->post('password');
+	if ($a->login())
+	  {
+	    $this->session->set_userdata('admin_id',$a->id);
+	    redirect('admins');
+	  }
+	else 
+	  {
+	    $d = new Department();
+	    
+	    $d->name = $this->input->post('email');
+	    $d->password = $this->input->post('password');
+	    if ($d->login())
+	      {
+		$this->session->set_userdata('department_id', $d->id);
+		redirect('departments');
+	      }
+	  }
+	
+	
     }
     redirect('main');
   }
 
   public function logout()
   {
-    $this->session->sess_destroy();
+    $this->session->unset_userdata('employee_id');
+    $this->session->unset_userdata('admin_id');
+    $this->session->unset_userdata('department_id');
   }
 }
 
