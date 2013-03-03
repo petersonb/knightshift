@@ -4,8 +4,7 @@ class Departments extends CI_Controller {
 
   public function index ()
   {
-    $data = array();
-    $this->load->view('master',$data);
+    
   }
 
   public function add_employee ()
