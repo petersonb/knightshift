@@ -2,13 +2,35 @@
 
 class Departments extends CI_Controller {
 
-  public function index()
+  public function index ()
   {
     $data = array();
     $this->load->view('master',$data);
   }
 
-  public function create()
+  public function add_employee ()
+  {
+    $this->load->library('form_validation');
+    $this->load->helper('form');
+
+    $this->form_validation->set_rules('employee_id', 'Employee Id', 'required');
+    $this->form_validation->set_rules('department_id', 'Department Id', 'required');
+
+    if ($this->form_validation->run())
+      {
+	$eid = $this->input->post('employee_id');
+	$did = $this->input->post('department_id');
+	$e = new Employee($eid);
+	$d = new Department($did);
+
+	$d->save($e);
+      }
+
+    $data['content'] = 'departments/add_employee';
+    $this->load->view('master',$data);
+  }
+
+  public function create ()
   {
     $this->load->library('form_validation');
     $this->load->helper('form');

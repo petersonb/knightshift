@@ -10,7 +10,10 @@ class Employee extends DataMapper {
 				 'type'  => 'password'
 				 )
 			   );
-    
+  
+  var $has_many = array(
+			'department' => array('join_table'=>'employees_departments')
+			);
 
   function __construct($id = NULL)
   {
