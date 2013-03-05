@@ -4,8 +4,7 @@ class Admins extends CI_Controller {
 
   public function index()
   {
-    echo $s = $this->session->userdata('department_id');
-    $data = array();
+    $data['title'] = 'Administrator Main';
     $this->load->view('master',$data);
   }
 

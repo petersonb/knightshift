@@ -4,7 +4,7 @@ class Employees extends CI_Controller {
 
   public function index()
   {
-    $data = array();
+    $data['title'] = 'Employee Main';
     $this->load->view('master',$data);
   }
 

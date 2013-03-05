@@ -4,7 +4,9 @@ class Departments extends CI_Controller {
 
   public function index ()
   {
-    
+    $d = new Department($this->session->userdata('department_id'));
+    $data['title'] = $d->name;
+    $this->load->view('master',$data);
   }
 
   public function add_employee ()
@@ -24,7 +26,8 @@ class Departments extends CI_Controller {
 
 	$d->save($e);
       }
-
+    
+    $data['title'] = "Add Employee";
     $data['content'] = 'departments/add_employee';
     $this->load->view('master',$data);
   }
@@ -50,7 +53,8 @@ class Departments extends CI_Controller {
 	$dept->save($a);
       }
     
-
+    
+    $data['title'] = 'Create Department';
     $data['content'] = 'departments/create';
     $this->load->view('master',$data);
   }
