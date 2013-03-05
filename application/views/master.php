@@ -1,6 +1,22 @@
 <html>
 <head>
-<title></title>
+<style type="text/css" >
+<?php if ($this->session->userdata('employee_id')): ?>
+body {
+    background : lightblue;
+}
+<?php elseif ($this->session->userdata('admin_id')): ?>
+body {
+    background : lightgreen;
+}
+<?php elseif ($this->session->userdata('department_id')): ?>
+body {
+    background : pink;
+}
+<?php endif; ?>
+</style>
+
+<title><?php if (isset($title)) echo $title; ?></title>
 </head>
 <body>
   <?php

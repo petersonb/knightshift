@@ -9,16 +9,24 @@ class Main extends CI_Controller {
 
   public function index()
   {
-    $this->load->helper(array('form'));
-
-    $data['content'] = array('main/home.php');
-
-    $this->load->view('master',$data);
+    if ($this->session->userdata('employee_id'))
+      redirect('employees');
+    elseif ($this->session->userdata('admin_id'))
+      redirect('admins');
+    elseif ($this->session->userdata('department_id'))
+      redirect('departments');
+    else 
+      {
+	$this->load->helper(array('form'));
+	
+	$data['content'] = array('main/home.php');
+	
+	$this->load->view('master',$data);
+      }
   }
 
   public function login()
   {
-    $this->logout();
     $this->load->helper(array('url'));
     
     $e = new Employee();
@@ -65,6 +73,9 @@ class Main extends CI_Controller {
     $this->session->unset_userdata('employee_id');
     $this->session->unset_userdata('admin_id');
     $this->session->unset_userdata('department_id');
+
+    $this->session->unset_userdata('deptartment_context');
+    redirect('main');
   }
 }
 
