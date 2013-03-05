@@ -66,6 +66,7 @@ class Departments extends CI_Controller {
   public function employee_panel()
   {
     $data['title'] = 'Employee Panel';
+    $data['context'] = 'departments/employee_panel';
     $this->load->view('master',$data);
   }
 
@@ -84,7 +85,12 @@ class Departments extends CI_Controller {
   public function unset_context()
   {
     $this->session->unset_userdata('department_context');
-    redirect('employees');
+    if ($this->session->userdata('employee_id'))
+      redirect('employees');
+    if ($this->session->userdata('admin_id'))
+      redirect('admins');
+    else
+      redirect('main');
   }
 
   private function is_admin($id = NULL)
