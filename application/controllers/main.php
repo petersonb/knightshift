@@ -74,7 +74,7 @@ class Main extends CI_Controller {
     $this->session->unset_userdata('admin_id');
     $this->session->unset_userdata('department_id');
 
-    $this->session->unset_userdata('deptartment_context');
+    $this->session->unset_userdata('department_context');
     redirect('main');
   }
 }

@@ -19,6 +19,10 @@ body {
 <title><?php if (isset($title)) echo $title; ?></title>
 </head>
 <body>
+  <a href="<?php echo base_url('main/logout') ?>">Logout</a>
+  <?php if ($this->session->userdata('department_context')): ?>
+  <a href="<?php echo base_url('departments/unset_context'); ?>">Unset Context</a>
+  <?php endif; ?>
   <?php
     if (isset($content))
       {

@@ -4,6 +4,10 @@ class Departments extends CI_Controller {
 
   public function index ()
   {
+    if ($this->session->userdata('department_context'))
+      {
+	redirect('departments/employee_panel');
+      }
     $d = new Department($this->session->userdata('department_id'));
     $data['title'] = $d->name;
     $this->load->view('master',$data);
@@ -57,6 +61,30 @@ class Departments extends CI_Controller {
     $data['title'] = 'Create Department';
     $data['content'] = 'departments/create';
     $this->load->view('master',$data);
+  }
+
+  public function employee_panel()
+  {
+    $data['title'] = 'Employee Panel';
+    $this->load->view('master',$data);
+  }
+
+  public function set_context($id = NULL)
+  {
+    if ($id)
+      {
+	$this->session->set_userdata('department_context',$id);
+	redirect('employees');
+      }
+
+    else
+      redirect('main');
+  }
+
+  public function unset_context()
+  {
+    $this->session->unset_userdata('department_context');
+    redirect('employees');
   }
 
   private function is_admin($id = NULL)
