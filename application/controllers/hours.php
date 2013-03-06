@@ -8,6 +8,38 @@ class Hours extends CI_Controller {
     $this->load->view('master',$data);
   }
 
+  public function edit_time($id = NULL)
+  {
+    if (!$id and !$this->input->post())
+      redirect('main');
+    else
+      {
+	$this->load->helper('form');
+	$this->load->library('form_validation');
+	
+	$this->form_validation->set_rules('date','Date','required');
+	$this->form_validation->set_rules('time_in','Time In', 'required');
+	$this->form_validation->set_rules('time_out','Time Out','required');
+	
+	if ($this->form_validation->run())
+	  {
+	    $h = new Hour($id);
+	    $h->date = $this->input->post('date');
+	    $h->time_in = $this->input->post('time_in');
+	    $h->time_out = $this->input->post('time_out');
+	    $h->save();
+	    redirect('hours/view_all');
+	  }
+	$h = new Hour($id);
+	$h->department->get();
+	
+	$data['hour'] = $h;
+	$data['title'] = 'Edit Time';
+	$data['content'] = 'hours/edit_time';
+	$this->load->view('master',$data);
+      }
+  }
+
   public function log_time()
   {
     $this->load->helper('form');
