@@ -12,7 +12,8 @@ class Employee extends DataMapper {
 			   );
   
   var $has_many = array(
-			'department' => array('join_table'=>'employees_departments')
+			'department' => array('join_table'=>'employees_departments'),
+			'hour' => array('join_table'=>'hour_relations')
 			);
 
   function __construct($id = NULL)

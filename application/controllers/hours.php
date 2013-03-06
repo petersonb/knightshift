@@ -36,6 +36,20 @@ class Hours extends CI_Controller {
     $data['content'] = 'hours/log_time';
     $this->load->view('master',$data);
   }
+
+  public function view_all()
+  {
+    $eid = $this->session->userdata('employee_id');
+    $did = $this->session->userdata('department_context');
+    $e = new Employee($eid);
+    $d = new Department($did);
+    $data['department'] = $d;
+    $dhours = $e->hour->where('department_id',$d->id);
+    $data['hours'] = $dhours->get();
+    $data['title'] = 'View All Hours';
+    $data['content'] = 'hours/view_all';
+    $this->load->view('master',$data);
+  }
   
 }
 
