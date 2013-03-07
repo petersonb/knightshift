@@ -1,6 +1,11 @@
-<h1><?php echo $department->name; ?></h1>
-<h3>View All Hours</h3>
-
+<h1>View All Hours</h1>
+<?php
+foreach ($department as $dept): 
+$dept->hour->where('employee_id',$employee->id);
+$hours = $dept->hour->get();
+?>
+<hr />
+<h1><?php echo $dept->name; ?></h1>
 <table>
   <tr>
     <th>id</th>
@@ -17,3 +22,4 @@
   </tr>
     <?php endforeach; ?>
 </table>
+<?php endforeach; ?>
