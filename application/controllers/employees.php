@@ -17,6 +17,33 @@ class Employees extends CI_Controller {
 	$this->load->view('master',$data);
       }
   }
+
+  public function change_password()
+  {
+    $this->load->helper('form');
+    $this->load->library('form_validation');
+
+    $this->form_validation->set_rules('current','Current Password', 'required');
+    $this->form_validation->set_rules('new','New Password','required');
+    $this->form_validation->set_rules('confirm','Confirm Password','required');
+
+    if ($this->form_validation->run())
+      {
+	$curr = new Employee($this->session->userdata('employee_id'));
+	$e = new Employee();
+	$e->email = $curr->email;
+	$e->password = $this->input->post('current');
+	if ($e->login())
+	  {
+	    $curr->password = $this->input->post('new');
+	    $curr->save();
+	  }
+      }
+    $data['title'] = 'Change Password';
+    $data['content'] = 'employees/change_password';
+    $this->load->view('master',$data);
+    
+  }
   
 }
 
