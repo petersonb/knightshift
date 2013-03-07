@@ -72,22 +72,31 @@ class Hours extends CI_Controller {
   public function view_all()
   {
     $eid = $this->session->userdata('employee_id');
-    $e = new Employee($eid);
-
-    $did = $this->session->userdata('department_context');
-    if ($did)
+    $aid = $this->session->userdata('admin_id');
+    $dct = $this->session->userdata('department_context');
+    $did = $this->session->userdata('department_id');
+    if ($dct)
+      $d = new Department($dct);
+    elseif ($did)
+      $d = new Department($did);
+    elseif ($eid)
       {
-	$d = new Department($did);
+	$e = new Employee($eid);
+	$d = $e->department->get();
       }
-    else
-      $d = $e->department->get();
-
+    elseif ($aid)
+      {
+	$a = new Admin($aid);
+	$d = $a->department->get();
+      }
+    
     foreach ($d as $dept)
       {
-	$data['department'][$dept->id] = $dept;
+	if ($eid)
+	  $dept->hour->where('employee_id',$eid);
+	$data['department'][$dept->id] = array('name'=>$dept->name,
+					       'hours'=>$dept->hour->get());
       }
-
-    $data['employee'] = $e;
 
     $data['title'] = 'View All Hours';
     $data['content'] = 'hours/view_all';

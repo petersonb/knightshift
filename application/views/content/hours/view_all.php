@@ -1,11 +1,10 @@
 <h1>View All Hours</h1>
 <?php
 foreach ($department as $dept): 
-$dept->hour->where('employee_id',$employee->id);
-$hours = $dept->hour->get();
+$hours = $dept['hours'];
 ?>
 <hr />
-<h1><?php echo $dept->name; ?></h1>
+<h1><?php echo $dept['name']; ?></h1>
 <table>
   <tr>
     <th>id</th>
