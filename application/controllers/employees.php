@@ -41,9 +41,35 @@ class Employees extends CI_Controller {
       }
     $data['title'] = 'Change Password';
     $data['content'] = 'employees/change_password';
-    $this->load->view('master',$data);
-    
+    $this->load->view('master',$data);    
   }
+
+  public function edit_profile()
+  {
+    $this->load->library('form_validation');
+    $this->load->helper('form');
+    
+    $this->form_validation->set_rules('firstname', 'First Name', 'required');
+    $this->form_validation->set_rules('lastname', 'Last Name', 'required');
+    $this->form_validation->set_rules('email', 'Email', 'required');
+
+    $e = new Employee($this->session->userdata('employee_id'));
+
+    if ($this->form_validation->run())
+      {
+	$e->firstname = $this->input->post('firstname');
+	$e->lastname= $this->input->post('lastname');
+	$e->email = $this->input->post('email');
+	$e->save();
+      }
+    
+    $data['employee'] = $e;
+    
+    $data['title'] = 'Edit Profile';
+    $data['content'] = 'employees/edit_profile';
+    $this->load->view('master',$data);
+  }
+
   
 }
 
