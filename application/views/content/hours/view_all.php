@@ -1,5 +1,6 @@
 <h1>View All Hours</h1>
 <?php
+if (isset($deparment)):
 foreach ($department as $dept): 
 $hours = $dept['hours'];
 ?>
@@ -21,4 +22,9 @@ $hours = $dept['hours'];
   </tr>
     <?php endforeach; ?>
 </table>
-<?php endforeach; ?>
+<?php 
+endforeach;
+    else:
+?>
+<p>You do not belong to any departments</p>
+<?php endif;?>
