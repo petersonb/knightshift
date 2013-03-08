@@ -1,6 +1,6 @@
 <h1>View All Hours</h1>
 <?php
-if (isset($deparment)):
+if (isset($department)):
 foreach ($department as $dept): 
 $hours = $dept['hours'];
 ?>

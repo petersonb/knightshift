@@ -45,11 +45,21 @@ class Hours extends CI_Controller {
     $this->load->helper('form');
     $this->load->library('form_validation');
 
+
+    $did = $this->session->userdata('department_id');
+    $dct = $this->session->userdata('department_context');
+    if ($did)
+      $d = new Department($did);
+    elseif($dct)
+      $d = new Department($dct);
+
+    $data['department']['name'] = $d->name;
     
-    $d = new Department($this->session->userdata('department_context'));
-    $data['department'] = $d;
-    $e = new Employee($this->session->userdata('employee_id'));
-    $data['employee'] = $e;
+    $eid = $this->session->userdata('employee_id');
+    if (!$eid)
+      $data['no_eid'] = TRUE;
+    else
+      $data['no_eid'] = FALSE;
 
     $this->form_validation->set_rules('date','Date','required');
     $this->form_validation->set_rules('time_in','Time-in','required');
@@ -57,6 +67,12 @@ class Hours extends CI_Controller {
     if ($this->form_validation->run())
       {
 	$h = new Hour();
+
+	if (!$eid)
+	  $e = new Employee($this->input->post('employee_id'));
+	else
+	  $e = new Employee($eid);
+
 	$h->date = $this->input->post('date');
 	$h->time_in = $this->input->post('time_in');
 	$h->time_out = $this->input->post('time_out');
