@@ -1,8 +1,8 @@
 @CHARSET "UTF-8";
 
 body {
-	_text-align: center;
-	background: #fff0b5;
+    _text-align: center;
+    background: #fff0b5;
 }
 
 h1 {
@@ -13,25 +13,25 @@ h1 {
 }
 
 #container {
-	width: 960px;
-	margin: 0 auto;
-	_text-align: left;
-	background: lightgray;
+    width: 960px;
+    margin: 0 auto;
+    _text-align: left;
+    background: lightgray;
 }
 
 #content {
-	padding: 20px;
+    padding: 20px;
 }
 
 a {
-	color: blue;
+    color: blue;
 }
 
 .form {
-	border: solid black 2px;
-	margin-bottom: 10px;
-	background: #8BBC8D;
-	border-collapse: collapse;
+    border: solid black 2px;
+    margin-bottom: 10px;
+    background: #8BBC8D;
+    border-collapse: collapse;
 }
 
 .form th {
@@ -47,40 +47,40 @@ a {
 }
 
 #navbar {
-	background: silver;
+    background: silver;
 }
 
 #adminbar {
-	background: gray;
+    background: gray;
 }
 
 #employeebar {
-	background: red;
+    background: red;
 }
 
 #employeebar a {
-	color: yellow;
+    color: yellow;
 }
 
 .nav {
-	height: 2em;
+    height: 2em;
 }
 
 .nav ul {
-	height: 1em;
-	padding: 0;
-	padding-top: .5em;
+    height: 1em;
+    padding: 0;
+    padding-top: .5em;
 }
 
 .nav li {
-	list-style: none;
-	float: left;
-	padding-left: 10px;
-	padding-right: 10px;
+    list-style: none;
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .nav a {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 .infoTable {
@@ -100,7 +100,7 @@ a {
 }
 
 .infoTable tr {
-    /*background: #BBBBFF;*/
+/*background: #BBBBFF;*/
 }
 
 .infoTable td {

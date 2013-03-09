@@ -25,6 +25,28 @@ body {
     <?php if ($this->session->userdata('department_context')): ?>
     <a href="<?php echo base_url('departments/unset_context'); ?>">Unset Context</a>
     <?php endif; ?>
+    
+    <div class="nav" id="navbar">
+      <?php
+	if ($this->session->userdata('employee_id'))
+	  {
+	    $this->load->view('menus/employees');
+	  }
+	  elseif ($this->session->userdata('admin_id'))
+	    {
+	      $this->load->view('menus/admins');
+	    }
+	    elseif ($this->session->userdata('department_id'))
+	      {
+		$this->load->view('menus/departments');
+	      }
+	    else
+	      {
+		$this->load->view('menus/main');
+	      }
+	    ?>
+    </div>
+      
     <?php
       if (isset($content))
 	{
