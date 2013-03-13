@@ -42,29 +42,28 @@ class Development extends CI_Controller {
     $a->firstname = 'First';
     $a->lastname = 'Lastname';
     $a->password = 'pass';
-    $a->email = 'admin0';
+    $a->email = 'admin1';
     $a->phone = '000-000-0000';
     $a->save();
 
-    echo 'Created Admin0';
+    echo 'Created Admin1';
 
     $a1 = new Admin();
     $a1->firstname = 'Second';
     $a1->lastname = 'Admin';
     $a1->password = 'pass';
-    $a1->email = 'admin1';
+    $a1->email = 'admin2';
     $a1->phone = '111-111-1111';
     $a1->save();
 
-    echo 'Created Admin1';
+    echo 'Created Admin2';
   }
 
   private function create_departments()
   {
-    $this->create_department(array(1),'Department 0');
-    $this->create_department(array(1,2),'Department 1');
-    $this->create_department(array(1,2),'Department 2');
-    $this->create_department(array(2),'Department 3');
+    $this->create_department(array(1),'dep1');
+    $this->create_department(array(1,2),'dep2');
+    $this->create_department(array(2),'dep3');
   }
 
   private function create_department($id,$name)
@@ -83,9 +82,9 @@ class Development extends CI_Controller {
 
   private function create_employees()
   {
-    $this->create_employee(array(1,2),'emp');
-    $this->create_employee(array(1),'emp1');
-    $this->create_employee(array(2),'emp2');
+    $this->create_employee(array(1,2),'emp1');
+    $this->create_employee(array(1),'emp2');
+    $this->create_employee(array(2),'emp3');
   }
 
   private function create_employee($id,$email)
