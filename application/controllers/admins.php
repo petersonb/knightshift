@@ -4,7 +4,18 @@ class Admins extends CI_Controller {
 
   public function index()
   {
+    $aid = $this->session->userdata('admin_id');
+    $a = new Admin($aid);
+    $depts = $a->department->get();
+
+    foreach ($depts as $d)
+      {
+	$data['departments'][$d->id] = array('id'=>$d->id,
+					     'name'=>$d->name);
+      }
+    
     $data['title'] = 'Administrator Main';
+    $data['content'] = 'admins/main.php';
     $this->load->view('master',$data);
   }
 

@@ -9,8 +9,14 @@ class Employees extends CI_Controller {
     else
       {
 	$e = new Employee($this->session->userdata('employee_id'));
-	$ds = $e->department->get();
+	$depts = $e->department->get();
 	
+	foreach ($depts as $d)
+	  {
+	    $ds[$d->id] = array('id'=>$d->id,
+				'name'=>$d->name);
+	  }
+
 	$data['departments'] = $ds;
 	$data['title'] = 'Employee Main';
 	$data['content'] = 'employees/main';
