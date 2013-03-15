@@ -63,7 +63,11 @@ a {
 }
 
 .nav {
-    height: 2em;
+    //padding-bottom: .02em;
+}
+
+.context_nav {
+    background: yellow;
 }
 
 .nav ul {

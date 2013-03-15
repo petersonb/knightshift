@@ -11,11 +11,26 @@ $menu_items = array(
 $context = $this->session->userdata('department_context');
 
 if ($context)
-  array_push($menu_items,array('base'=>'departments/add_employee',
-			       'name'=>'Add Employee'));
+  $context_items = array(
+			 array('base'=>'hours/view_all',
+			       'name'=>'View Hours'),
+			 array('base'=>'departments/add_employee',
+			       'name'=>'Add Employee'),
+			 array('base'=>'departments/create',
+			       'name'=>'Create Department')
+			 );
 ?>
 <ul>
   <?php foreach ($menu_items as $item):?>
   <li><a href="<?php echo base_url($item['base']); ?>"><?php echo $item['name']; ?></a></li>
   <?php endforeach; ?>
 </ul>
+
+<?php if($context): ?>
+<ul class="context_nav">
+  <?php foreach ($context_items as $item):?>
+  <li><a href="<?php echo base_url($item['base']); ?>"><?php echo $item['name']; ?></a></li>
+  <?php endforeach; ?>
+
+</ul>
+<?php endif; ?>
