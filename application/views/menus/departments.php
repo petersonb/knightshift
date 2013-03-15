@@ -1,7 +1,9 @@
 <?php
 $menu_items = array(
-		    array('base'=>'employees',
+		    array('base'=>'departments',
 			  'name'=>'Home'),
+		    array('base'=>'hours/log_time',
+			  'name'=>'Log Time'),
 		    array('base'=>'hours/view_all',
 			  'name'=>'View Hours'));
 ?>
