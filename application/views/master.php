@@ -1,6 +1,23 @@
 <html>
 <head>
 <link href="<?php echo base_url("css/style.css"); ?>" type="text/css" rel="stylesheet" />
+
+<?php
+   if (isset($css))
+     {
+       if (is_array($css))
+	 {
+	   foreach ($css as $style):
+?>
+<link href="<?php echo base_url("css/".$style.".css"); ?>" type="text/css" rel="stylesheet" />
+<?php endforeach;
+	 }
+       else
+	 {
+?>
+<link href="<?php echo base_url("css/".$css.".css"); ?>" type="text/css" rel="stylesheet" />
+<?php  }}?>
+
 <style type="text/css" >
 <?php if ($this->session->userdata('employee_id')): ?>
 body {
@@ -18,6 +35,24 @@ body {
 </style>
 
 <title><?php if (isset($title)) echo $title; ?></title>
+
+<?php 
+if (isset($javascript)):
+  if (is_array($javascript)):
+    foreach ($javascript as $js_file): 
+?>
+<script type="text/javascript" src="<?php echo base_url('javascript/'.$js_file.'.js'); ?>"></script>
+<?php 
+endforeach;
+else: 
+?>
+<script type="text/javascript" src="<?php echo base_url('javascript/'.$javascript.'.js'); ?>"</script>
+<?php 
+endif;
+endif;
+?>
+
+
 </head>
 <body>
   <div id="container">

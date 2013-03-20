@@ -4,7 +4,7 @@
 Employee Id: <input type="text" name="employee_id" />
 <br />
 <?php endif; ?>
-Date: <input type="text" name="date" /> <br />
+Date: <input id="datepicker" type="text" name="date" /> <br />
 Time-in: <input type="text" name="time_in" /> <br />
 Time-out: <input type="text" name="time_out" /> <br />
 <input type="submit" value="Log Time" />

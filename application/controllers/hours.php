@@ -81,6 +81,8 @@ class Hours extends CI_Controller {
       }
 
     $data['title'] = 'Log Time';
+    $data['css'] = 'jquery-ui';
+    $data['javascript'] = array('jquery','jquery-ui','hours/date');
     $data['content'] = 'hours/log_time';
     $this->load->view('master',$data);
   }
