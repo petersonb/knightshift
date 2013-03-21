@@ -132,6 +132,7 @@ class Hours extends CI_Controller {
 
   public function employee_hours($id)
   {
+    $this->load->helper('date');
     $e = new Employee($id);
     $e->hour->get();
     
@@ -139,10 +140,10 @@ class Hours extends CI_Controller {
     foreach ($e->hour as $h)
       {
 	array_push($data,array('id'=>$h->id,
-			    'date'=>$h->date,
-			    'time_in'=>$h->time_in,
+			       'date'=>date_mysql_std($h->date),
+			       'time_in'=>$h->time_in,
 			       'time_out'=>$h->time_out));
-	  
+	
       }
     
     echo json_encode($data);
