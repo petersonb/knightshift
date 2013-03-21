@@ -80,7 +80,7 @@ class Hours extends CI_Controller {
       }
 
     $data['title'] = 'Log Time';
-    $data['css'] = 'jquery-ui';
+    $data['css'] = 'calendar_widget/jquery-ui';
     $data['javascript'] = array('jquery','jquery-ui','hours/date');
     $data['content'] = 'hours/log_time';
     $this->load->view('master',$data);
@@ -99,6 +99,7 @@ class Hours extends CI_Controller {
     elseif ($eid)
       {
 	$e = new Employee($eid);
+	$data['employee'] = array('id'=>$e->id);
 	$d = $e->department->get();
       }
     elseif ($aid)
@@ -116,8 +117,35 @@ class Hours extends CI_Controller {
       }
 
     $data['title'] = 'View All Hours';
+    $data['css'] = array('slickgrid/slick.grid',
+			 'slickgrid/css/smoothness/jquery-ui-1.8.16.custom'
+			 );
+    $data['javascript'] = array('slickgrid/lib/jquery-1.7.min',
+				'slickgrid/lib/jquery.event.drag-2.0.min',
+				'slickgrid/slick.core',
+				'slickgrid/slick.grid',
+				'hours/emp_hours'
+				);
     $data['content'] = 'hours/view_all';
     $this->load->view('master',$data);
+  }
+
+  public function employee_hours($id)
+  {
+    $e = new Employee($id);
+    $e->hour->get();
+    
+    $data = array();
+    foreach ($e->hour as $h)
+      {
+	array_push($data,array('id'=>$h->id,
+			    'date'=>$h->date,
+			    'time_in'=>$h->time_in,
+			       'time_out'=>$h->time_out));
+	  
+      }
+    
+    echo json_encode($data);
   }
   
 }
