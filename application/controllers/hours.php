@@ -120,12 +120,7 @@ class Hours extends CI_Controller {
     $data['css'] = array('slickgrid/slick.grid',
 			 'slickgrid/css/smoothness/jquery-ui-1.8.16.custom'
 			 );
-    $data['javascript'] = array('slickgrid/lib/jquery-1.7.min',
-				'slickgrid/lib/jquery.event.drag-2.0.min',
-				'slickgrid/slick.core',
-				'slickgrid/slick.grid',
-				'hours/emp_hours'
-				);
+
     $data['content'] = 'hours/view_all';
     $this->load->view('master',$data);
   }

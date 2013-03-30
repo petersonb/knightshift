@@ -28,6 +28,3 @@ endforeach;
 ?>
 <p>You do not belong to any departments</p>
 <?php endif;?>
-<input type="hidden" id="employee_id" value="<?php echo $employee['id']; ?>" />
-<div id="emp_hour_table" style="width:300px; height:500px;">
-</div>
