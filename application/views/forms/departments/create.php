@@ -1,6 +1,8 @@
 <?php echo form_open('departments/create'); ?>
 Department Name: <input type="text" name="name" />
 <br />
+Login Name: <input type="text" name="login_name" />
+<br />
 Department ID: <input type="text" name="id" />
 <br />
 Password: <input type="password" name="password" />
