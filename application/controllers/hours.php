@@ -85,6 +85,15 @@ class Hours extends CI_Controller {
 		if ($this->department_id)
 		{
 			$d = new Department($this->department_id);
+			$emp = $d->employee->get();
+			foreach($emp as $e)
+			{
+				$data['employees'][$e->id] = array(
+						'id'=>$e->id,
+						'firstname'=>$e->firstname,
+						'lastname'=>$e->lastname
+				);
+			}
 		}
 
 		// If not a department, must have department context
@@ -126,7 +135,6 @@ class Hours extends CI_Controller {
 			// TODO better time input handling
 
 			$ihour = $this->input->post('hour_in');
-			echo '('.$ihour.')';
 			$imin  = $this->input->post('minute_in');
 			$ipm    = $this->input->post('pm_in');
 
@@ -138,16 +146,16 @@ class Hours extends CI_Controller {
 				$ihour = $ihour + 12;
 			if (!$ipm && $ihour == 12)
 				$ihour = "00";
-				
+
 			$itime = $ihour.':'.$imin.':00';
-				
+
 			if ($opm)
 				$ohour = $ohour + 12;
 			if (!$opm && $ohour == 12)
 				$ohour = "00";
 
 			$otime = $ohour.':'.$omin.':00';
-				
+
 			$h->time_in = $itime;
 			$h->time_out = $otime;
 			$h->save($e);

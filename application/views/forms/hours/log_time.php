@@ -1,13 +1,19 @@
 <?php echo validation_errors(); ?>
 <?php echo form_open('hours/log_time'); ?>
 <?php if ($no_eid): ?>
-Employee Id:
-<input type="text" name="employee_id" />
+Employee: 
+<select name="employee_id">
+	<?php foreach ($employees as $emp): ?>
+	<option value="<?php $emp['id'] ; ?>">
+		<?php echo $emp['firstname']. ' ' . $emp['lastname']; ?>
+	</option>
+	<?php endforeach;?>
+</select>
 <br />
 <?php endif; ?>
 Date:
-<input id="datepicker"
-	type="text" name="date" />
+<input id="datepicker" type="text"
+	name="date" />
 <br />
 <table>
 	<tr>
@@ -62,5 +68,6 @@ Date:
 		</td>
 	</tr>
 </table>
-<input type="submit" value="Log Time" />
+<input type="submit"
+	value="Log Time" />
 </form>
