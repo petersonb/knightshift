@@ -102,7 +102,7 @@ class Admins extends CI_Controller {
 		$this->form_validation->set_rules('lastname', 'Last Name', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required');
 
-		$a = new Admin($this->session->userdata('admin_id'));
+		$a = new Admin($this->admin_id);
 
 		if ($this->form_validation->run())
 		{
