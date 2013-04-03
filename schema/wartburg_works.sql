@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 07, 2013 at 05:22 PM
+-- Generation Time: Apr 03, 2013 at 10:11 AM
 -- Server version: 5.1.67-log
--- PHP Version: 5.4.8--pl0-gentoo
+-- PHP Version: 5.4.13--pl0-gentoo
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `admins_departments` (
 CREATE TABLE IF NOT EXISTS `departments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
+  `login_name` varchar(32) NOT NULL,
   `dept_id` int(10) NOT NULL,
   `password` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
