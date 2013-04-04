@@ -1,30 +1,15 @@
+<input type="hidden" id="x" value="1" />
 <h1>View All Hours</h1>
-<?php
-if (isset($department)):
-foreach ($department as $dept): 
-$hours = $dept['hours'];
-?>
-<hr />
-<h1><?php echo $dept['name']; ?></h1>
-<table>
-  <tr>
-    <th>id</th>
-    <th>Date</th>
-    <th>Time In</th>
-    <th>Time Out</th>
-  </tr>
-  <?php foreach ($hours as $hour): ?>
-  <tr>
-    <td><?php echo $hour->id; ?></td>
-    <td><?php echo $hour->date; ?></td>
-    <td><?php echo $hour->time_in; ?> </td>
-    <td><?php echo $hour->time_out; ?> </td>
-  </tr>
-    <?php endforeach; ?>
+
+<table class="dataTable" id="dataTable">
+	<thead>
+		<tr>
+			<th width="200px">Department</th>
+			<th width="120px">Date</th>
+			<th width="100px">Time In</th>
+			<th width="100px">Time Out</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
 </table>
-<?php 
-endforeach;
-    else:
-?>
-<p>You do not belong to any departments</p>
-<?php endif;?>

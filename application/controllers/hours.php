@@ -175,60 +175,83 @@ class Hours extends CI_Controller {
 	 *
 	 * Allows All hours to be viewed. Varies depending on type of access.
 	 */
-	public function view_all()
+	public function view_all ()
 	{
-		if ($this->department_context)
+		$data['title'] = 'View All Hours';
+		$data['content'] = 'hours/view_all';
+
+		if ($this->department_context || $this->department_id)
 		{
-			$d = new Department($this->department_context);
-		}
-		elseif ($this->department_id)
-		{
-			$d = new Department($this->department_id);
+			$js = 'dept_hours';
 		}
 		elseif ($this->employee_id)
 		{
-			$e = new Employee($this->employee_id);
-			$data['employee'] = array('id'=>$e->id);
-			$d = $e->department->get();
-		}
-		elseif ($this->admin_id)
-		{
-			$a = new Admin($this->admin_id);
-			$d = $a->department->get();
+			$js = 'emp_hours';
 		}
 
-		foreach ($d as $dept)
+		$data['javascript'] = array(
+				'datatables/media/js/jquery',
+				'datatables/media/js/jquery.dataTables',
+				'hours/'.$js
+		);
+		$data['css'] = 'dataTables/jquery.dataTables';
+		$this->load->view('master',$data);
+	}
+	public function employee_hours()
+	{
+		$this->load->helper('date');
+		$e = new Employee($this->employee_id);
+		$e->hour->get();
+
+		$data = array('aaData'=>array());
+		foreach ($e->hour as $h)
 		{
-			if ($this->employee_id)
-			{
-				$dept->hour->where('employee_id',$this->employee_id);
-			}
-			$data['department'][$dept->id] = array(
-					'name'=>$dept->name,
-					'hours'=>$dept->hour->get()
+			$d = $h->department->get();
+			array_push($data['aaData'],
+			array(
+			$d->name,
+			date_mysql_std($h->date),
+			$h->time_in,
+			$h->time_out)
 			);
 		}
 
-		$data['title'] = 'View All Hours';
-		$data['content'] = 'hours/view_all';
-		$this->load->view('master',$data);
+		echo json_encode($data);
 	}
 
-	public function employee_hours($id)
+	public function department_hours()
 	{
 		$this->load->helper('date');
-		$e = new Employee($id);
-		$e->hour->get();
 
-		$data = array();
-		foreach ($e->hour as $h)
+		$aaData = array();
+
+		if ($this->admin_id)
 		{
-			array_push($data,array('id'=>$h->id,
-			'date'=>date_mysql_std($h->date),
-			'time_in'=>$h->time_in,
-			'time_out'=>$h->time_out));
-
+			$a = new Admin($this->admin_id);
+			$depts = $a->department->get();
 		}
+		elseif ($this->department_id)
+		{
+			$depts = new Department($this->department_id);
+		}
+
+		foreach ($depts as $d)
+		{
+			$hours = $d->hour->get();
+			foreach ($hours as $h)
+			{
+				array_push($aaData,
+				array(
+				$d->name,
+				$h->date,
+				$h->time_in,
+				$h->time_out
+				)
+				);
+			}
+		}
+
+		$data=array('aaData'=>$aaData);
 
 		echo json_encode($data);
 	}
