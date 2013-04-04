@@ -2,19 +2,29 @@
 
 class Employees extends CI_Controller {
 
+	public function __construct() {
+		parent::__construct();
+		$this->admin_id = $this->session->userdata('admin_id');
+		$this->employee_id = $this->session->userdata('employee_id');
+		$this->department_id = $this->session->userdata('department_id');
+		$this->department_context = $this->session->userdata('department_context');
+	}
+
 	public function index()
 	{
 		if ($this->session->userdata('department_context'))
 			redirect('departments');
 		else
 		{
-			$e = new Employee($this->session->userdata('employee_id'));
+			$e = new Employee($this->employee_id);
 			$depts = $e->department->get();
 
 			foreach ($depts as $d)
 	  {
-	  	$ds[$d->id] = array('id'=>$d->id,
-	  			'name'=>$d->name);
+	  	$ds[$d->id] = array(
+	  			'id'=>$d->id,
+	  			'name'=>$d->name
+	  	);
 	  }
 
 	  $data['departments'] = $ds;
@@ -31,19 +41,19 @@ class Employees extends CI_Controller {
 
 		$this->form_validation->set_rules('current','Current Password', 'required');
 		$this->form_validation->set_rules('new','New Password','required');
-		$this->form_validation->set_rules('confirm','Confirm Password','required');
+		$this->form_validation->set_rules('confirm','Confirm Password','required|matches[new]');
 
 		if ($this->form_validation->run())
 		{
-			$curr = new Employee($this->session->userdata('employee_id'));
+			$curr = new Employee($this->employee_id);
 			$e = new Employee();
 			$e->email = $curr->email;
 			$e->password = $this->input->post('current');
 			if ($e->login())
-	  {
-	  	$curr->password = $this->input->post('new');
-	  	$curr->save();
-	  }
+			{
+				$curr->password = $this->input->post('new');
+				$curr->save();
+			}
 		}
 		$data['title'] = 'Change Password';
 		$data['content'] = 'employees/change_password';

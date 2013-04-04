@@ -16,7 +16,14 @@ $passwords = array(
 ?>
 
 <?php echo validation_errors(); ?>
-<?php echo form_open('employees/change_password'); ?>
+<?php
+if ($this->employee_id)
+{ 
+echo form_open('employees/change_password');
+}
+else
+	echo form_open('admins/change_password'); 
+?>
 
 <table>
 	<?php form_password_bank($passwords); ?>

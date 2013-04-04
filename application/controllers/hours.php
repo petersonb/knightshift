@@ -177,14 +177,12 @@ class Hours extends CI_Controller {
 	 */
 	public function view_all ()
 	{
-		$data['title'] = 'View All Hours';
-		$data['content'] = 'hours/view_all';
 
 		if ($this->employee_id)
 		{
 			$js = 'emp_hours';
 		}
-		else// ($this->department_context || $this->department_id)
+		else
 		{
 			$js = 'dept_hours';
 		}
@@ -194,6 +192,9 @@ class Hours extends CI_Controller {
 				'datatables/media/js/jquery.dataTables',
 				'hours/'.$js
 		);
+		
+		$data['title'] = 'View All Hours';
+		$data['content'] = 'hours/view_all';
 		$data['css'] = 'dataTables/jquery.dataTables';
 		$this->load->view('master',$data);
 	}

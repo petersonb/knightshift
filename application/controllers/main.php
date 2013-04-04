@@ -43,7 +43,8 @@ class Main extends CI_Controller {
 
 		$this->load->helper('form');
 
-		$data['content'] = array('main/home.php');
+		$data['title'] = 'KnightShift';
+		$data['content'] = 'main/home';
 		$this->load->view('master',$data);
 	}
 

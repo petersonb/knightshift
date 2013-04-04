@@ -36,7 +36,7 @@ function form_password_bank($passwords)
 	?>
 <tr>
 	<td><?php echo $p['label']; ?>:</td>
-	<td><?php echo form_input($p); ?></td>
+	<td><?php echo form_password($p); ?></td>
 </tr>
 <?php 
 endforeach;

@@ -1,15 +1,6 @@
 <?php
 
 class Hour extends DataMapper {
-
-  var $validation = array (
-			   array(
-				 'field' => 'password',
-				 'label' => 'Password',
-				 'rules' => array('encrypt'),
-				 'type'  => 'password'
-				 )
-			   );
   
   var $has_one = array(
 		       'department' => array('join_table'=>'hour_relations'),
