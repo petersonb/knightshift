@@ -1,16 +1,43 @@
+<?php 
+$inputs = array(
+		array(
+				'label'=>'First Name',
+				'name'=>'firstname',
+				'value'=>set_value('firstname')
+		),
+		array(
+				'label'=>'Last Name',
+				'name'=>'lastname',
+				'value'=>set_value('lastname')
+		),
+		array(
+				'label'=>'Email',
+				'name'=>'email',
+				'value'=>set_value('email')
+		)
+);
+
+$passwords = array(
+		array(
+				'label'=>'Password',
+				'name'=>'password',
+		),
+		array(
+				'label'=>'Confirm',
+				'name'=>'confirm',
+		)
+)
+?>
+
 <?php echo validation_errors(); ?>
 <?php echo form_open('register/employee'); ?>
 
-First Name: <input type="text" name="firstname" value="<?php echo set_value('firstname'); ?>" />
-<br />
-Last Name: <input type="text" name="lastname" value="<?php echo set_value('lastname'); ?>" />
-<br />
-email: <input type="text" name="email" value="<?php echo set_value('email'); ?>" />
-<br />
-password: <input type="password" name="password" />
-<br />
-confirm: <input type="password" name="confirm" />
-<br />
-<input type="submit" value="submit" />
-
+<table>
+	<?php form_input_bank($inputs);?>
+	<?php form_password_bank($passwords);?>
+	<tr>
+		<td colspan="2"><?php echo form_submit('submit','Submit');?>
+		</td>
+	</tr>
+</table>
 </form>
