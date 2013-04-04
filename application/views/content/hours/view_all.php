@@ -4,10 +4,15 @@
 <table class="dataTable" id="dataTable">
 	<thead>
 		<tr>
-			<th width="200px">Department</th>
-			<th width="120px">Date</th>
-			<th width="100px">Time In</th>
-			<th width="100px">Time Out</th>
+			<?php if (!$this->department_context && !$this->department_id):?>
+			<th>Department</th>
+			<?php endif; ?>
+			<?php if (!$this->employee_id): ?>
+			<th>Employee</th>
+			<?php endif; ?>
+			<th>Date</th>
+			<th>Time In</th>
+			<th>Time Out</th>
 		</tr>
 	</thead>
 	<tbody>

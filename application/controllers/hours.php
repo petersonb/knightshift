@@ -180,13 +180,13 @@ class Hours extends CI_Controller {
 		$data['title'] = 'View All Hours';
 		$data['content'] = 'hours/view_all';
 
-		if ($this->department_context || $this->department_id)
-		{
-			$js = 'dept_hours';
-		}
-		elseif ($this->employee_id)
+		if ($this->employee_id)
 		{
 			$js = 'emp_hours';
+		}
+		else// ($this->department_context || $this->department_id)
+		{
+			$js = 'dept_hours';
 		}
 
 		$data['javascript'] = array(
@@ -197,11 +197,21 @@ class Hours extends CI_Controller {
 		$data['css'] = 'dataTables/jquery.dataTables';
 		$this->load->view('master',$data);
 	}
+
+
 	public function employee_hours()
 	{
 		$this->load->helper('date');
 		$e = new Employee($this->employee_id);
-		$e->hour->get();
+
+		if ($this->department_context)
+		{
+			$hours = $e->hour->where("department_id",$this->department_context)->get();
+		}
+		else
+		{
+			$hour = $e->hour->get();
+		}
 
 		$data = array('aaData'=>array());
 		foreach ($e->hour as $h)
@@ -225,29 +235,67 @@ class Hours extends CI_Controller {
 
 		$aaData = array();
 
-		if ($this->admin_id)
+		if ($this->department_context)
 		{
-			$a = new Admin($this->admin_id);
-			$depts = $a->department->get();
+			$depts = new Department($this->department_context);
 		}
 		elseif ($this->department_id)
 		{
 			$depts = new Department($this->department_id);
 		}
+		elseif ($this->admin_id)
+		{
+			$a = new Admin($this->admin_id);
+			$depts = $a->department->get();
+		}
 
 		foreach ($depts as $d)
 		{
 			$hours = $d->hour->get();
-			foreach ($hours as $h)
+			if ($this->department_context || $this->department_id)
 			{
-				array_push($aaData,
-				array(
-				$d->name,
-				$h->date,
-				$h->time_in,
-				$h->time_out
-				)
-				);
+				foreach ($hours as $h)
+				{
+					$e = $h->employee->get();
+					array_push($aaData,
+					array(
+					$e->firstname . ' ' . $e->lastname,
+					$h->date,
+					$h->time_in,
+					$h->time_out
+					)
+					);
+				}
+			}
+			elseif ($this->admin_id)
+			{
+				foreach ($hours as $h)
+				{
+					$e = $h->employee->get();
+					array_push($aaData,
+					array(
+					$d->name,
+					$e->firstname . ' ' . $e->lastname,
+					$h->date,
+					$h->time_in,
+					$h->time_out
+					)
+					);
+				}
+			}
+			else
+			{
+				foreach ($hours as $h)
+				{
+					array_push($aaData,
+					array(
+					$d->name,
+					$h->date,
+					$h->time_in,
+					$h->time_out
+					)
+					);
+				}
 			}
 		}
 
