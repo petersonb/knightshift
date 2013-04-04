@@ -29,7 +29,6 @@ class Register extends CI_Controller {
 		$this->load->library(array('form_validation'));
 
 		// TODO ACUTAL RULES
-		$this->form_validation->set_rules('title', 'Title', 'required');
 		$this->form_validation->set_rules('firstname', 'First Name', 'required');
 		$this->form_validation->set_rules('lastname', 'Last Name' , 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required');
@@ -46,8 +45,15 @@ class Register extends CI_Controller {
 			$admin->email     = $this->input->post('email');
 			$admin->password  = $this->input->post('password');
 			$admin->save();
-
-			redirect('admins');
+			
+			$a = new Admin();
+			$a->email = $admin->email;
+			$a->password = $this->input->post('password');
+			if ($a->login())
+			{
+				$this->session->set_userdata('admin_id',$a->id);
+				redirect('admins');
+			}
 		}
 
 
