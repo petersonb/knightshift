@@ -106,8 +106,6 @@ class Hours extends CI_Controller {
 
 		// TODO MORE RULES
 		$this->form_validation->set_rules('date','Date','required');
-		$this->form_validation->set_rules('time_in','Time-in','required');
-		$this->form_validation->set_rules('time_out','Time-out','required');
 
 		if ($this->form_validation->run())
 		{
@@ -123,8 +121,35 @@ class Hours extends CI_Controller {
 			}
 
 			$h->date = date_std_mysql($this->input->post('date'));
-			$h->time_in = $this->input->post('time_in');
-			$h->time_out = $this->input->post('time_out');
+
+
+			// TODO better time input handling
+
+			$ihour = $this->input->post('hour_in');
+			echo '('.$ihour.')';
+			$imin  = $this->input->post('minute_in');
+			$ipm    = $this->input->post('pm_in');
+
+			$ohour = $this->input->post('hour_out');
+			$omin  = $this->input->post('minute_out');
+			$opm   = $this->input->post('pm_out');
+
+			if ($ipm)
+				$ihour = $ihour + 12;
+			if (!$ipm && $ihour == 12)
+				$ihour = "00";
+				
+			$itime = $ihour.':'.$imin.':00';
+				
+			if ($opm)
+				$ohour = $ohour + 12;
+			if (!$opm && $ohour == 12)
+				$ohour = "00";
+
+			$otime = $ohour.':'.$omin.':00';
+				
+			$h->time_in = $itime;
+			$h->time_out = $otime;
 			$h->save($e);
 			$h->save($d);
 		}
