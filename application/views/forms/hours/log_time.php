@@ -1,7 +1,7 @@
 <?php echo validation_errors(); ?>
 <?php echo form_open('hours/log_time'); ?>
 <?php if ($no_eid): ?>
-Employee: 
+Employee:
 <select name="employee_id">
 	<?php foreach ($employees as $emp): ?>
 	<option value="<?php $emp['id'] ; ?>">
@@ -40,9 +40,6 @@ Date:
 		</select>
 		</td>
 	</tr>
-</table>
-<br />
-<table>
 	<tr>
 		<td>Time-out :</td>
 		<td><select name="hour_out">
@@ -68,6 +65,5 @@ Date:
 		</td>
 	</tr>
 </table>
-<input type="submit"
-	value="Log Time" />
+<input type="submit" value="Log Time" />
 </form>
