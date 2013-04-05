@@ -4,7 +4,7 @@
 Employee:
 <select name="employee_id">
 	<?php foreach ($employees as $emp): ?>
-	<option value="<?php $emp['id'] ; ?>">
+	<option value="<?php echo $emp['id'] ; ?>">
 		<?php echo $emp['firstname']. ' ' . $emp['lastname']; ?>
 	</option>
 	<?php endforeach;?>
