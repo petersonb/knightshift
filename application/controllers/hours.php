@@ -160,6 +160,8 @@ class Hours extends CI_Controller {
 			$h->time_out = $otime;
 			$h->save($e);
 			$h->save($d);
+			
+			redirect('hours/view_all');
 		}
 		
 		$data['date'] = date('m/d/Y');

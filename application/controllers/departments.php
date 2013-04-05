@@ -4,6 +4,7 @@ class Departments extends CI_Controller {
 
 	public function index ()
 	{
+		redirect('hours/log_time');
 		if ($this->session->userdata('department_context'))
 		{
 			redirect('departments/employee_panel');
