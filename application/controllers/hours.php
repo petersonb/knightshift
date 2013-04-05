@@ -161,6 +161,8 @@ class Hours extends CI_Controller {
 			$h->save($e);
 			$h->save($d);
 		}
+		
+		$data['date'] = date('m/d/Y');
 
 		$data['title'] = 'Log Time';
 		$data['css'] = 'calendar_widget/jquery-ui';

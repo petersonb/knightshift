@@ -12,7 +12,7 @@ Employee:
 <br />
 <?php endif; ?>
 Date:
-<input id="datepicker" type="text"
+<input id="datepicker" type="text" value="<?php echo $date; ?>"
 	name="date" />
 <br />
 <table>
