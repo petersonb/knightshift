@@ -34,6 +34,18 @@ class Employees extends CI_Controller {
 		}
 	}
 
+	public function view_all()
+	{
+		$data['content'] = 'employees/view_all';
+		$data['javascript'] = array(
+				'datatables/media/js/jquery',
+				'datatables/media/js/jquery.dataTables',
+				'employees/admin_table'
+		);
+		$data['css'] = 'dataTables/jquery.dataTables';
+		$this->load->view('master',$data);
+	}
+
 	public function change_password()
 	{
 		$this->load->helper('form');
@@ -90,7 +102,40 @@ class Employees extends CI_Controller {
 		$this->load->view('master',$data);
 	}
 
+	/**
+	 * All Employees
+	 *
+	 * Ajax Source for employee information
+	 */
+	public function all_employees()
+	{
 
+		if ($this->department_context)
+		{
+			$d = new Department($this->department_context);
+			$emps = $d->employee->get();
+		}
+
+		else
+		{
+			$emps = new Employee();
+			$emps->get();
+		}
+		$aaData = array();
+
+		foreach ($emps as $e)
+		{
+			array_push($aaData,
+			array(
+			$e->firstname,
+			$e->lastname,
+			$e->email
+			)
+			);
+		}
+
+		echo json_encode(array('aaData'=>$aaData));
+	}
 }
 
 /* End of file employee.php */
