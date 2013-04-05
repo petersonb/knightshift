@@ -83,6 +83,7 @@ class Register extends CI_Controller {
 			$emp->firstname = $this->input->post('firstname');
 			$emp->lastname = $this->input->post('lastname');
 			$emp->email = $this->input->post('email');
+			$emp->student_id = $this->input->post('student_id');
 			$emp->password = $this->input->post('password');
 			$emp->save();
 

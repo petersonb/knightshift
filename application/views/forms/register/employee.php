@@ -14,6 +14,11 @@ $inputs = array(
 				'label'=>'Email',
 				'name'=>'email',
 				'value'=>set_value('email')
+		),
+		array(
+				'label'=>'Student Id',
+				'name'=>'student_id',
+				'value'=>set_value('student_id')
 		)
 );
 

@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.10.4
+-- version 3.5.6
 -- http://www.phpmyadmin.net
 --
--- Host: mysql.petersonb.com
--- Generation Time: Apr 03, 2013 at 09:32 PM
--- Server version: 5.1.39
--- PHP Version: 5.2.17
+-- Host: localhost
+-- Generation Time: Apr 05, 2013 at 12:45 AM
+-- Server version: 5.1.67-log
+-- PHP Version: 5.4.8--pl0-gentoo
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -36,11 +37,6 @@ CREATE TABLE IF NOT EXISTS `admins` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `admins`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -51,11 +47,6 @@ CREATE TABLE IF NOT EXISTS `admins_departments` (
   `admin_id` int(11) DEFAULT NULL,
   `department_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `admins_departments`
---
-
 
 -- --------------------------------------------------------
 
@@ -72,11 +63,6 @@ CREATE TABLE IF NOT EXISTS `departments` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `departments`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -88,15 +74,11 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `firstname` varchar(32) NOT NULL,
   `lastname` varchar(32) NOT NULL,
   `email` varchar(64) NOT NULL,
+  `student_id` int(10) DEFAULT NULL,
   `phone` varchar(16) NOT NULL,
   `password` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `employees`
---
-
 
 -- --------------------------------------------------------
 
@@ -108,11 +90,6 @@ CREATE TABLE IF NOT EXISTS `employees_departments` (
   `employee_id` int(11) DEFAULT NULL,
   `department_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `employees_departments`
---
-
 
 -- --------------------------------------------------------
 
@@ -128,11 +105,6 @@ CREATE TABLE IF NOT EXISTS `hours` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `hours`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -145,7 +117,6 @@ CREATE TABLE IF NOT EXISTS `hour_relations` (
   `department_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `hour_relations`
---
-
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

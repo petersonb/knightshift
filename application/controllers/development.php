@@ -94,6 +94,7 @@ class Development extends CI_Controller {
 		$e->email = $email;
 		$e->firstname = $email;
 		$e->lastname = $email;
+		$e->student_id = 234567;
 		$e->password = 'pass';
 		foreach ($id as $did)
 		{
