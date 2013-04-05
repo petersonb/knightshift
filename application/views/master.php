@@ -29,7 +29,7 @@ body {
 }
 <?php elseif ($this->session->userdata('department_id')): ?>
 body {
-    background : pink;
+    background : orange;
 }
 <?php endif; ?>
 </style>
