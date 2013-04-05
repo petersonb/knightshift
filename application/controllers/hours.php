@@ -160,10 +160,10 @@ class Hours extends CI_Controller {
 			$h->time_out = $otime;
 			$h->save($e);
 			$h->save($d);
-			
+				
 			redirect('hours/view_all');
 		}
-		
+
 		$data['date'] = date('m/d/Y');
 
 		$data['title'] = 'Log Time';
@@ -229,7 +229,8 @@ class Hours extends CI_Controller {
 				array(
 				date_mysql_std($h->date),
 				$h->time_in,
-				$h->time_out
+				$h->time_out,
+				"<a href='".base_url('hours/edit_time/'.$h->id)."'>edit</a>"
 				)
 				);
 			}
@@ -244,7 +245,9 @@ class Hours extends CI_Controller {
 				$d->name,
 				date_mysql_std($h->date),
 				$h->time_in,
-				$h->time_out)
+				$h->time_out,
+				"<a href='".base_url('hours/edit_time/'.$h->id)."'>edit</a>"
+						)
 				);
 			}
 		}
@@ -275,7 +278,7 @@ class Hours extends CI_Controller {
 		foreach ($depts as $d)
 		{
 			$hours = $d->hour->get();
-			if ($this->department_context || $this->department_id)
+			if ($this->department_id)
 			{
 				foreach ($hours as $h)
 				{
@@ -290,6 +293,24 @@ class Hours extends CI_Controller {
 					);
 				}
 			}
+			
+			if ($this->department_context)
+			{
+				$hours = $d->hour->get();
+				foreach ($hours as $h)
+				{
+					$e = $h->employee->get();
+					array_push($aaData,
+					array(
+					$e->firstname . ' ' . $e->lastname,
+					date_mysql_std($h->date),
+					$h->time_in,
+					$h->time_out,
+					"<a href='".base_url('hours/edit_time/'.$h->id)."'>edit</a>"
+							)
+					);
+				}
+			}
 			elseif ($this->admin_id)
 			{
 				foreach ($hours as $h)
@@ -301,7 +322,8 @@ class Hours extends CI_Controller {
 					$e->firstname . ' ' . $e->lastname,
 					date_mysql_std($h->date),
 					$h->time_in,
-					$h->time_out
+					$h->time_out,
+					"<a href='".base_url('hours/edit_time/'.$h->id)."'>edit</a>"
 					)
 					);
 				}
