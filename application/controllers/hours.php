@@ -295,7 +295,7 @@ class Hours extends CI_Controller {
 					array(
 					$d->name,
 					$e->firstname . ' ' . $e->lastname,
-					date_mysql_date($h->date),
+					date_mysql_std($h->date),
 					$h->time_in,
 					$h->time_out
 					)
@@ -309,7 +309,7 @@ class Hours extends CI_Controller {
 					array_push($aaData,
 					array(
 					$d->name,
-					date_mysql_date($h->date),
+					date_mysql_std($h->date),
 					$h->time_in,
 					$h->time_out
 					)
