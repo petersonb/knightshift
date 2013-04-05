@@ -192,7 +192,7 @@ class Hours extends CI_Controller {
 				'datatables/media/js/jquery.dataTables',
 				'hours/'.$js
 		);
-		
+
 		$data['title'] = 'View All Hours';
 		$data['content'] = 'hours/view_all';
 		$data['css'] = 'dataTables/jquery.dataTables';
@@ -214,20 +214,38 @@ class Hours extends CI_Controller {
 			$hour = $e->hour->get();
 		}
 
-		$data = array('aaData'=>array());
-		foreach ($e->hour as $h)
+
+		$aaData = array();
+
+		if ($this->department_context)
 		{
-			$d = $h->department->get();
-			array_push($data['aaData'],
-			array(
-			$d->name,
-			date_mysql_std($h->date),
-			$h->time_in,
-			$h->time_out)
-			);
+			foreach ($e->hour as $h)
+			{
+				array_push($aaData,
+				array(
+				date_mysql_std($h->date),
+				$h->time_in,
+				$h->time_out
+				)
+				);
+			}
+		}
+		else
+		{
+			foreach ($e->hour as $h)
+			{
+				$d = $h->department->get();
+				array_push($aaData,
+				array(
+				$d->name,
+				date_mysql_std($h->date),
+				$h->time_in,
+				$h->time_out)
+				);
+			}
 		}
 
-		echo json_encode($data);
+		echo json_encode(array('aaData'=>$aaData));
 	}
 
 	public function department_hours()
@@ -261,7 +279,7 @@ class Hours extends CI_Controller {
 					array_push($aaData,
 					array(
 					$e->firstname . ' ' . $e->lastname,
-					$h->date,
+					date_mysql_std($h->date),
 					$h->time_in,
 					$h->time_out
 					)
@@ -277,7 +295,7 @@ class Hours extends CI_Controller {
 					array(
 					$d->name,
 					$e->firstname . ' ' . $e->lastname,
-					$h->date,
+					date_mysql_date($h->date),
 					$h->time_in,
 					$h->time_out
 					)
@@ -291,7 +309,7 @@ class Hours extends CI_Controller {
 					array_push($aaData,
 					array(
 					$d->name,
-					$h->date,
+					date_mysql_date($h->date),
 					$h->time_in,
 					$h->time_out
 					)
