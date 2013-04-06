@@ -39,35 +39,69 @@ class Hours extends CI_Controller {
 	public function edit_time($id = NULL)
 	{
 		// TODO NEEDS SECURITY
-		if (!$id and !$this->input->post())
+		if (!$id)
 		{
 			redirect('main');
 		}
 
-		$this->load->helper('form');
+		$this->load->helper(array('form','date'));
 		$this->load->library('form_validation');
 
 		// TODO MORE RULES
 		$this->form_validation->set_rules('date','Date','required');
-		$this->form_validation->set_rules('time_in','Time In', 'required');
-		$this->form_validation->set_rules('time_out','Time Out','required');
 
 		if ($this->form_validation->run())
 		{
+			$ihour = $this->input->post('hour_in');
+			$imin  = $this->input->post('minute_in');
+			$ipm    = $this->input->post('pm_in');
+
+			$ohour = $this->input->post('hour_out');
+			$omin  = $this->input->post('minute_out');
+			$opm   = $this->input->post('pm_out');
+
+			$itime = date_twelve_to_24("$ihour:$imin $ipm");
+			$otime = date_twelve_to_24("$ohour:$omin $opm");
+
 			$h = new Hour($id);
-			$h->date = $this->input->post('date');
-			$h->time_in = $this->input->post('time_in');
-			$h->time_out = $this->input->post('time_out');
-			$h->save();
+			$h->date = date_std_mysql($this->input->post('date'));
+			$h->time_in = $itime;
+			$h->time_out = $otime;
+			$succ = $h->save();
 			redirect('hours/view_all');
 		}
-		$h = new Hour($id);
-		$h->department->get();
+		else
+		{
+			$data['edit'] = true;
 
-		$data['hour'] = $h;
-		$data['title'] = 'Edit Time';
-		$data['content'] = 'hours/edit_time';
-		$this->load->view('master',$data);
+			$h = new Hour($id);
+			$h->department->get();
+
+			$data['date'] = date_mysql_std($h->date);
+
+			$in_split = preg_split('/[\s,:]+/',date_24_to_twelve($h->time_in));
+			$data['time_in'] = array(
+					'hour'=>$in_split[0],
+					'minute'=>$in_split[1],
+					'period'=>$in_split[2]
+			);
+
+			$out_split = preg_split('/[\s,:]+/',date_24_to_twelve($h->time_out));
+			$data['time_out'] = array(
+					'hour'=>$out_split[0],
+					'minute'=>$out_split[1],
+					'period'=>$out_split[2]
+			);
+
+			$data['hour'] = array(
+					'id'=>$h->id,
+			);
+			$data['title'] = 'Edit Time';
+			$data['content'] = 'hours/edit_time';
+			$data['css'] = 'calendar_widget/jquery-ui';
+			$data['javascript'] = array('jquery','jquery-ui','hours/date');
+			$this->load->view('master',$data);
+		}
 	}
 
 	/**
@@ -132,8 +166,6 @@ class Hours extends CI_Controller {
 			$h->date = date_std_mysql($this->input->post('date'));
 
 
-			// TODO better time input handling
-
 			$ihour = $this->input->post('hour_in');
 			$imin  = $this->input->post('minute_in');
 			$ipm    = $this->input->post('pm_in');
@@ -142,27 +174,27 @@ class Hours extends CI_Controller {
 			$omin  = $this->input->post('minute_out');
 			$opm   = $this->input->post('pm_out');
 
-			if ($ipm)
-				$ihour = $ihour + 12;
-			if (!$ipm && $ihour == 12)
-				$ihour = "00";
-
-			$itime = $ihour.':'.$imin.':00';
-
-			if ($opm)
-				$ohour = $ohour + 12;
-			if (!$opm && $ohour == 12)
-				$ohour = "00";
-
-			$otime = $ohour.':'.$omin.':00';
+			$itime = date_twelve_to_24("$ihour:$imin $ipm");
+			$otime = date_twelve_to_24("$ohour:$omin $opm");
 
 			$h->time_in = $itime;
 			$h->time_out = $otime;
 			$h->save($e);
 			$h->save($d);
-				
+
 			redirect('hours/view_all');
 		}
+
+		$curr_time = preg_split('/[\s,:]+/',date('g:i a'));
+		$minute = (int) ($curr_time[1]/15)*15;
+		$time = array(
+				'hour'=>$curr_time[0],
+				'minute'=>$minute,
+				'period'=>$curr_time[2]
+		);
+		
+		$data['time_in']=$time;
+		$data['time_out']=$time;
 
 		$data['date'] = date('m/d/Y');
 
@@ -228,10 +260,10 @@ class Hours extends CI_Controller {
 				array_push($aaData,
 				array(
 				date_mysql_std($h->date),
-				$h->time_in,
-				$h->time_out,
+				date_24_to_twelve($h->time_in),
+				date_24_to_twelve($h->time_out),
 				"<a href='".base_url('hours/edit_time/'.$h->id)."'>edit</a>"
-				)
+						)
 				);
 			}
 		}
@@ -244,8 +276,8 @@ class Hours extends CI_Controller {
 				array(
 				$d->name,
 				date_mysql_std($h->date),
-				$h->time_in,
-				$h->time_out,
+				date_24_to_twelve($h->time_in),
+				date_24_to_twelve($h->time_out),
 				"<a href='".base_url('hours/edit_time/'.$h->id)."'>edit</a>"
 						)
 				);
@@ -287,13 +319,13 @@ class Hours extends CI_Controller {
 					array(
 					$e->firstname . ' ' . $e->lastname,
 					date_mysql_std($h->date),
-					$h->time_in,
-					$h->time_out
+					date_24_to_twelve($h->time_in),
+					date_24_to_twelve($h->time_out)
 					)
 					);
 				}
 			}
-			
+
 			if ($this->department_context)
 			{
 				$hours = $d->hour->get();
@@ -304,8 +336,8 @@ class Hours extends CI_Controller {
 					array(
 					$e->firstname . ' ' . $e->lastname,
 					date_mysql_std($h->date),
-					$h->time_in,
-					$h->time_out,
+					date_24_to_twelve($h->time_in),
+					date_24_to_twelve($h->time_out),
 					"<a href='".base_url('hours/edit_time/'.$h->id)."'>edit</a>"
 							)
 					);
@@ -321,10 +353,10 @@ class Hours extends CI_Controller {
 					$d->name,
 					$e->firstname . ' ' . $e->lastname,
 					date_mysql_std($h->date),
-					$h->time_in,
-					$h->time_out,
+					date_24_to_twelve($h->time_in),
+					date_24_to_twelve($h->time_out),
 					"<a href='".base_url('hours/edit_time/'.$h->id)."'>edit</a>"
-					)
+							)
 					);
 				}
 			}
@@ -336,8 +368,8 @@ class Hours extends CI_Controller {
 					array(
 					$d->name,
 					date_mysql_std($h->date),
-					$h->time_in,
-					$h->time_out
+					date_24_to_twelve($h->time_in),
+					date_24_to_twelve($h->time_out)
 					)
 					);
 				}
