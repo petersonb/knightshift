@@ -103,6 +103,37 @@ class Hours extends CI_Controller {
 			$this->load->view('master',$data);
 		}
 	}
+	
+	public function delete_time($id = null)
+	{
+		if (!$id)
+		{
+			redirect('hours/view_all');
+		}
+		
+		$this->load->helper(array('form','date'));
+		
+		if ($this->input->post())
+		{
+			if ($this->input->post('confirm'))
+			{
+				$h = new Hour($id);
+				$h->delete();
+			}
+			redirect('hours/view_all');
+		}
+		
+		$h = new Hour($id);
+		$data['hour']= array(
+				'id'=>$h->id,
+				'date'=>date_mysql_std($h->date),
+				'time_in'=>date_24_to_twelve($h->time_in),
+				'time_out'=>date_24_to_twelve($h->time_out),
+				'department'=>$h->department->get()->name
+		);
+		$data['content'] = 'hours/delete_time';
+		$this->load->view('master',$data);
+	}
 
 	/**
 	 * Log Time
@@ -192,7 +223,7 @@ class Hours extends CI_Controller {
 				'minute'=>$minute,
 				'period'=>$curr_time[2]
 		);
-		
+
 		$data['time_in']=$time;
 		$data['time_out']=$time;
 
@@ -355,7 +386,7 @@ class Hours extends CI_Controller {
 					date_mysql_std($h->date),
 					date_24_to_twelve($h->time_in),
 					date_24_to_twelve($h->time_out),
-					"<a href='".base_url('hours/edit_time/'.$h->id)."'>edit</a>"
+					"<a href='".base_url('hours/edit_time/'.$h->id)."'><img src='".base_url('/css/icons/edit.png')."'/></a><a href='".base_url('hours/delete_time/'.$h->id)."'><img src='".base_url('/css/icons/delete.png')."'/></a"
 							)
 					);
 				}

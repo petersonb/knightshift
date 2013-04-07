@@ -21,7 +21,11 @@ if ($context)
 			array('base'=>'employees/view_all',
 					'name'=>'View Employees')
 	);
-?>
+else
+{
+	array_push($menu_items,array('base'=>'hours/view_all','name'=>'View All Hours'));
+}
+	?>
 <ul>
 	<?php foreach ($menu_items as $item):?>
 	<li><a href="<?php echo base_url($item['base']); ?>"><?php echo $item['name']; ?>

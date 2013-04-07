@@ -19,7 +19,7 @@
 			<th>Time Out</th>
 			
 			<?php if ($this->employee_id || $this->admin_id):?>
-			<th width="20px">Edit</th>
+			<th width="10px">Edit</th>
 			<?php endif; ?>
 		</tr>
 	</thead>
