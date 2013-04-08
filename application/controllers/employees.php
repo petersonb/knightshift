@@ -200,9 +200,18 @@ class Employees extends CI_Controller {
 	public function all_employees()
 	{
 
-		$emps = new Employee();
-		$emps->get();
+		$d = new Department($this->department_context);
+		$existing_emps = $d->employee->get();
+		
+		$ids = array();
+		foreach($existing_emps as $emp)
+		{
+			array_push($ids,$emp->id);
+		}
 
+		$emps = new Employee();
+		$emps->where_not_in('id',$ids)->get();
+		
 		$aaData = array();
 
 		foreach ($emps as $e)
