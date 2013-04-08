@@ -18,11 +18,13 @@ $passwords = array(
 <?php echo validation_errors(); ?>
 <?php
 if ($this->employee_id)
-{ 
-echo form_open('employees/change_password');
+{
+	echo form_open('employees/change_password');
 }
 else
-	echo form_open('admins/change_password'); 
+{
+	echo form_open('admins/change_password');
+}
 ?>
 
 <table>

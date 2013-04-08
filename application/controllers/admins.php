@@ -19,6 +19,7 @@ class Admins extends CI_Controller {
 		parent::__construct();
 
 		$this->admin_id = $this->session->userdata('admin_id');
+		$this->employee_id = $this->session->userdata('employee_id');
 		$this->department_context = $this->session->userdata('department_context');
 	}
 

@@ -147,9 +147,16 @@ class Hours extends CI_Controller {
 		$this->load->library('form_validation');
 
 		// If logging hour as department
-		if ($this->department_id)
+		if ($this->department_id || ($this->admin_id && $this->department_context))
 		{
-			$d = new Department($this->department_id);
+			if ($this->department_id)
+			{
+				$d = new Department($this->department_id);
+			}
+			elseif($this->department_context)
+			{
+				$d = new Department($this->department_context);
+			}
 			$emp = $d->employee->get();
 			foreach($emp as $e)
 			{

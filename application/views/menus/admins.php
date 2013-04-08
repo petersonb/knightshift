@@ -12,20 +12,22 @@ $context = $this->session->userdata('department_context');
 
 if ($context)
 	$context_items = array(
+			array('base'=>'employees/view_all',
+					'name'=>'View Employees'),
 			array('base'=>'hours/view_all',
 					'name'=>'View Hours'),
+			array('base'=>'hours/log_time',
+					'name'=>'Log Time'),
 			array('base'=>'departments/add_employee',
 					'name'=>'Add Employee'),
 			array('base'=>'departments/create',
 					'name'=>'Create Department'),
-			array('base'=>'employees/view_all',
-					'name'=>'View Employees')
 	);
 else
 {
 	array_push($menu_items,array('base'=>'hours/view_all','name'=>'View All Hours'));
 }
-	?>
+?>
 <ul>
 	<?php foreach ($menu_items as $item):?>
 	<li><a href="<?php echo base_url($item['base']); ?>"><?php echo $item['name']; ?>
