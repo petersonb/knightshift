@@ -364,7 +364,7 @@ class Hours extends CI_Controller {
 				}
 			}
 
-			if ($this->department_context)
+			elseif ($this->department_context)
 			{
 				$hours = $d->hour->get();
 				foreach ($hours as $h)
