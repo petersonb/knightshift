@@ -101,6 +101,28 @@ class Employees extends CI_Controller {
 		$data['content'] = 'employees/edit_profile';
 		$this->load->view('master',$data);
 	}
+	
+	public function department_employees()
+	{
+	
+		$d = new Department($this->department_context);
+		$emps = $d->employee->get();
+	
+		$aaData = array();
+	
+		foreach ($emps as $e)
+		{
+			array_push($aaData,
+			array(
+			$e->firstname,
+			$e->lastname,
+			$e->email
+			)
+			);
+		}
+	
+		echo json_encode(array('aaData'=>$aaData));
+	}
 
 	/**
 	 * All Employees
@@ -110,23 +132,16 @@ class Employees extends CI_Controller {
 	public function all_employees()
 	{
 
-		if ($this->department_context)
-		{
-			$d = new Department($this->department_context);
-			$emps = $d->employee->get();
-		}
-
-		else
-		{
-			$emps = new Employee();
-			$emps->get();
-		}
+		$emps = new Employee();
+		$emps->get();
+		
 		$aaData = array();
 
 		foreach ($emps as $e)
 		{
 			array_push($aaData,
 			array(
+			$e->id,
 			$e->firstname,
 			$e->lastname,
 			$e->email

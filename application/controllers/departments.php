@@ -2,6 +2,14 @@
 
 class Departments extends CI_Controller {
 
+	public function __construct() {
+		parent::__construct();
+		$this->admin_id = $this->session->userdata('admin_id');
+		$this->employee_id = $this->session->userdata('employee_id');
+		$this->department_id = $this->session->userdata('department_id');
+		$this->department_context = $this->session->userdata('department_context');
+	}
+
 	public function index ()
 	{
 		redirect('hours/log_time');
@@ -20,12 +28,12 @@ class Departments extends CI_Controller {
 		$this->load->helper('form');
 
 		$this->form_validation->set_rules('employee_id', 'Employee Id', 'required');
-		$this->form_validation->set_rules('department_id', 'Department Id', 'required');
+		$this->form_validation->set_message('required','You must select an employee from the table.');
 
 		if ($this->form_validation->run())
 		{
 			$eid = $this->input->post('employee_id');
-			$did = $this->input->post('department_id');
+			$did = $this->department_context;
 			$e = new Employee($eid);
 			$d = new Department($did);
 
@@ -34,6 +42,12 @@ class Departments extends CI_Controller {
 
 		$data['title'] = "Add Employee";
 		$data['content'] = 'departments/add_employee';
+		$data['javascript'] = array(
+				"datatables/media/js/jquery",
+				"datatables/media/js/jquery.dataTables",
+				"departments/find_employee"
+		);
+		$data['css'] = 'dataTables/jquery.dataTables';
 		$this->load->view('master',$data);
 	}
 

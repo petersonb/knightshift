@@ -103,16 +103,16 @@ class Hours extends CI_Controller {
 			$this->load->view('master',$data);
 		}
 	}
-	
+
 	public function delete_time($id = null)
 	{
 		if (!$id)
 		{
 			redirect('hours/view_all');
 		}
-		
+
 		$this->load->helper(array('form','date'));
-		
+
 		if ($this->input->post())
 		{
 			if ($this->input->post('confirm'))
@@ -122,7 +122,7 @@ class Hours extends CI_Controller {
 			}
 			redirect('hours/view_all');
 		}
-		
+
 		$h = new Hour($id);
 		$data['hour']= array(
 				'id'=>$h->id,
@@ -293,7 +293,7 @@ class Hours extends CI_Controller {
 				date_mysql_std($h->date),
 				date_24_to_twelve($h->time_in),
 				date_24_to_twelve($h->time_out),
-				"<a href='".base_url('hours/edit_time/'.$h->id)."'>edit</a>"
+				"<a href='".base_url('hours/edit_time/'.$h->id)."'><img src='".base_url('/css/icons/edit.png')."'/></a><a href='".base_url('hours/delete_time/'.$h->id)."'><img src='".base_url('/css/icons/delete.png')."'/></a"
 						)
 				);
 			}
@@ -309,7 +309,7 @@ class Hours extends CI_Controller {
 				date_mysql_std($h->date),
 				date_24_to_twelve($h->time_in),
 				date_24_to_twelve($h->time_out),
-				"<a href='".base_url('hours/edit_time/'.$h->id)."'>edit</a>"
+				"<a href='".base_url('hours/edit_time/'.$h->id)."'><img src='".base_url('/css/icons/edit.png')."'/></a><a href='".base_url('hours/delete_time/'.$h->id)."'><img src='".base_url('/css/icons/delete.png')."'/></a"
 						)
 				);
 			}
@@ -369,7 +369,7 @@ class Hours extends CI_Controller {
 					date_mysql_std($h->date),
 					date_24_to_twelve($h->time_in),
 					date_24_to_twelve($h->time_out),
-					"<a href='".base_url('hours/edit_time/'.$h->id)."'>edit</a>"
+					"<a href='".base_url('hours/edit_time/'.$h->id)."'><img src='".base_url('/css/icons/edit.png')."'/></a><a href='".base_url('hours/delete_time/'.$h->id)."'><img src='".base_url('/css/icons/delete.png')."'/></a"
 							)
 					);
 				}

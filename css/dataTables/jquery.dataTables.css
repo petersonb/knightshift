@@ -2,6 +2,7 @@
 /*
  * Table
  */
+ 
 table.dataTable {
 	margin: 0 auto;
 	clear: both;
@@ -41,6 +42,11 @@ table.dataTable tr.even td.sorting_1 { background-color: #EAEBFF; }
 table.dataTable tr.even td.sorting_2 { background-color: #F2F3FF; }
 table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
 
+table.dataTable tr.row_selected td {
+	background-color: gray;
+}
+
+table.dataTable tr.row_selected td.sorting_1 {background-color: gray; }
 
 /*
  * Table wrapper
