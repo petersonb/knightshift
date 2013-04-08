@@ -96,10 +96,15 @@ class Development extends CI_Controller {
 		$e->lastname = $email;
 		$e->student_id = 234567;
 		$e->password = 'pass';
+		$e->save();
 		foreach ($id as $did)
 		{
 			$d = new Department($did);
-			$e->save($d);
+// 			$e->save($d);
+			$r = new Rate();
+			$r->hourly=7.25;
+			$r->save($e);
+			$r->save($d);
 		}
 		echo "Created employee ".$email;
 	}

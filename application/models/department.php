@@ -14,6 +14,7 @@ class Department extends DataMapper {
 	var $has_many = array(
 			'admin' => array('join_table' => 'admins_departments'),
 			'employee' => array('join_table' => 'employees_departments'),
+			'rate'=>array('join_table'=>'employees_departments'),
 			'hour' => array('join_table' => 'hour_relations')
 	);
 

@@ -17,6 +17,8 @@
 </table>
 <div style="clear: both;"></div>
 <hr />
+<input type="text" value="<?php echo $base_rate; ?>" name="hourly" />
+<br />
 <input type="submit" value="add employee" />
 </form>
 

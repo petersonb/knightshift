@@ -72,6 +72,48 @@ class Employees extends CI_Controller {
 		$this->load->view('master',$data);
 	}
 
+	public function admin_manage($eid = Null,$did = Null)
+	{
+		if (!$eid)
+		{
+			redirect('admins');
+		}
+		elseif(!$this->admin_id)
+		{
+			redirect('main');
+		}
+		
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+		
+		$e = new Employee($eid);
+		if ($did)
+		{
+			$r = $e->rate->where('department_id',$this->$did)->get();
+		}
+		else
+		{
+			$r = $e->rate->where('department_id',$this->department_context)->get();
+		}
+		
+		$this->form_validation->set_rules('hourly','Hourly wage', 'required');
+		
+		if ($this->form_validation->run())
+		{
+			$r->hourly = $this->input->post('hourly');
+			$r->save();
+		}
+		
+		$data['current_rate'] = $r->hourly;
+		$data['employee'] = array(
+				'id'=>$e->id
+		);
+		
+		$data['title'] = 'Manage Employee';
+		$data['content'] = 'employees/admin_manage';
+		$this->load->view('master',$data);
+	}
+
 	public function edit_profile()
 	{
 		$this->load->library('form_validation');
@@ -101,15 +143,15 @@ class Employees extends CI_Controller {
 		$data['content'] = 'employees/edit_profile';
 		$this->load->view('master',$data);
 	}
-	
+
 	public function department_employees()
 	{
-	
+
 		$d = new Department($this->department_context);
 		$emps = $d->employee->get();
-	
+
 		$aaData = array();
-	
+
 		foreach ($emps as $e)
 		{
 			array_push($aaData,
@@ -120,7 +162,7 @@ class Employees extends CI_Controller {
 			)
 			);
 		}
-	
+
 		echo json_encode(array('aaData'=>$aaData));
 	}
 
@@ -134,7 +176,7 @@ class Employees extends CI_Controller {
 
 		$emps = new Employee();
 		$emps->get();
-		
+
 		$aaData = array();
 
 		foreach ($emps as $e)

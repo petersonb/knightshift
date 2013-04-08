@@ -36,10 +36,17 @@ class Departments extends CI_Controller {
 			$did = $this->department_context;
 			$e = new Employee($eid);
 			$d = new Department($did);
-
-			$d->save($e);
+			$r = new Rate();
+			
+			$r->hourly = $this->input->post('hourly');
+			
+			$r->save($e);
+			$r->save($d);
+// 			$d->save($e);
 		}
 
+		$data['base_rate']=7.25;
+		
 		$data['title'] = "Add Employee";
 		$data['content'] = 'departments/add_employee';
 		$data['javascript'] = array(
