@@ -93,6 +93,7 @@ class Departments extends CI_Controller {
 		$this->load->view('master',$data);
 	}
 
+	
 	public function set_context($id = NULL)
 	{
 		if ($id)
