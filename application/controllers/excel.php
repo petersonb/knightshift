@@ -24,7 +24,7 @@ class Excel extends CI_Controller {
 		}
 
 		$depts = $user->department->get();
-		
+
 		foreach ($depts as $d)
 		{
 			$data['departments'][$d->id] = array(
@@ -37,12 +37,140 @@ class Excel extends CI_Controller {
 		$data['title'] = 'Excel Handling';
 		$this->load->view('master',$data);
 	}
-	
+
 	public function admin ()
 	{
 		$this->load->helper('form');
 		$data['content'] = 'excel/admin';
 		$this->load->view('master',$data);
+	}
+
+	public function admin_generate()
+	{
+		$this->load->library('excel');
+
+		$mval = $this->input->post('month');
+		$yval = $this->input->post('year');
+		$time = mktime('0','0','0',$mval,'1',$yval);
+		$month = date('F',$time);
+		$year = date('Y',$time);
+
+		$d = new Department($this->department_context);
+
+		$filepath = 'excel/'.$d->id . '/' . $year . '/' . $month . '/';
+		$this->check_filepath($filepath);
+
+		$emps = $d->employee->get();
+
+		foreach ($emps as $e)
+		{
+			
+			$name = $e->firstname . ' ' . $e->lastname;
+			
+			$r = $e->rate->where('department_id',$this->department_context)->get();
+			$template = "excel/template.xlsx";
+			$excel = PHPExcel_IOFactory::load($template);
+			
+			$excel->setActiveSheetIndex(0)
+			->setCellValue('F2',$month)
+			->setCellValue('C5',$name)
+			->setCellValue('C7',$e->student_id)
+			->setCellValue('H5',$d->name)
+			->setCellValue('H7',$d->dept_id)
+			->setCellValue('H9','supervisor name')
+			->setCellValue('G47',$r->hourly);
+			
+			
+			
+			
+			
+			$hrs = $e->hour->get();
+			
+			
+			
+			
+			
+			
+				
+			echo '---------------------------<br />';
+			$total = new DateTime("00:00");
+			foreach ($hrs as $h)
+			{
+				$in = new DateTime($h->time_in);
+				$out = new DateTime($h->time_out);
+				$diff = $in->diff($out);
+				echo '('.$this->decimal_time($diff).')';
+				$total = $total->add($diff);
+				echo $total->format("H.i").'<br />';
+				echo $h->time_in;
+				echo ' : '.$h->time_out.'<br />';
+				echo $diff->format("%H.%i") . '<br />';
+				
+				$sdate = preg_split('/-/', $h->date);
+				$day = $sdate[2];
+				$yval = $day + 12;
+				$x = 66;
+				$checkx = $excel->setActiveSheetIndex(0)->getCell('B'.$yval);
+				if ($checkx != '')
+				{
+					$checkx = $excel->setActiveSheetIndex(0)->getCell('D'.$yval);
+					if ($checkx != '') $x = 70;
+					else $x=68;
+				}
+
+				$excel->setActiveSheetIndex(0)
+				->setCellValue(chr($x).$yval,$h->time_in)
+				->setCellValue(chr($x+1).$yval,$h->time_out);
+
+
+			}
+			$writer = PHPExcel_IOFactory::createWriter($excel,'Excel2007');
+			$name = str_replace(' ', '', $name);
+			$writer->save($filepath.$month.$name.'.xlsx');
+			echo $total->format("H.i").'<br />';
+		}
+	}
+
+	private function decimal_time($time)
+	{
+		$t = $time->format("%H.%i");
+		$ts = explode('.',$t);
+		if ($ts[1]!=0)
+		{
+			$min = $ts[1]/60. * 100;
+		}
+		else
+		{
+			$min = 0;
+		}
+		return $ts[0].'.'.$min;
+	}
+
+	private function check_filepath($filepath)
+	{
+		if (!file_exists($filepath))
+		{
+			$fpa = explode('/',$filepath);
+			if (!file_exists($fpa[0]))
+			{
+				shell_exec("mkdir ". $fpa[0]);
+			}
+				
+			if (!file_exists("$fpa[0]/$fpa[1]"))
+			{
+				shell_exec("mkdir " . "$fpa[0]/$fpa[1]");
+			}
+				
+			if (!file_exists("$fpa[0]/$fpa[1]/$fpa[2]"))
+			{
+				shell_exec("mkdir " . "$fpa[0]/$fpa[1]/$fpa[2]");
+			}
+				
+			if (!file_exists("$fpa[0]/$fpa[1]/$fpa[2]/$fpa[3]"))
+			{
+				shell_exec("mkdir " . "$fpa[0]/$fpa[1]/$fpa[2]/$fpa[3]");
+			}
+		}
 	}
 
 	private function initial_auth()
