@@ -168,8 +168,6 @@ class Hours extends CI_Controller {
 			}
 			
 			sort($data['employees']);
-			
-			
 		}
 
 		// If not a department, must have department context
