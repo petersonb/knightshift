@@ -134,7 +134,7 @@ class Hours extends CI_Controller {
 		$data['content'] = 'hours/delete_time';
 		$this->load->view('master',$data);
 	}
-
+	
 	/**
 	 * Log Time
 	 *
@@ -160,12 +160,16 @@ class Hours extends CI_Controller {
 			$emp = $d->employee->get();
 			foreach($emp as $e)
 			{
-				$data['employees'][$e->id] = array(
+				$data['employees'][$e->firstname] = array(
 						'id'=>$e->id,
 						'firstname'=>$e->firstname,
 						'lastname'=>$e->lastname
 				);
 			}
+			
+			sort($data['employees']);
+			
+			
 		}
 
 		// If not a department, must have department context
