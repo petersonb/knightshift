@@ -15,6 +15,11 @@ class Hours extends CI_Controller {
 		$this->employee_id = $this->session->userdata('employee_id');
 		$this->department_id = $this->session->userdata('department_id');
 		$this->department_context = $this->session->userdata('department_context');
+		if (!$this->admin_id && !$this->employee_id && !$this->department_id)
+		{
+			redirect('main');
+		}
+
 	}
 
 	/**
