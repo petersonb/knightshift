@@ -22,7 +22,7 @@
  * @package    PHPExcel_Shared
  * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
- * @version    1.7.8, 2012-10-12
+ * @version    ##VERSION##, ##DATE##
  */
 
 
@@ -39,11 +39,11 @@ class PHPExcel_Shared_CodePage
 	 * Convert Microsoft Code Page Identifier to Code Page Name which iconv
 	 * and mbstring understands
 	 *
-	 * @param int $number Microsoft Code Page Indentifier
+	 * @param integer $codePage Microsoft Code Page Indentifier
 	 * @return string Code Page Name
 	 * @throws Exception
 	 */
-	public static function NumberToName($codePage = '1252')
+	public static function NumberToName($codePage = 1252)
 	{
 		switch ($codePage) {
 			case 367:	return 'ASCII';				break;	//	ASCII

@@ -57,7 +57,7 @@ class Excel extends CI_Controller {
 
 		$d = new Department($this->department_context);
 
-		$filepath = 'excel/'.$d->id . '/' . $year . '/' . $month . '/';
+		$filepath = 'excelsheets/'.$d->id . '/' . $year . '/' . $month . '/';
 		$this->check_filepath($filepath);
 
 		$emps = $d->employee->get();
@@ -68,7 +68,7 @@ class Excel extends CI_Controller {
 			$name = $e->firstname . ' ' . $e->lastname;
 			
 			$r = $e->rate->where('department_id',$this->department_context)->get();
-			$template = "excel/template.xlsx";
+			$template = "excelsheets/template.xlsx";
 			$excel = PHPExcel_IOFactory::load($template);
 			
 			$excel->setActiveSheetIndex(0)
@@ -85,7 +85,6 @@ class Excel extends CI_Controller {
 			
 			
 			$hrs = $e->hour->get();
-			
 			
 			
 			
@@ -129,6 +128,7 @@ class Excel extends CI_Controller {
 			$writer->save($filepath.$month.$name.'.xlsx');
 			echo $total->format("H.i").'<br />';
 		}
+		$opt = shell_exec("zip -r excelsheets/zips/{$mval} excelsheets/1/");
 	}
 
 	private function decimal_time($time)

@@ -15,7 +15,7 @@ for ($y = 2013; $y <= date('Y'); $y++)
 <?php echo form_open('excel/admin_generate'); ?>
 <select name="month">
 	<?php foreach ($months as $m): ?>
-	<option value="<?php echo $m['val']; ?>">
+	<option <?php if ($m['val'] == '05') echo "selected=selected"; ?> value="<?php echo $m['val']; ?>">
 		<?php echo $m['name']; ?>
 	</option>
 	<?php endforeach; ?>

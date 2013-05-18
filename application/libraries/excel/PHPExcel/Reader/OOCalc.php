@@ -22,7 +22,7 @@
  * @package    PHPExcel_Reader
  * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
- * @version    1.7.8, 2012-10-12
+ * @version    ##VERSION##, ##DATE##
  */
 
 
@@ -42,38 +42,14 @@ if (!defined('PHPEXCEL_ROOT')) {
  * @package		PHPExcel_Reader
  * @copyright	Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Reader_OOCalc implements PHPExcel_Reader_IReader
+class PHPExcel_Reader_OOCalc extends PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
 {
-	/**
-	 * Read data only?
-	 * Identifies whether the Reader should only read data values for cells, and ignore any formatting information;
-	 *		or whether it should read both data and formatting
-	 *
-	 * @var	boolean
-	 */
-	private $_readDataOnly = false;
-
-	/**
-	 * Restrict which sheets should be loaded?
-	 * This property holds an array of worksheet names to be loaded. If null, then all worksheets will be loaded.
-	 *
-	 * @var	array of string
-	 */
-	private $_loadSheetsOnly = null;
-
 	/**
 	 * Formats
 	 *
 	 * @var array
 	 */
 	private $_styles = array();
-
-	/**
-	 * PHPExcel_Reader_IReadFilter instance
-	 *
-	 * @var PHPExcel_Reader_IReadFilter
-	 */
-	private $_readFilter = null;
 
 
 	/**
@@ -85,113 +61,22 @@ class PHPExcel_Reader_OOCalc implements PHPExcel_Reader_IReader
 
 
 	/**
-	 * Read data only?
-	 *		If this is true, then the Reader will only read data values for cells, it will not read any formatting information.
-	 *		If false (the default) it will read data and formatting.
-	 *
-	 * @return	boolean
-	 */
-	public function getReadDataOnly() {
-		return $this->_readDataOnly;
-	}
-
-
-	/**
-	 * Set read data only
-	 *		Set to true, to advise the Reader only to read data values for cells, and to ignore any formatting information.
-	 *		Set to false (the default) to advise the Reader to read both data and formatting for cells.
-	 *
-	 * @param	boolean	$pValue
-	 * @return	PHPExcel_Reader_OOCalc
-	 */
-	public function setReadDataOnly($pValue = false) {
-		$this->_readDataOnly = $pValue;
-		return $this;
-	}
-
-
-	/**
-	 * Get which sheets to load
-	 *		Returns either an array of worksheet names (the list of worksheets that should be loaded), or a null
-	 *			indicating that all worksheets in the workbook should be loaded.
-	 *
-	 * @return mixed
-	 */
-	public function getLoadSheetsOnly()
-	{
-		return $this->_loadSheetsOnly;
-	}
-
-
-	/**
-	 * Set which sheets to load
-	 *
-	 * @param mixed $value
-	 *		This should be either an array of worksheet names to be loaded, or a string containing a single worksheet name.
-	 *		If NULL, then it tells the Reader to read all worksheets in the workbook
-	 *
-	 * @return PHPExcel_Reader_OOCalc
-	 */
-	public function setLoadSheetsOnly($value = null)
-	{
-		$this->_loadSheetsOnly = is_array($value) ?
-			$value : array($value);
-		return $this;
-	}
-
-
-	/**
-	 * Set all sheets to load
-	 *		Tells the Reader to load all worksheets from the workbook.
-	 *
-	 * @return PHPExcel_Reader_OOCalc
-	 */
-	public function setLoadAllSheets()
-	{
-		$this->_loadSheetsOnly = null;
-		return $this;
-	}
-
-
-	/**
-	 * Read filter
-	 *
-	 * @return PHPExcel_Reader_IReadFilter
-	 */
-	public function getReadFilter() {
-		return $this->_readFilter;
-	}
-
-
-	/**
-	 * Set read filter
-	 *
-	 * @param PHPExcel_Reader_IReadFilter $pValue
-	 * @return PHPExcel_Reader_OOCalc
-	 */
-	public function setReadFilter(PHPExcel_Reader_IReadFilter $pValue) {
-		$this->_readFilter = $pValue;
-		return $this;
-	}
-
-
-	/**
 	 * Can the current PHPExcel_Reader_IReader read the file?
 	 *
 	 * @param 	string 		$pFileName
 	 * @return 	boolean
-	 * @throws Exception
+	 * @throws PHPExcel_Reader_Exception
 	 */
 	public function canRead($pFilename)
 	{
 		// Check if file exists
 		if (!file_exists($pFilename)) {
-			throw new Exception("Could not open " . $pFilename . " for reading! File does not exist.");
+			throw new PHPExcel_Reader_Exception("Could not open " . $pFilename . " for reading! File does not exist.");
 		}
 
 		// Check if zip class exists
 		if (!class_exists('ZipArchive',FALSE)) {
-			throw new Exception("ZipArchive library is not enabled");
+			throw new PHPExcel_Reader_Exception("ZipArchive library is not enabled");
 		}
 
 		// Load file
@@ -219,13 +104,13 @@ class PHPExcel_Reader_OOCalc implements PHPExcel_Reader_IReader
 	 * Reads names of the worksheets from a file, without parsing the whole file to a PHPExcel object
 	 *
 	 * @param 	string 		$pFilename
-	 * @throws 	Exception
+	 * @throws 	PHPExcel_Reader_Exception
 	 */
 	public function listWorksheetNames($pFilename)
 	{
 		// Check if file exists
 		if (!file_exists($pFilename)) {
-			throw new Exception("Could not open " . $pFilename . " for reading! File does not exist.");
+			throw new PHPExcel_Reader_Exception("Could not open " . $pFilename . " for reading! File does not exist.");
 		}
 
 		$worksheetNames = array();
@@ -256,7 +141,7 @@ class PHPExcel_Reader_OOCalc implements PHPExcel_Reader_IReader
 	 *
 	 * @param 	string 		$pFilename
 	 * @return 	PHPExcel
-	 * @throws 	Exception
+	 * @throws 	PHPExcel_Reader_Exception
 	 */
 	public function load($pFilename)
 	{
@@ -284,13 +169,13 @@ class PHPExcel_Reader_OOCalc implements PHPExcel_Reader_IReader
 	 * Return worksheet info (Name, Last Column Letter, Last Column Index, Total Rows, Total Columns)
 	 *
 	 * @param   string     $pFilename
-	 * @throws   Exception
+	 * @throws   PHPExcel_Reader_Exception
 	 */
 	public function listWorksheetInfo($pFilename)
 	{
 		// Check if file exists
 		if (!file_exists($pFilename)) {
-			throw new Exception("Could not open " . $pFilename . " for reading! File does not exist.");
+			throw new PHPExcel_Reader_Exception("Could not open " . $pFilename . " for reading! File does not exist.");
 		}
 
 		$worksheetInfo = array();
@@ -358,13 +243,13 @@ class PHPExcel_Reader_OOCalc implements PHPExcel_Reader_IReader
 	 * @param 	string 		$pFilename
 	 * @param	PHPExcel	$objPHPExcel
 	 * @return 	PHPExcel
-	 * @throws 	Exception
+	 * @throws 	PHPExcel_Reader_Exception
 	 */
 	public function loadIntoExisting($pFilename, PHPExcel $objPHPExcel)
 	{
 		// Check if file exists
 		if (!file_exists($pFilename)) {
-			throw new Exception("Could not open " . $pFilename . " for reading! File does not exist.");
+			throw new PHPExcel_Reader_Exception("Could not open " . $pFilename . " for reading! File does not exist.");
 		}
 
 		$timezoneObj = new DateTimeZone('Europe/London');

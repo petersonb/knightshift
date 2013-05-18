@@ -22,7 +22,7 @@
  * @package    PHPExcel_CachedObjectStorage
  * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
- * @version    1.7.8, 2012-10-12
+ * @version    ##VERSION##, ##DATE##
  */
 
 
@@ -34,6 +34,14 @@
  * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_CachedObjectStorage_Memory extends PHPExcel_CachedObjectStorage_CacheBase implements PHPExcel_CachedObjectStorage_ICache {
+
+    /**
+     * Dummy method callable from CacheBase, but unused by Memory cache
+     *
+	 * @return	void
+     */
+	protected function _storeData() {
+	}	//	function _storeData()
 
     /**
      * Add or Update a cell in cache identified by coordinate address

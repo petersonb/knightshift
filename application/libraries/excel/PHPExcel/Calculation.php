@@ -22,7 +22,7 @@
  * @package    PHPExcel_Calculation
  * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
- * @version	1.7.8, 2012-10-12
+ * @version	##VERSION##, ##DATE##
  */
 
 
@@ -1681,14 +1681,6 @@ class PHPExcel_Calculation {
 
 
 	private function __construct() {
-		$localeFileDirectory = PHPEXCEL_ROOT.'PHPExcel/locale/';
-		foreach (glob($localeFileDirectory.'/*',GLOB_ONLYDIR) as $filename) {
-			$filename = substr($filename,strlen($localeFileDirectory)+1);
-			if ($filename != 'en') {
-				self::$_validLocaleLanguages[] = $filename;
-			}
-		}
-
 		$setPrecision = (PHP_INT_SIZE == 4) ? 12 : 16;
 		$this->_savedPrecision = ini_get('precision');
 		if ($this->_savedPrecision < $setPrecision) {
@@ -1700,6 +1692,16 @@ class PHPExcel_Calculation {
 	public function __destruct() {
 		if ($this->_savedPrecision != ini_get('precision')) {
 			ini_set('precision',$this->_savedPrecision);
+		}
+	}
+
+	private static function _loadLocales() {
+		$localeFileDirectory = PHPEXCEL_ROOT.'PHPExcel/locale/';
+		foreach (glob($localeFileDirectory.'/*',GLOB_ONLYDIR) as $filename) {
+			$filename = substr($filename,strlen($localeFileDirectory)+1);
+			if ($filename != 'en') {
+				self::$_validLocaleLanguages[] = $filename;
+			}
 		}
 	}
 
@@ -1882,6 +1884,9 @@ class PHPExcel_Calculation {
 		if (strpos($locale,'_') !== false) {
 			list($language) = explode('_',$locale);
 		}
+
+		if (count(self::$_validLocaleLanguages) == 1)
+			self::_loadLocales();
 
 		//	Test whether we have any language data for this language (any locale)
 		if (in_array($language,self::$_validLocaleLanguages)) {
@@ -2977,7 +2982,7 @@ class PHPExcel_Calculation {
 		}
 
 		while (($op = $stack->pop()) !== NULL) {	// pop everything off the stack and push onto output
-			if ((is_array($opCharacter) && $opCharacter['value'] == '(') || ($opCharacter === '('))
+			if ((is_array($op) && $op['value'] == '(') || ($op === '('))
 				return $this->_raiseFormulaError("Formula Error: Expecting ')'");	// if there are any opening braces on the stack, then braces were unbalanced
 			$output[] = $op;
 		}
