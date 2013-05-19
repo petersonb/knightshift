@@ -64,13 +64,13 @@ class Excel extends CI_Controller {
 
 		foreach ($emps as $e)
 		{
-			
+				
 			$name = $e->firstname . ' ' . $e->lastname;
-			
+				
 			$r = $e->rate->where('department_id',$this->department_context)->get();
 			$template = "excelsheets/template.xlsx";
 			$excel = PHPExcel_IOFactory::load($template);
-			
+				
 			$excel->setActiveSheetIndex(0)
 			->setCellValue('F2',$month)
 			->setCellValue('C5',$name)
@@ -79,20 +79,20 @@ class Excel extends CI_Controller {
 			->setCellValue('H7',$d->dept_id)
 			->setCellValue('H9','supervisor name')
 			->setCellValue('G47',$r->hourly);
-			
-			
-			
-			
-			
-			$hrs = $e->hour->get();
-			
-			
-			
-			
-			
 				
-			echo '---------------------------<br />';
-			$total = new DateTime("00:00");
+				
+				
+				
+				
+			$hrs = $e->hour->get();
+				
+				
+				
+				
+				
+
+			echo '<hr />'.$e->firstname.'<br />---------------------------<br />';
+			$total = new DateTime("01-00-0000 00:00");
 			foreach ($hrs as $h)
 			{
 				$in = new DateTime($h->time_in);
@@ -100,11 +100,12 @@ class Excel extends CI_Controller {
 				$diff = $in->diff($out);
 				echo '('.$this->decimal_time($diff).')';
 				$total = $total->add($diff);
-				echo $total->format("H.i").'<br />';
+				echo '<br />';
+				echo $total->format("d.H.i").'<br />';
 				echo $h->time_in;
 				echo ' : '.$h->time_out.'<br />';
 				echo $diff->format("%H.%i") . '<br />';
-				
+
 				$sdate = preg_split('/-/', $h->date);
 				$day = $sdate[2];
 				$yval = $day + 12;
@@ -113,8 +114,14 @@ class Excel extends CI_Controller {
 				if ($checkx != '')
 				{
 					$checkx = $excel->setActiveSheetIndex(0)->getCell('D'.$yval);
-					if ($checkx != '') $x = 70;
-					else $x=68;
+					if ($checkx != '')
+					{
+						$x = 70;
+					}
+					else
+					{
+						$x=68;
+					}
 				}
 
 				$excel->setActiveSheetIndex(0)
@@ -125,8 +132,12 @@ class Excel extends CI_Controller {
 			}
 			$writer = PHPExcel_IOFactory::createWriter($excel,'Excel2007');
 			$name = str_replace(' ', '', $name);
+			$t = floatval($total->format("H.i")).'<br />';
+			$day = intval($total->format('d'))-1;
+			$fintotal = $t + (24*$day);
+			$excel->setActiveSheetIndex(0)
+			->setCellValue('G44',$fintotal);
 			$writer->save($filepath.$month.$name.'.xlsx');
-			echo $total->format("H.i").'<br />';
 		}
 		$opt = shell_exec("zip -r excelsheets/zips/{$mval} excelsheets/1/");
 	}
@@ -155,17 +166,17 @@ class Excel extends CI_Controller {
 			{
 				shell_exec("mkdir ". $fpa[0]);
 			}
-				
+
 			if (!file_exists("$fpa[0]/$fpa[1]"))
 			{
 				shell_exec("mkdir " . "$fpa[0]/$fpa[1]");
 			}
-				
+
 			if (!file_exists("$fpa[0]/$fpa[1]/$fpa[2]"))
 			{
 				shell_exec("mkdir " . "$fpa[0]/$fpa[1]/$fpa[2]");
 			}
-				
+
 			if (!file_exists("$fpa[0]/$fpa[1]/$fpa[2]/$fpa[3]"))
 			{
 				shell_exec("mkdir " . "$fpa[0]/$fpa[1]/$fpa[2]/$fpa[3]");
