@@ -84,12 +84,9 @@ class Excel extends CI_Controller {
 				
 			$hrs = $e->hour;
 			$hrs->where_between("date","'2013-05-01'","'2013-05-31'")->get();
-			echo '<hr />'.$e->firstname.'<br />---------------------------<br />';
 			$total = 0.0;
-			echo "<table border=1>";
 			foreach ($hrs as $h)
 			{
-				echo "<tr>";
 				$in = new DateTime($h->time_in);
 				$out = new DateTime($h->time_out);
 				$diff = $in->diff($out);
@@ -97,7 +94,6 @@ class Excel extends CI_Controller {
 				$floatdiff = $diff;
 				$total += $floatdiff;
 
-				echo "<td>{$h->id}</td><td>{$h->date}</td><td>{$h->time_in}</td><td>{$h->time_out}</td><td>$diff</td><td>$total</td>";
 
 				$sdate = preg_split('/-/', $h->date);
 				$day = $sdate[2];
@@ -118,10 +114,8 @@ class Excel extends CI_Controller {
 				}
 
 				$c_day_subtotal = $excel->setActiveSheetIndex(0)->getCell('H'.$yval)->getValue();
-				echo '('.$c_day_subtotal.')';
 				if ($c_day_subtotal != '')
 				{
-					echo gettype($c_day_subtotal);
 					$c_day_total = floatval($c_day_subtotal) + $diff;
 				}
 				else 
@@ -135,9 +129,7 @@ class Excel extends CI_Controller {
 				->setCellValue(chr($x).$yval,date_24_to_twelve($h->time_in))
 				->setCellValue(chr($x+1).$yval,date_24_to_twelve($h->time_out));
 
-				echo "</tr>";
 			}
-			echo "</table>";
 			$writer = PHPExcel_IOFactory::createWriter($excel,'Excel2007');
 			$name = str_replace(' ', '', $name);
 			$excel->setActiveSheetIndex(0)
@@ -145,10 +137,15 @@ class Excel extends CI_Controller {
 			->setCellValue('G49',$r->hourly*$total);
 			$writer->save($filepath.$month.$name.'.xlsx');
 		}
-		$opt = shell_exec("zip -r $filepath/../$month {$filepath}");
-		echo $opt;
+		$zip_path = "$filepath../$month";
+		$opt = shell_exec("zip -r $zip_path {$filepath}");
+		
+		$data['zip_path'] = '/'.$zip_path.'.zip';
+		
+		$data['content'] = 'excel/download';
+		$this->load->view('master',$data);
 	}
-
+	
 	private function decimal_time($time)
 	{
 		$t = $time->format("%H.%i");

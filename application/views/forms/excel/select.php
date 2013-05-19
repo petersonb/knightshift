@@ -10,12 +10,15 @@ for ($y = 2013; $y <= date('Y'); $y++)
 {
 	array_push($years, $y);
 }
+
+$date_value = date('m');
 ?>
 
 <?php echo form_open('excel/admin_generate'); ?>
 <select name="month">
 	<?php foreach ($months as $m): ?>
-	<option <?php if ($m['val'] == '05') echo "selected=selected"; ?> value="<?php echo $m['val']; ?>">
+	<option <?php if ($m['val'] == $date_value) echo "selected=selected"; ?>
+		value="<?php echo $m['val']; ?>">
 		<?php echo $m['name']; ?>
 	</option>
 	<?php endforeach; ?>
@@ -28,6 +31,5 @@ for ($y = 2013; $y <= date('Y'); $y++)
 	<?php endforeach; ?>
 </select>
 <br />
-<input type="submit"
-	value="submit" />
+<input type="submit" value="submit" />
 </form>

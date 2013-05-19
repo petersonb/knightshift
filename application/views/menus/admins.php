@@ -22,6 +22,8 @@ if ($context)
 					'name'=>'Add Employee'),
 			array('base'=>'departments/create',
 					'name'=>'Create Department'),
+			array('base'=>'excel',
+					'name'=>'Excel Handling'),
 	);
 else
 {
