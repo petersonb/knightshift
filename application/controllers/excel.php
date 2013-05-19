@@ -145,7 +145,8 @@ class Excel extends CI_Controller {
 			->setCellValue('G49',$r->hourly*$total);
 			$writer->save($filepath.$month.$name.'.xlsx');
 		}
-		$opt = shell_exec("zip -r excelsheets/zips/{$mval} excelsheets/1/");
+		$opt = shell_exec("zip -r $filepath/../$month {$filepath}");
+		echo $opt;
 	}
 
 	private function decimal_time($time)
