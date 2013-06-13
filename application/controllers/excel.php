@@ -40,6 +40,10 @@ class Excel extends CI_Controller {
 
 	public function admin ()
 	{
+		// Security
+		if (!$this->admin_id)
+			redirect('main');
+		
 		$this->load->helper('form');
 		$data['content'] = 'excel/admin';
 		$this->load->view('master',$data);
@@ -47,6 +51,10 @@ class Excel extends CI_Controller {
 
 	public function admin_generate()
 	{
+		// Security
+		if (!$this->admin_id)
+			redirect('main');
+		
 		$this->load->library('excel');
 		$this->load->helper('date');
 

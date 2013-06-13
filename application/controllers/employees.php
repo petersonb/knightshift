@@ -12,7 +12,10 @@ class Employees extends CI_Controller {
 
 	public function index()
 	{
-		if ($this->session->userdata('department_context'))
+		// Security
+		if (!$this->employee_id)
+			redirect('main');
+		if ($this->department_context)
 			redirect('departments');
 		else
 		{
@@ -36,6 +39,10 @@ class Employees extends CI_Controller {
 
 	public function view_all()
 	{
+		// Security
+		if (!$this->department_context && !$this->department_id)
+			redirect('main');
+
 		$data['content'] = 'employees/view_all';
 		$data['javascript'] = array(
 				'datatables/media/js/jquery',
@@ -48,6 +55,10 @@ class Employees extends CI_Controller {
 
 	public function change_password()
 	{
+		// Security
+		if (!$this->employee_id)
+			redirect('main');
+
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
@@ -72,29 +83,36 @@ class Employees extends CI_Controller {
 		$this->load->view('master',$data);
 	}
 
-	public function admin_manage($eid = Null,$did = Null)
+	public function admin_manage($eid = Null)
 	{
+		// Security
 		if (!$eid)
 		{
 			redirect('admins');
 		}
-		elseif(!$this->admin_id)
+		if(!$this->admin_id)
 		{
 			redirect('main');
 		}
-
+		if(!$this->department_context)
+			redirect('main');
+		
+		$d = new Department($this->department_context);
+		$e = $d->employee->where('id',$eid)->get();
+		if (!$e->exists())
+			redirect('main');
+		
+		$a = $d->admin->where('id',$this->admin_id)->get();
+		if (!$a->exists())
+			redirect('main');
+		
+		
+		// Load
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
 		$e = new Employee($eid);
-		if ($did)
-		{
-			$r = $e->rate->where('department_id',$this->$did)->get();
-		}
-		else
-		{
-			$r = $e->rate->where('department_id',$this->department_context)->get();
-		}
+		$r = $e->rate->where('department_id',$this->department_context)->get();
 
 		$this->form_validation->set_rules('hourly','Hourly wage', 'required');
 
@@ -117,6 +135,11 @@ class Employees extends CI_Controller {
 
 	public function edit_profile()
 	{
+		// Security
+		if (!$this->employee_id)
+			redirect('main');
+		
+		// Load
 		$this->load->library('form_validation');
 		$this->load->helper('form');
 
@@ -145,9 +168,14 @@ class Employees extends CI_Controller {
 		$this->load->view('master',$data);
 	}
 
+	/**
+	 * Department Employees
+	 * 
+	 * Supplies json for tables when dealing in department
+	 * context or deptartment.
+	 */
 	public function department_employees()
 	{
-
 		if ($this->department_context)
 		{
 			$d = new Department($this->department_context);
@@ -155,6 +183,10 @@ class Employees extends CI_Controller {
 		elseif ($this->department_id)
 		{
 			$d = new Department($this->department_id);
+		}
+		else 
+		{
+			redirect('main');
 		}
 		$emps = $d->employee->get();
 		$aaData = array();
@@ -195,14 +227,15 @@ class Employees extends CI_Controller {
 	/**
 	 * All Employees
 	 *
-	 * Ajax Source for employee information
+	 * Json for employee information
 	 */
 	public function all_employees()
 	{
-
+		if (!$this->department_context)
+			redirect('main');
 		$d = new Department($this->department_context);
 		$existing_emps = $d->employee->get();
-		
+
 		$ids = array();
 		foreach($existing_emps as $emp)
 		{
@@ -211,7 +244,7 @@ class Employees extends CI_Controller {
 
 		$emps = new Employee();
 		$emps->where_not_in('id',$ids)->get();
-		
+
 		$aaData = array();
 
 		foreach ($emps as $e)

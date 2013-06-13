@@ -24,6 +24,11 @@ class Departments extends CI_Controller {
 
 	public function add_employee ()
 	{
+		// Security
+		if (!$this->admin_id && !$this->department_context)
+			redirect('main');
+
+		// Load
 		$this->load->library('form_validation');
 		$this->load->helper('form');
 
@@ -37,16 +42,15 @@ class Departments extends CI_Controller {
 			$e = new Employee($eid);
 			$d = new Department($did);
 			$r = new Rate();
-			
+
 			$r->hourly = $this->input->post('hourly');
-			
+
 			$r->save($e);
 			$r->save($d);
-// 			$d->save($e);
 		}
 
 		$data['base_rate']=7.25;
-		
+
 		$data['title'] = "Add Employee";
 		$data['content'] = 'departments/add_employee';
 		$data['javascript'] = array(
@@ -60,11 +64,14 @@ class Departments extends CI_Controller {
 
 	public function create ()
 	{
+		// Security
+		if (!$this->admin_id)
+			redirect('main');
+
+		// Load
 		$this->load->library('form_validation');
 		$this->load->helper('form');
 
-		if (! $this->is_admin())
-			redirect('main');
 
 		$this->form_validation->set_rules('name', 'Department Name', 'required');
 
@@ -88,22 +95,42 @@ class Departments extends CI_Controller {
 
 	public function employee_panel()
 	{
+		// Security
+		if (!$this->employee_id)
+			rediect('main');
+
 		$data['title'] = 'Employee Panel';
 		$data['context'] = 'departments/employee_panel';
 		$this->load->view('master',$data);
 	}
 
-	
+
 	public function set_context($id = NULL)
 	{
-		if ($id)
+		// Security
+		// No id, no go
+		if (!$id)
+			redirect('main');
+		
+		// The user must belong to the department.
+		$d = new Department($id);
+		if ($this->employee_id)
 		{
-			$this->session->set_userdata('department_context',$id);
-			redirect('employees');
+			$e = $d->employee->where('id',$this->employee_id)->get();
+			if (!$e->exists())
+				redirect('main');
 		}
-
+		elseif ($this->admin_id)
+		{
+			$a = $d->admin->where('id', $this->admin_id)->get();
+			if (!$a->exists())
+				redirect('main');
+		}
 		else
 			redirect('main');
+
+		$this->session->set_userdata('department_context',$id);
+		redirect('employees');
 	}
 
 	public function unset_context()
@@ -115,23 +142,6 @@ class Departments extends CI_Controller {
 			redirect('admins');
 		else
 			redirect('main');
-	}
-
-	private function is_admin($id = NULL)
-	{
-		if ($this->session->userdata('admin_id'))
-		{
-			if ($id && $id !== $this->session->userdata('admin_id'))
-	  {
-	  	return FALSE;
-	  }
-	  else
-	  {
-	  	return TRUE;
-	  }
-		}
-
-		return FALSE;
 	}
 }
 

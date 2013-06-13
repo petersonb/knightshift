@@ -20,6 +20,7 @@ class Admins extends CI_Controller {
 
 		$this->admin_id = $this->session->userdata('admin_id');
 		$this->employee_id = $this->session->userdata('employee_id');
+		$this->department_id = $this->session->userdata('department_id');
 		$this->department_context = $this->session->userdata('department_context');
 	}
 
@@ -32,6 +33,10 @@ class Admins extends CI_Controller {
 	 */
 	public function index()
 	{
+		// Security
+		if (!$this->admin_id)
+			redirect('main');
+		
 		$a = new Admin($this->admin_id);
 		$depts = $a->department->get();
 
@@ -54,11 +59,15 @@ class Admins extends CI_Controller {
 	 * Change Password
 	 *
 	 * Allows the admin to change their password.
-	 * 
+	 *
 	 * Redirect to admins on success.
 	 */
 	public function change_password()
 	{
+		// Security
+		if (!$this->admin_id)
+			redirect('main');
+		
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
@@ -89,13 +98,18 @@ class Admins extends CI_Controller {
 
 	/**
 	 * Admin Edit Profile
-	 * 
+	 *
 	 * Allows admin to edit their profile information
-	 * 
+	 *
 	 * Redirect to admins on save
 	 */
 	public function edit_profile()
 	{
+		// Security
+		if (!$this->admin_id)
+			redirect('main');
+		
+		// Load
 		$this->load->library('form_validation');
 		$this->load->helper('form');
 
@@ -127,7 +141,6 @@ class Admins extends CI_Controller {
 		$data['content'] = 'admins/edit_profile';
 		$this->load->view('master',$data);
 	}
-
 }
 
 /* End of file admin.php */
