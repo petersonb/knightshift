@@ -15,4 +15,6 @@ $menu_items = array(
 	<li><a href="<?php echo base_url($item['base']); ?>"><?php echo $item['name']; ?>
 	</a></li>
 	<?php endforeach; ?>
+	<li class="logout"><a href="<?php echo base_url('main/logout'); ?>">Logout</a>
+	</li>
 </ul>

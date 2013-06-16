@@ -1,0 +1,126 @@
+@CHARSET "UTF-8";
+
+body {
+    _text-align: center;
+    background: #fff0b5;
+}
+
+h1 {
+    padding:0;
+    margin: 0;
+    margin-bottom: .5em;
+    font-size: 1.5em;
+}
+
+#container {
+    width: 960px;
+    margin: 0 auto;
+    _text-align: left;
+    background: lightgray;
+}
+
+#content {
+    padding: 20px;
+}
+
+a {
+    color: blue;
+}
+
+.form {
+    border: solid black 2px;
+    margin-bottom: 10px;
+    background: #8BBC8D;
+    border-collapse: collapse;
+}
+
+.form th {
+    border-bottom: 1px solid #000000;
+    text-align: left;
+    padding-right: 2em;
+}
+
+.form td {
+    padding-right: 2em;
+    padding-top: .2em;
+    padding-bottom: .2em;
+}
+
+#navbar {
+    background: silver;
+}
+
+#adminbar {
+    background: gray;
+}
+
+#employeebar {
+    background: red;
+}
+
+#employeebar a {
+    color: yellow;
+}
+
+.nav {
+    //padding-bottom: .02em;
+}
+
+.context_nav {
+    background: yellow;
+}
+
+.nav ul {
+    height: 1em;
+    padding: 0;
+    padding-top: .5em;
+}
+
+.nav li {
+    list-style: none;
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.nav a {
+    text-decoration: none;
+}
+
+.infoTable {
+    background: white;
+    border: 2px solid black;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.infoTable th {
+    background: gray;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-bottom: solid 2px #000000;
+    text-align: left;
+}
+
+.infoTable tr {
+/*background: #BBBBFF;*/
+}
+
+.infoTable td {
+    padding-left: 1em;
+    padding-right: 1em;
+    border-bottom: solid 1px #C4C4C4;
+}
+
+.odd {
+    background: #FFFFFF;
+}
+
+.even {
+    background: #D5D5FF;
+}
+
+.message {
+    background: #DD3333;
+}

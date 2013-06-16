@@ -35,6 +35,14 @@ else
 	<li><a href="<?php echo base_url($item['base']); ?>"><?php echo $item['name']; ?>
 	</a></li>
 	<?php endforeach; ?>
+	<li class="logout"><a href="<?php echo base_url('main/logout'); ?>">Logout</a>
+	</li>
+	<?php if($context): ?>
+	<li class="logout"><a
+		href="<?php echo base_url('departments/unset_context'); ?>">Unset
+			Context</a>
+	</li>
+	<?php endif; ?>
 </ul>
 
 <?php if($context): ?>

@@ -1,126 +1,79 @@
 @CHARSET "UTF-8";
 
+* {
+	margin: 0;
+	padding: 0;
+}
+
 body {
-    _text-align: center;
-    background: #fff0b5;
+	text-align: center;
+	background: black;
 }
 
-h1 {
-    padding:0;
-    margin: 0;
-    margin-bottom: .5em;
-    font-size: 1.5em;
+#wrapper {
+	width: 960px;
+	margin: 0 auto;
+	text-align: left;
 }
 
-#container {
-    width: 960px;
-    margin: 0 auto;
-    _text-align: left;
-    background: lightgray;
-}
-
-#content {
-    padding: 20px;
-}
-
-a {
-    color: blue;
-}
-
-.form {
-    border: solid black 2px;
-    margin-bottom: 10px;
-    background: #8BBC8D;
-    border-collapse: collapse;
-}
-
-.form th {
-    border-bottom: 1px solid #000000;
-    text-align: left;
-    padding-right: 2em;
-}
-
-.form td {
-    padding-right: 2em;
-    padding-top: .2em;
-    padding-bottom: .2em;
-}
-
-#navbar {
-    background: silver;
-}
-
-#adminbar {
-    background: gray;
-}
-
-#employeebar {
-    background: red;
-}
-
-#employeebar a {
-    color: yellow;
+.header {
+	
 }
 
 .nav {
-    //padding-bottom: .02em;
-}
-
-.context_nav {
-    background: yellow;
+	background: #3f3f3f;
+	width: 960px;
+	margin: 0 auto;
 }
 
 .nav ul {
-    height: 1em;
-    padding: 0;
-    padding-top: .5em;
+	height: 40px;
+	padding: 0;
+	margin: 0;
 }
 
 .nav li {
-    list-style: none;
-    float: left;
-    padding-left: 10px;
-    padding-right: 10px;
+	display: inline;
+	float: left;
+	height: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 20px;
 }
 
-.nav a {
-    text-decoration: none;
+.nav li a {
+	color: #fc7903;
+	font-weight: bold;
+	text-decoration: none;
 }
 
-.infoTable {
-    background: white;
-    border: 2px solid black;
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 20px;
+.nav li a:hover {
+	color: #ffffff;
 }
 
-.infoTable th {
-    background: gray;
-    padding-left: 1em;
-    padding-right: 1em;
-    border-bottom: solid 2px #000000;
-    text-align: left;
+.nav .logout {
+	float: right;
+	margin-right: 20px;
 }
 
-.infoTable tr {
-/*background: #BBBBFF;*/
+.context_nav {
+	background: #fc7903;
 }
 
-.infoTable td {
-    padding-left: 1em;
-    padding-right: 1em;
-    border-bottom: solid 1px #C4C4C4;
+.context_nav li a{
+	color: #3f3f3f;
 }
 
-.odd {
-    background: #FFFFFF;
+
+.content {
+	padding: 20px;
+	background: #8f8f8f;
 }
 
-.even {
-    background: #D5D5FF;
+.footer {
+	
 }
 
-.message {
-    background: #DD3333;
+li {
+	margin-left: 15px;
 }
