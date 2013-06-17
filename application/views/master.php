@@ -22,7 +22,8 @@ if (isset($css))
 <?php  }
 }?>
 
-<title><?php if (isset($title)) echo $title; ?></title>
+<title><?php if (isset($title)) echo $title; ?>
+</title>
 
 <?php 
 if (isset($javascript)):
@@ -46,6 +47,9 @@ endif;
 </head>
 <body>
 	<div id="wrapper">
+		<div class="header">
+			<?php $this->load->view('main/header'); ?>
+		</div>
 
 		<div class="nav">
 			<?php
