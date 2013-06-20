@@ -86,6 +86,7 @@ class Development extends CI_Controller {
 		$this->create_employee(array(1,2),'emp1');
 		$this->create_employee(array(1),'emp2');
 		$this->create_employee(array(2),'emp3');
+		$this->create_employee(array(1,2), 'itsdev@petersonb.com');
 	}
 
 	private function create_employee($id,$email)
