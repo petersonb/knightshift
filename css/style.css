@@ -1,87 +1,98 @@
 @CHARSET "UTF-8";
 
 * {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-	text-align: center;
-	background: black;
+    text-align: center;
+    background: black;
 }
 
 #wrapper {
-	width: 960px;
-	margin: 0 auto;
-	text-align: left;
+    width: 960px;
+    margin: 0 auto;
+    text-align: left;
 }
 
 .header {
-	background: #fc7903;
-	padding-left: 20px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+    background: #fc7903;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .header h1 {
-	font-style: italic;
-	color: #000000;
+    font-style: italic;
+    color: #000000;
 }
 
 .nav {
-	background: #3f3f3f;
-	width: 960px;
-	margin: 0 auto;
+    background: #3f3f3f;
+    width: 960px;
+    margin: 0 auto;
 }
 
 .nav ul {
-	height: 40px;
-	padding: 0;
-	margin: 0;
+    height: 40px;
+    padding: 0;
+    margin: 0;
 }
 
 .nav li {
-	display: inline;
-	float: left;
-	height: 20px;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	margin-left: 20px;
+    display: inline;
+    float: left;
+    height: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 20px;
 }
 
 .nav li a {
-	color: #fc7903;
-	font-weight: bold;
-	text-decoration: none;
+    color: #fc7903;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .nav li a:hover {
-	color: #ffffff;
+    color: #ffffff;
 }
 
 .nav .logout {
-	float: right;
-	margin-right: 20px;
+    float: right;
+    margin-right: 20px;
 }
 
 .context_nav {
-	background: #fc7903;
+    background: #fc7903;
 }
 
 .context_nav li a{
-	color: #3f3f3f;
+    color: #3f3f3f;
 }
 
 
 .content {
-	padding: 20px;
-	background: #8f8f8f;
+    padding: 20px;
+    background: #8f8f8f;
 }
 
 .footer {
-	
+    
 }
 
 li {
-	margin-left: 15px;
+    margin-left: 15px;
+}
+
+form {
+    background: #bbbbbb;
+    padding: 10px;
+    border: solid #000000 2px;
+}
+
+form input {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
