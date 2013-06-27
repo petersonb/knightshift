@@ -27,7 +27,8 @@ class Register extends CI_Controller {
 	{
 		$this->load->helper('form');
 		$this->load->library(array('form_validation'));
-
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
+		
 		// TODO ACUTAL RULES
 		$this->form_validation->set_rules('firstname', 'First Name', 'required');
 		$this->form_validation->set_rules('lastname', 'Last Name' , 'required');
@@ -72,7 +73,8 @@ class Register extends CI_Controller {
 	{
 		$this->load->helper('form');
 		$this->load->library(array('form_validation'));
-
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
+		
 		// TODO Make some goram rules
 		$this->form_validation->set_rules('firstname', 'First Name', 'required');
 

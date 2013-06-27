@@ -30,6 +30,8 @@ class Departments extends CI_Controller {
 
 		// Load
 		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
+		
 		$this->load->helper('form');
 
 		$this->form_validation->set_rules('employee_id', 'Employee Id', 'required');
@@ -70,6 +72,8 @@ class Departments extends CI_Controller {
 
 		// Load
 		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
+		
 		$this->load->helper('form');
 
 

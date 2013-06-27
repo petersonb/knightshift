@@ -61,6 +61,7 @@ class Employees extends CI_Controller {
 
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
 
 		$this->form_validation->set_rules('current','Current Password', 'required');
 		$this->form_validation->set_rules('new','New Password','required');
@@ -110,7 +111,8 @@ class Employees extends CI_Controller {
 		// Load
 		$this->load->helper('form');
 		$this->load->library('form_validation');
-
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
+		
 		$e = new Employee($eid);
 		$r = $e->rate->where('department_id',$this->department_context)->get();
 
@@ -141,6 +143,8 @@ class Employees extends CI_Controller {
 		
 		// Load
 		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
+		
 		$this->load->helper('form');
 
 		$this->form_validation->set_rules('firstname', 'First Name', 'required');

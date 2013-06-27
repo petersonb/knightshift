@@ -51,6 +51,8 @@ class Hours extends CI_Controller {
 
 		$this->load->helper(array('form','date'));
 		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
+		
 
 		// TODO MORE RULES
 		$this->form_validation->set_rules('date','Date','required');
@@ -150,6 +152,8 @@ class Hours extends CI_Controller {
 	{
 		$this->load->helper(array('form','date'));
 		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
+		
 
 		// If logging hour as department
 		if ($this->department_id || ($this->admin_id && $this->department_context))
