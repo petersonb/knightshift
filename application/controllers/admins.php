@@ -112,14 +112,12 @@ class Admins extends CI_Controller {
 		// Load
 		$this->load->library('form_validation');
 		$this->load->helper('form');
-
-		$this->form_validation->set_rules('firstname', 'First Name', 'required');
-		$this->form_validation->set_rules('lastname', 'Last Name', 'required');
-		$this->form_validation->set_rules('email', 'Email', 'required');
+		
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
 
 		$a = new Admin($this->admin_id);
 
-		if ($this->form_validation->run())
+		if ($this->form_validation->run('admin_edit_profile'))
 		{
 			$a->title = $this->input->post('title');
 			$a->firstname = $this->input->post('firstname');

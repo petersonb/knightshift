@@ -28,7 +28,7 @@ $passwords = array(
 				'name'=>'password'
 		),
 		array(
-				'label'=>'confirm',
+				'label'=>'Confirm',
 				'name'=>'confirm'
 		)
 )

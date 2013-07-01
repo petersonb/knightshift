@@ -20,7 +20,6 @@ $inputs = array(
 
 <?Php echo validation_errors(); ?>
 <?php echo form_open('employees/edit_profile'); ?>
-
 <table>
 	<?php form_input_bank($inputs); ?>
 	<tr>

@@ -29,16 +29,8 @@ class Register extends CI_Controller {
 		$this->load->library(array('form_validation'));
 		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
 		
-		// TODO ACUTAL RULES
-		$this->form_validation->set_rules('firstname', 'First Name', 'required');
-		$this->form_validation->set_rules('lastname', 'Last Name' , 'required');
-		$this->form_validation->set_rules('email', 'Email', 'required');
-		$this->form_validation->set_rules('password','Password','required');
-		$this->form_validation->set_rules('confirm','Confirm','required|matches[password]');
-
-		if ($this->form_validation->run())
+		if ($this->form_validation->run('admin_registration'))
 		{
-			// TODO CHECK FOR UNIQUE EMAIL
 			$admin = new Admin();
 			$admin->title     = $this->input->post('title');
 			$admin->firstname = $this->input->post('firstname');
@@ -74,13 +66,11 @@ class Register extends CI_Controller {
 		$this->load->helper('form');
 		$this->load->library(array('form_validation'));
 		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
-		
-		// TODO Make some goram rules
-		$this->form_validation->set_rules('firstname', 'First Name', 'required');
 
-		if ($this->form_validation->run())
+		if ($this->form_validation->run('employee_registration'))
 		{
-			// TODO check unique employee
+			$email = $this->input->post('email');
+			
 			$emp = new Employee();
 			$emp->firstname = $this->input->post('firstname');
 			$emp->lastname = $this->input->post('lastname');
@@ -96,7 +86,6 @@ class Register extends CI_Controller {
 
 		$this->load->view('master', $data);
 	}
-
 }
 
 /* End of file admin.php */
