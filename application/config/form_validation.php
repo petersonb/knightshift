@@ -99,6 +99,14 @@ $config = array (
 						'field' => 'email',
 						'label' => 'Email',
 						'rules' => 'required|is_unique[employees.email]|is_unique[admins.email]|valid_email'
-				)
-		)
-);
+				      )
+						 ),
+		
+		'departments_create' => array(
+					      array(
+						    'field'=>'login_name',
+						    'label'=>'Login name',
+						    'rules'=>'required|is_unique[departments.login_name]'
+						    )
+					      )
+		 );

@@ -76,10 +76,7 @@ class Departments extends CI_Controller {
 		
 		$this->load->helper('form');
 
-
-		$this->form_validation->set_rules('name', 'Department Name', 'required');
-
-		if ($this->form_validation->run())
+		if ($this->form_validation->run('departments_create'))
 		{
 			$a = new Admin($this->session->userdata('admin_id'));
 
