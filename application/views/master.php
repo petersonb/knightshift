@@ -71,10 +71,6 @@ endif;
 			}
 			?>
 		</div>
-		<div>
-		  <h3 style="color:white">The next time someone is in the linux lab, please turn on Cichlid and Glasscat please and thanks!</h3>
-		</div>
-
 		<div class="content">
 			<?php
 			if (isset($content))
