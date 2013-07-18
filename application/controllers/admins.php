@@ -35,7 +35,10 @@ class Admins extends CI_Controller {
 	{
 		// Security
 		if (!$this->admin_id)
-			redirect('main');
+		  redirect('main');
+
+		elseif ($this->department_context)
+		  redirect('employees/view_all');
 		
 		$a = new Admin($this->admin_id);
 		$depts = $a->department->get();
