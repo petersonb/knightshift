@@ -5,9 +5,11 @@
 	<thead>
 		<tr>
 			<?php $sortCol++; ?>
-			<th>Firstname</th>
+			<th style="width: 200px;" >Firstname</th>
 			<?php $sortCol++; ?>
-			<th>Lastname</th>
+			<th style="width: 250px;" >Lastname</th>
+			<?php $sortCol++; ?>
+			<th>Email</th>
 		</tr>
 	</thead>
 	<tbody>

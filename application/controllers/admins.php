@@ -146,7 +146,9 @@ class Admins extends CI_Controller {
 	public function view_all()
 	{
 		// Security
-		
+		if (!$this->admin_id && !$this->department_id && !$this->employee_id) {
+			redirect('main');
+		}
 		$data['title'] = 'View All Admins';
 		$data['content'] = 'admins/view_all';
 		$data['css'] = 'dataTables/jquery.dataTables';
@@ -169,7 +171,6 @@ class Admins extends CI_Controller {
 		{
 			array_push($aaData,
 			array(
-			$a->id,
 			$a->firstname,
 			$a->lastname,
 			$a->email
