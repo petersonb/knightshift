@@ -52,7 +52,7 @@ endif;
 			<?php $this->load->view('main/header'); ?>
 		</div>
 
-		<div>
+		<div class="nav">
 			<?php
 			if ($this->session->userdata('employee_id'))
 			{

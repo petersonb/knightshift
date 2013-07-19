@@ -60,7 +60,7 @@ $menu_items = array(
 						),
 				)
 		),
-		array('base'=>'departmens',
+		array('base'=>'departments',
 				'name'=>'Departments',
 				'context' => 'no',
 				'dropdown_items' => array(
