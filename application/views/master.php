@@ -2,6 +2,7 @@
 <head>
 <link href="<?php echo base_url("css/style.css"); ?>" type="text/css"
 	rel="stylesheet" />
+<link href="<?php echo base_url("css/dropdown.css"); ?>" type="text/css" rel="stylesheet" />
 
 <?php
 if (isset($css))
@@ -51,7 +52,7 @@ endif;
 			<?php $this->load->view('main/header'); ?>
 		</div>
 
-		<div class="nav">
+		<div>
 			<?php
 			if ($this->session->userdata('employee_id'))
 			{

@@ -29,28 +29,42 @@ else
 {
 	array_push($menu_items,array('base'=>'hours/view_all','name'=>'View All Hours'));
 }
+
+$menu_items = array(
+		array('base'=>'admins',
+				'name'=>'Home',
+				'dropdown_items' => array(),
+		),
+		array('base'=>'admins',
+				'name'=>'Profile',
+				'dropdown_items' => array(
+
+						array('base'=>'admins/edit_profile',
+								'name'=>'Edit Profile',
+								'dropdown_items' => array()
+						),
+						array('base'=>'admins/change_password',
+								'name'=>'Change Password',
+								'dropdown_items' => array()
+						)
+				)
+		)
+);
 ?>
-<ul>
-	<?php foreach ($menu_items as $item):?>
-	<li><a href="<?php echo base_url($item['base']); ?>"><?php echo $item['name']; ?>
-	</a></li>
+
+<ul class="dropdown">
+	<?php foreach ($menu_items as $top_item): ?>
+	<li><a href="<?php echo base_url($top_item['base']); ?>"><?php echo $top_item['name']; ?>
+	<?php if (count($top_item['dropdown_items']) > 0): ?>
+	<ul>
+	</a> 
+	<?php foreach ($top_item['dropdown_items'] as $dropdown_item): ?>
+			<li><a href="<?php echo base_url($dropdown_item['base']); ?>"><?php echo $dropdown_item['name']; ?>
+			</a></li>
 	<?php endforeach; ?>
-	<li class="logout"><a href="<?php echo base_url('main/logout'); ?>">Logout</a>
-	</li>
-	<?php if($context): ?>
-	<li class="logout"><a
-		href="<?php echo base_url('departments/unset_context'); ?>">Unset
-			Context</a>
-	</li>
+	</ul>
 	<?php endif; ?>
-</ul>
-
-<?php if($context): ?>
-<ul class="context_nav">
-	<?php foreach ($context_items as $item):?>
-	<li><a href="<?php echo base_url($item['base']); ?>"><?php echo $item['name']; ?>
-	</a></li>
+	</li>
 	<?php endforeach; ?>
-
 </ul>
-<?php endif; ?>
+<div style="clear: both;"></div>
