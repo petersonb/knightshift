@@ -97,22 +97,22 @@ class Employees extends CI_Controller {
 		}
 		if(!$this->department_context)
 			redirect('main');
-		
+
 		$d = new Department($this->department_context);
 		$e = $d->employee->where('id',$eid)->get();
 		if (!$e->exists())
 			redirect('main');
-		
+
 		$a = $d->admin->where('id',$this->admin_id)->get();
 		if (!$a->exists())
 			redirect('main');
-		
-		
+
+
 		// Load
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
-		
+
 		$e = new Employee($eid);
 		$r = $e->rate->where('department_id',$this->department_context)->get();
 
@@ -140,11 +140,11 @@ class Employees extends CI_Controller {
 		// Security
 		if (!$this->employee_id)
 			redirect('main');
-		
+
 		// Load
 		$this->load->library('form_validation');
 		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
-		
+
 		$this->load->helper('form');
 
 		$e = new Employee($this->employee_id);
@@ -156,7 +156,7 @@ class Employees extends CI_Controller {
 			$e->email = $this->input->post('email');
 			$e->save();
 		}
-		
+
 		$data['employee'] = array(
 				'firstname'=>$e->firstname,
 				'lastname'=>$e->lastname,
@@ -170,7 +170,7 @@ class Employees extends CI_Controller {
 
 	/**
 	 * Department Employees
-	 * 
+	 *
 	 * Supplies json for tables when dealing in department
 	 * context or deptartment.
 	 */
@@ -184,7 +184,7 @@ class Employees extends CI_Controller {
 		{
 			$d = new Department($this->department_id);
 		}
-		else 
+		else
 		{
 			redirect('main');
 		}
