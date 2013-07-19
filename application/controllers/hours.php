@@ -29,6 +29,7 @@ class Hours extends CI_Controller {
 	 */
 	public function index()
 	{
+		redirect('main');
 		$data['title'] = 'Hours';
 		$this->load->view('master',$data);
 	}
