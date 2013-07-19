@@ -147,7 +147,7 @@ class Employees extends CI_Controller {
 		
 		$this->load->helper('form');
 
-		$e = new Employee($this->session->userdata('employee_edit_profile'));
+		$e = new Employee($this->employee_id);
 		$e->get();
 
 		if ($this->form_validation->run('employee_edit_profile'))
