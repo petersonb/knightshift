@@ -73,6 +73,7 @@ $menu_items = array(
 				'dropdown_items' => array()
 		),
 );
+$context = $this->session->userdata('department_context');
 ?>
 
 <ul>
