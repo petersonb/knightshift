@@ -58,10 +58,15 @@ $config = array (
 						'field' => 'confirm',
 						'label' => 'Confirm',
 						'rules' => 'required'
+				),
+				array(
+						'field' => 'valid',
+						'label' => 'Valid registration',
+						'rules' => 'required'
 				)
 
 		),
-		
+
 		// Additional Level of rules in controller to make sure email unique OR belongs to current user
 		'admin_edit_profile' => array(
 				array(
