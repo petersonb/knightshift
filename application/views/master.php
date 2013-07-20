@@ -2,7 +2,8 @@
 <head>
 <link href="<?php echo base_url("css/style.css"); ?>" type="text/css"
 	rel="stylesheet" />
-<link href="<?php echo base_url("css/dropdown.css"); ?>" type="text/css" rel="stylesheet" />
+<link href="<?php echo base_url("css/dropdown.css"); ?>" type="text/css"
+	rel="stylesheet" />
 
 <?php
 if (isset($css))
@@ -72,23 +73,28 @@ endif;
 			}
 			?>
 		</div>
-		<div class="content">
-			<?php
-			if (isset($content))
-			{
-				if (is_array($content))
+		<div class="body">
+			<div class="content">
+				<?php
+				if (isset($content))
 				{
-					foreach ($content as $c_view)
+					if (is_array($content))
 					{
-						$this->load->view('content/'.$c_view);
+						foreach ($content as $c_view)
+						{
+							$this->load->view('content/'.$c_view);
+						}
+					}
+					else
+					{
+						$this->load->view('content/'.$content);
 					}
 				}
-				else
-				{
-					$this->load->view('content/'.$content);
-				}
-			}
-			?>
+				?>
+			</div>
+		</div>
+		<div class="footer">
+			<p>KnightShift</p>
 		</div>
 	</div>
 </body>
