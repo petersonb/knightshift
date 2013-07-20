@@ -151,10 +151,24 @@ class Employees extends CI_Controller {
 
 		if ($this->form_validation->run('employee_edit_profile'))
 		{
-			$e->firstname = $this->input->post('firstname');
-			$e->lastname= $this->input->post('lastname');
-			$e->email = $this->input->post('email');
-			$e->save();
+			$email = $this->input->post('email');
+			if ($e->email != $email)
+			{
+				$this->form_validation->set_rules('email','Email','is_unique[admins.email]|is_unique[employees.email]');
+				if ($this->form_validation->run())
+				{
+					$e->firstname = $this->input->post('firstname');
+					$e->lastname= $this->input->post('lastname');
+					$e->email = $email;
+					$e->save();
+				}
+			}
+			else
+			{
+				$e->firstname = $this->input->post('firstname');
+				$e->lastname= $this->input->post('lastname');
+				$e->save();
+			}
 		}
 
 		$data['employee'] = array(

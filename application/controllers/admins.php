@@ -122,12 +122,28 @@ class Admins extends CI_Controller {
 
 		if ($this->form_validation->run('admin_edit_profile'))
 		{
-			$a->title = $this->input->post('title');
-			$a->firstname = $this->input->post('firstname');
-			$a->lastname= $this->input->post('lastname');
-			$a->email = $this->input->post('email');
-			$a->save();
-			redirect('admins');
+			$email = $this->input->post('email');
+			if ($a->email != $email) {
+				$this->form_validation->set_rules('email','Email','is_unique[employees.email]|is_unique[admins.email]');
+					
+				if ($this->form_validation->run())
+				{
+					$a->title = $this->input->post('title');
+					$a->firstname = $this->input->post('firstname');
+					$a->lastname= $this->input->post('lastname');
+					$a->email = $this->input->post('email');
+					$a->save();
+					redirect('admins');
+				}
+			}
+			else 
+			{
+				$a->title = $this->input->post('title');
+				$a->firstname = $this->input->post('firstname');
+				$a->lastname= $this->input->post('lastname');
+				$a->save();
+				redirect('admins');
+			}
 		}
 
 		$data['admin'] = array(
@@ -137,6 +153,7 @@ class Admins extends CI_Controller {
 				'lastname'=>$a->lastname,
 				'email'=>$a->email
 		);
+
 
 		$data['title'] = 'Edit Profile';
 		$data['content'] = 'admins/edit_profile';
@@ -159,14 +176,14 @@ class Admins extends CI_Controller {
 		);
 		$this->load->view('master',$data);
 	}
-	
+
 	public function get_all_admins() {
 		$admins = new Admin();
 		$admins->get();
-		
-		
+
+
 		$aaData = array();
-		
+
 		foreach ($admins as $a)
 		{
 			array_push($aaData,
@@ -177,7 +194,7 @@ class Admins extends CI_Controller {
 			)
 			);
 		}
-		
+
 		echo json_encode(array('aaData'=>$aaData));
 	}
 }

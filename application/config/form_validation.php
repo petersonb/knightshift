@@ -61,6 +61,8 @@ $config = array (
 				)
 
 		),
+		
+		// Additional Level of rules in controller to make sure email unique OR belongs to current user
 		'admin_edit_profile' => array(
 				array(
 						'title' => 'title',
@@ -80,10 +82,11 @@ $config = array (
 				array(
 						'field' => 'email',
 						'label' => 'Email',
-						'rules' => 'required|is_unique[employees.email]|is_unique[admins.email]|valid_email'
+						'rules' => 'required|valid_email'
 				)
 		),
-		
+
+		// Additional Level of rules in controller to make sure email unique OR belongs to current user
 		'employee_edit_profile' => array(
 				array(
 						'field' => 'firstname',
@@ -98,15 +101,15 @@ $config = array (
 				array(
 						'field' => 'email',
 						'label' => 'Email',
-						'rules' => 'required|is_unique[employees.email]|is_unique[admins.email]|valid_email'
-				      )
-						 ),
-		
+						'rules' => 'required|valid_email'
+				)
+		),
+
 		'departments_create' => array(
-					      array(
-						    'field'=>'login_name',
-						    'label'=>'Login name',
-						    'rules'=>'required|is_unique[departments.login_name]'
-						    )
-					      )
-		 );
+				array(
+						'field'=>'login_name',
+						'label'=>'Login name',
+						'rules'=>'required|is_unique[departments.login_name]'
+				)
+		)
+);
