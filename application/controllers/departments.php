@@ -21,9 +21,9 @@ class Departments extends CI_Controller {
 		{
 			$user = new Employee($this->employee_id);
 		}
-		else
+		elseif ($this->department_id)
 		{
-			redirect('main');
+			redirect('hours/log_time');
 		}
 		if ($this->department_context)
 		{

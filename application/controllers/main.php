@@ -38,7 +38,7 @@ class Main extends CI_Controller {
 		}
 		elseif ($this->department_id)
 		{
-			redirect('departments');
+			redirect('hours/log_time');
 		}
 
 		$this->load->helper('form');
