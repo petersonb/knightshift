@@ -30,6 +30,10 @@ $menu_items = array(
 						array('base'=>'departments/add_admin',
 								'name'=>'Add Admin',
 								'context'=>'yes'
+						),
+						array('base'=>'departments/remove_employee',
+								'name'=>'Remove Employee',
+								'context'=>'yes'
 						)
 				)
 		),

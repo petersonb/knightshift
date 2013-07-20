@@ -10,7 +10,7 @@ $(document).ready(function() {
 	oTable = $('#employees').dataTable({
 		"bSortable": [],
 		"bProcessing" : true,
-		"sAjaxSource" : "/employees/all_employees",
+		"sAjaxSource" : "/departments/all_unrelated_employees",
 		"aaSorting" : [ [ 2, "asc" ] ],
 		"aoColumnDefs" : [ {
 			"bVisible" : false,

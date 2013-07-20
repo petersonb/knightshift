@@ -230,51 +230,7 @@ class Employees extends CI_Controller {
 		echo json_encode(array('aaData'=>$aaData));
 	}
 
-	/**
-	 * All Employees
-	 *
-	 * Json for employee information
-	 */
-	public function all_employees()
-	{
-		if (!$this->department_context)
-			redirect('main');
-		$d = new Department($this->department_context);
-		$existing_emps = $d->employee->get();
 
-
-
-		$emps = new Employee();
-		if ($existing_emps->count() > 0)
-		{
-		$ids = array();
-		foreach($existing_emps as $emp)
-		{
-			array_push($ids,$emp->id);
-		}
-			$emps->where_not_in('id',$ids)->get();
-		}
-		else 
-		{
-			$emps->get();
-		}
-
-		$aaData = array();
-
-		foreach ($emps as $e)
-		{
-			array_push($aaData,
-			array(
-			$e->id,
-			$e->firstname,
-			$e->lastname,
-			$e->email
-			)
-			);
-		}
-
-		echo json_encode(array('aaData'=>$aaData));
-	}
 }
 
 /* End of file employee.php */

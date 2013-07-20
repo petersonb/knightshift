@@ -212,6 +212,93 @@ class Departments extends CI_Controller {
 		else
 			redirect('main');
 	}
+	
+	/**
+	 * All Employees
+	 *
+	 * Json for employee information
+	 */
+	public function all_unrelated_employees()
+	{
+		if (!$this->department_context)
+			redirect('main');
+		$d = new Department($this->department_context);
+		$existing_emps = $d->employee->get();
+	
+	
+	
+		$emps = new Employee();
+		if ($existing_emps->count() > 0)
+		{
+			$ids = array();
+			foreach($existing_emps as $emp)
+			{
+				array_push($ids,$emp->id);
+			}
+			$emps->where_not_in('id',$ids)->get();
+		}
+		else
+		{
+			$emps->get();
+		}
+	
+		$aaData = array();
+	
+		foreach ($emps as $e)
+		{
+			array_push($aaData,
+			array(
+			$e->id,
+			$e->firstname,
+			$e->lastname,
+			$e->email
+			)
+			);
+		}
+	
+		echo json_encode(array('aaData'=>$aaData));
+	}
+	
+	public function all_unrelated_admins()
+	{
+		if (!$this->department_context)
+			redirect('main');
+		$d = new Department($this->department_context);
+		$existing_admins = $d->admin->get();
+	
+	
+	
+		$admins = new Admin();
+		if ($existing_admins->count() > 0)
+		{
+			$ids = array();
+			foreach($existing_admins as $admin)
+			{
+				array_push($ids,$admin->id);
+			}
+			$admins->where_not_in('id',$ids)->get();
+		}
+		else
+		{
+			$admins->get();
+		}
+	
+		$aaData = array();
+	
+		foreach ($admins as $a)
+		{
+			array_push($aaData,
+			array(
+			$a->id,
+			$a->firstname,
+			$a->lastname,
+			$a->email
+			)
+			);
+		}
+	
+		echo json_encode(array('aaData'=>$aaData));
+	}
 }
 
 /* End of file departments.php */
