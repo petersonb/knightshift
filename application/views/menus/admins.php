@@ -26,6 +26,10 @@ $menu_items = array(
 						array('base'=>'departments/add_employee',
 								'name'=>'Add Employee',
 								'context'=>'yes'
+						),
+						array('base'=>'departments/add_admin',
+								'name'=>'Add Admin',
+								'context'=>'yes'
 						)
 				)
 		),

@@ -46,6 +46,42 @@ class Departments extends CI_Controller {
 		$data['content'] = 'admins/main.php';
 		$this->load->view('master',$data);
 	}
+	
+	public function add_admin()
+	{
+		// Security
+		if (!$this->admin_id && !$this->department_context)
+			redirect('main');
+		
+		// Load
+		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
+		
+		$this->load->helper('form');
+		
+		$this->form_validation->set_rules('admin_id', 'Admin Id', 'required');
+		$this->form_validation->set_message('required','You must select an admin from the table.');
+		
+		if ($this->form_validation->run())
+		{
+			$eid = $this->input->post('admin_id');
+			$did = $this->department_context;
+			$a = new Admin($eid);
+			$d = new Department($this->department_context);
+		
+			$a->save($d);
+		}
+		
+		$data['title'] = "Add Administrator";
+		$data['content'] = 'departments/add_admin';
+		$data['javascript'] = array(
+				"datatables/media/js/jquery",
+				"datatables/media/js/jquery.dataTables",
+				"departments/find_administrators"
+		);
+		$data['css'] = 'dataTables/jquery.dataTables';
+		$this->load->view('master',$data);
+	}
 
 	public function add_employee ()
 	{
