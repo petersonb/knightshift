@@ -13,28 +13,20 @@ class Employees extends CI_Controller {
 	public function index()
 	{
 		// Security
-		if (!$this->employee_id)
-			redirect('main');
-		if ($this->department_context)
-			redirect('departments');
-		else
+		if (!$this->employee_id) 
 		{
-			$e = new Employee($this->employee_id);
-			$depts = $e->department->get();
-
-			foreach ($depts as $d)
-	  {
-	  	$ds[$d->id] = array(
-	  			'id'=>$d->id,
-	  			'name'=>$d->name
-	  	);
-	  }
-
-	  $data['departments'] = $ds;
-	  $data['title'] = 'Employee Main';
-	  $data['content'] = 'employees/main';
-	  $this->load->view('master',$data);
+			redirect('main');
 		}
+		
+		$e = new Employee($this->employee_id);
+		$data['employee'] = array(
+				'firstname'=>$e->firstname,
+				'lastname'=>$e->lastname,
+				'email'=>$e->email
+		);
+		$data['title'] = 'View Profile';
+		$data['content'] = 'employees/view_profile';
+		$this->load->view('master',$data);
 	}
 
 	public function view_all()

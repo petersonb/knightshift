@@ -37,24 +37,17 @@ class Admins extends CI_Controller {
 		if (!$this->admin_id)
 			redirect('main');
 
-		elseif ($this->department_context)
-		redirect('employees/view_all');
-
 		$a = new Admin($this->admin_id);
-		$depts = $a->department->get();
-
-		// Load departments used for listing owned departments
-		// TODO Create a private function for this???
-		foreach ($depts as $d)
-		{
-			$data['departments'][$d->id] = array(
-					'id'=>$d->id,
-					'name'=>$d->name
-			);
-		}
+		
+		$data['admin'] = array(
+				'title' => $a->title,
+				'firstname' => $a->firstname,
+				'lastname' => $a->lastname,
+				'email' => $a->email
+		);
 
 		$data['title'] = 'Administrator Main';
-		$data['content'] = 'admins/main.php';
+		$data['content'] = 'admins/view_profile';
 		$this->load->view('master',$data);
 	}
 

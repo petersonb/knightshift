@@ -15,20 +15,6 @@ $menu_items = array(
 						),
 				),
 		),
-		array('base'=>'hours',
-				'name'=>'Hours',
-				'context'=>'yes',
-				'dropdown_items' => array(
-						array('base'=>'hours/log_time',
-								'name'=>'Log Time',
-								'context'=>'yes'
-						),
-						array('base'=>'hours/view_all',
-								'name'=>'View All',
-								'context'=>'yes'
-						),
-				)
-		),
 		array('base'=>'departments',
 				'name'=>'Departments',
 				'context' => 'no',
@@ -41,6 +27,20 @@ $menu_items = array(
 								'name'=>'Add Employee',
 								'context'=>'yes'
 						)
+				)
+		),
+		array('base'=>'hours',
+				'name'=>'Hours',
+				'context'=>'no',
+				'dropdown_items' => array(
+						array('base'=>'hours/log_time',
+								'name'=>'Log Time',
+								'context'=>'yes'
+						),
+						array('base'=>'hours/view_all',
+								'name'=>'View All',
+								'context'=>'no'
+						),
 				)
 		),
 		array('base'=>'excel',

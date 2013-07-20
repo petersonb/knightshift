@@ -29,6 +29,10 @@ class Hours extends CI_Controller {
 	 */
 	public function index()
 	{
+		if ($this->admin_id || $this->employee_id) 
+		{
+			redirect('hours/view_all');	
+		}
 		redirect('main');
 		$data['title'] = 'Hours';
 		$this->load->view('master',$data);

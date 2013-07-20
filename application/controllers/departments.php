@@ -12,13 +12,38 @@ class Departments extends CI_Controller {
 
 	public function index ()
 	{
-		redirect('hours/log_time');
-		if ($this->session->userdata('department_context'))
+		// Security
+		if ($this->admin_id)
 		{
-			redirect('departments/employee_panel');
+			$user = new Admin($this->admin_id);
 		}
-		$d = new Department($this->session->userdata('department_id'));
-		$data['title'] = $d->name;
+		elseif ($this->employee_id)
+		{
+			$user = new Employee($this->employee_id);	
+		}
+		else
+		{
+			redirect('main');
+		}
+		if ($this->department_context)
+		{
+			redirect('employees/view_all');
+		}
+
+		$depts = $user->department->get();
+
+		// Load departments used for listing owned departments
+		// TODO Create a private function for this???
+		foreach ($depts as $d)
+		{
+			$data['departments'][$d->id] = array(
+					'id'=>$d->id,
+					'name'=>$d->name
+			);
+		}
+
+		$data['title'] = 'Administrator Main';
+		$data['content'] = 'admins/main.php';
 		$this->load->view('master',$data);
 	}
 
@@ -31,7 +56,7 @@ class Departments extends CI_Controller {
 		// Load
 		$this->load->library('form_validation');
 		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
-		
+
 		$this->load->helper('form');
 
 		$this->form_validation->set_rules('employee_id', 'Employee Id', 'required');
@@ -73,7 +98,7 @@ class Departments extends CI_Controller {
 		// Load
 		$this->load->library('form_validation');
 		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
-		
+
 		$this->load->helper('form');
 
 		if ($this->form_validation->run('departments_create'))
@@ -112,7 +137,7 @@ class Departments extends CI_Controller {
 		// No id, no go
 		if (!$id)
 			redirect('main');
-		
+
 		// The user must belong to the department.
 		$d = new Department($id);
 		if ($this->employee_id)
@@ -131,7 +156,7 @@ class Departments extends CI_Controller {
 			redirect('main');
 
 		$this->session->set_userdata('department_context',$id);
-		redirect('employees');
+		redirect('hours/view_all');
 	}
 
 	public function unset_context()
