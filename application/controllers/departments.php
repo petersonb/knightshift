@@ -46,32 +46,32 @@ class Departments extends CI_Controller {
 		$data['content'] = 'admins/main.php';
 		$this->load->view('master',$data);
 	}
-	
+
 	public function add_admin()
 	{
 		// Security
 		if (!$this->admin_id && !$this->department_context)
 			redirect('main');
-		
+
 		// Load
 		$this->load->library('form_validation');
 		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
-		
+
 		$this->load->helper('form');
-		
+
 		$this->form_validation->set_rules('admin_id', 'Admin Id', 'required');
 		$this->form_validation->set_message('required','You must select an admin from the table.');
-		
+
 		if ($this->form_validation->run())
 		{
 			$eid = $this->input->post('admin_id');
 			$did = $this->department_context;
 			$a = new Admin($eid);
 			$d = new Department($this->department_context);
-		
+
 			$a->save($d);
 		}
-		
+
 		$data['title'] = "Add Administrator";
 		$data['content'] = 'departments/add_admin';
 		$data['javascript'] = array(
@@ -120,6 +120,42 @@ class Departments extends CI_Controller {
 				"datatables/media/js/jquery",
 				"datatables/media/js/jquery.dataTables",
 				"departments/find_employee"
+		);
+		$data['css'] = 'dataTables/jquery.dataTables';
+		$this->load->view('master',$data);
+	}
+
+	public function remove_employee()
+	{
+		// Security
+		if (!$this->admin_id && !$this->department_context)
+			redirect('main');
+
+		// Load
+		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
+
+		$this->load->helper('form');
+
+		$this->form_validation->set_rules('employee_id', 'Employee Id', 'required');
+		$this->form_validation->set_message('required','You must select an employee from the table.');
+
+		if ($this->form_validation->run())
+		{
+			$eid = $this->input->post('employee_id');
+			$did = $this->department_context;
+			$e = new Employee($eid);
+			$d = new Department($did);
+
+			$d->delete($e);
+		}
+
+		$data['title'] = "Remove Employee";
+		$data['content'] = 'departments/remove_employee';
+		$data['javascript'] = array(
+				"datatables/media/js/jquery",
+				"datatables/media/js/jquery.dataTables",
+				"departments/related_employee"
 		);
 		$data['css'] = 'dataTables/jquery.dataTables';
 		$this->load->view('master',$data);
@@ -212,7 +248,32 @@ class Departments extends CI_Controller {
 		else
 			redirect('main');
 	}
-	
+
+	public function all_related_employees()
+	{
+		if (!$this->department_context)
+			redirect('main');
+
+		$d = new Department($this->department_context);
+		$related_emps = $d->employee->get();
+
+		$aaData = array();
+
+		foreach ($related_emps as $e)
+		{
+			array_push($aaData,
+			array(
+			$e->id,
+			$e->firstname,
+			$e->lastname,
+			$e->email
+			)
+			);
+		}
+
+		echo json_encode(array('aaData'=>$aaData));
+	}
+
 	/**
 	 * All Employees
 	 *
@@ -224,9 +285,9 @@ class Departments extends CI_Controller {
 			redirect('main');
 		$d = new Department($this->department_context);
 		$existing_emps = $d->employee->get();
-	
-	
-	
+
+
+
 		$emps = new Employee();
 		if ($existing_emps->count() > 0)
 		{
@@ -241,9 +302,9 @@ class Departments extends CI_Controller {
 		{
 			$emps->get();
 		}
-	
+
 		$aaData = array();
-	
+
 		foreach ($emps as $e)
 		{
 			array_push($aaData,
@@ -255,19 +316,19 @@ class Departments extends CI_Controller {
 			)
 			);
 		}
-	
+
 		echo json_encode(array('aaData'=>$aaData));
 	}
-	
+
 	public function all_unrelated_admins()
 	{
 		if (!$this->department_context)
 			redirect('main');
 		$d = new Department($this->department_context);
 		$existing_admins = $d->admin->get();
-	
-	
-	
+
+
+
 		$admins = new Admin();
 		if ($existing_admins->count() > 0)
 		{
@@ -282,9 +343,9 @@ class Departments extends CI_Controller {
 		{
 			$admins->get();
 		}
-	
+
 		$aaData = array();
-	
+
 		foreach ($admins as $a)
 		{
 			array_push($aaData,
@@ -296,7 +357,7 @@ class Departments extends CI_Controller {
 			)
 			);
 		}
-	
+
 		echo json_encode(array('aaData'=>$aaData));
 	}
 }
