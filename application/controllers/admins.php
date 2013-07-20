@@ -38,7 +38,7 @@ class Admins extends CI_Controller {
 			redirect('main');
 
 		$a = new Admin($this->admin_id);
-		
+
 		$data['admin'] = array(
 				'title' => $a->title,
 				'firstname' => $a->firstname,
@@ -76,16 +76,21 @@ class Admins extends CI_Controller {
 		{
 			// Check password
 			// TODO when recovering password, do not require this step
+			$curr = new Admin($this->admin_id);
 			$a = new Admin();
 			$a->email = $curr->email;
 			$a->password = $this->input->post('current');
 			if ($a->login())
-	  {
-	  	$curr = new Admin($this->admin_id);
-	  	$curr->password = $this->input->post('new');
-	  	$curr->save();
-	  }
-	  redirect('admins');
+			{
+				$curr = new Admin($this->admin_id);
+				$curr->password = $this->input->post('new');
+				$curr->save();
+			}
+			else 
+			{
+				echo "BLOW";
+			}
+// 			redirect('admins');
 		}
 		$data['title'] = 'Change Password';
 		$data['content'] = 'admins/change_password';
@@ -129,7 +134,7 @@ class Admins extends CI_Controller {
 					redirect('admins');
 				}
 			}
-			else 
+			else
 			{
 				$a->title = $this->input->post('title');
 				$a->firstname = $this->input->post('firstname');
