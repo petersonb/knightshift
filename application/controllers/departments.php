@@ -19,7 +19,7 @@ class Departments extends CI_Controller {
 		}
 		elseif ($this->employee_id)
 		{
-			$user = new Employee($this->employee_id);	
+			$user = new Employee($this->employee_id);
 		}
 		else
 		{
@@ -156,7 +156,14 @@ class Departments extends CI_Controller {
 			redirect('main');
 
 		$this->session->set_userdata('department_context',$id);
-		redirect('hours/view_all');
+		if ($this->employee_id)
+		{
+			redirect('hours/log_time');
+		}
+		else
+		{
+			redirect('hours/view_all');
+		}
 	}
 
 	public function unset_context()
