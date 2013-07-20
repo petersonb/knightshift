@@ -13,11 +13,11 @@ class Employees extends CI_Controller {
 	public function index()
 	{
 		// Security
-		if (!$this->employee_id) 
+		if (!$this->employee_id)
 		{
 			redirect('main');
 		}
-		
+
 		$e = new Employee($this->employee_id);
 		$data['employee'] = array(
 				'firstname'=>$e->firstname,
@@ -242,14 +242,22 @@ class Employees extends CI_Controller {
 		$d = new Department($this->department_context);
 		$existing_emps = $d->employee->get();
 
+
+
+		$emps = new Employee();
+		if ($existing_emps->count() > 0)
+		{
 		$ids = array();
 		foreach($existing_emps as $emp)
 		{
 			array_push($ids,$emp->id);
 		}
-
-		$emps = new Employee();
-		$emps->where_not_in('id',$ids)->get();
+			$emps->where_not_in('id',$ids)->get();
+		}
+		else 
+		{
+			$emps->get();
+		}
 
 		$aaData = array();
 
