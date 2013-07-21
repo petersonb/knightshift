@@ -183,6 +183,7 @@ class Departments extends CI_Controller {
 			$dept->dept_id = $this->input->post('id');
 			$dept->password = $this->input->post('password');
 			$dept->save($a);
+			redirect('departments');
 		}
 
 

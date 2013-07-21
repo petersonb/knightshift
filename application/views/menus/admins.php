@@ -5,7 +5,7 @@ $menu_items = array(
 				'context'=>'no',
 				'dropdown_items' => array(),
 		),
-		array('base'=>'employees',
+		array('base'=>'employees/view_all',
 				'name'=>'Employees',
 				'context'=>'yes',
 				'dropdown_items' => array(

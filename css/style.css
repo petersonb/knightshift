@@ -1,31 +1,31 @@
 @CHARSET "UTF-8";
 
 * {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-    text-align: center;
-    background: black;
+	text-align: center;
+	background: black;
 }
 
 #wrapper {
-    width: 960px;
-    margin: 0 auto;
-    text-align: left;
+	width: 960px;
+	margin: 0 auto;
+	text-align: left;
 }
 
 .header {
-    background: #fc7903;
-    padding-left: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+	background: #fc7903;
+	padding-left: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .header h1 {
-    font-style: italic;
-    color: #000000;
+	font-style: italic;
+	color: #000000;
 }
 
 .body {
@@ -35,25 +35,25 @@ body {
 }
 
 .context_nav {
-    background: #fc7903;
+	background: #fc7903;
 }
 
-.context_nav li a{
-    color: #3f3f3f;
+.context_nav li a {
+	color: #3f3f3f;
 }
 
 .content {
-    background: #ccc;
-    padding: 20px;
+	background: #ccc;
+	padding: 20px;
 }
 
 .footer {
-    background: #3f3f3f;
-    color: #fff;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    padding-left: 10px;
-    padding-right: 10px;
+	background: #3f3f3f;
+	color: #fff;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .footer p {
@@ -61,18 +61,18 @@ body {
 }
 
 li {
-    margin-left: 15px;
+	margin-left: 15px;
 }
 
 form {
-    background: #bbbbbb;
-    padding: 10px;
-    border: solid #000000 2px;
+	background: #bbbbbb;
+	padding: 10px;
+	border: solid #000000 2px;
 }
 
 form input {
-    margin-top: 5px;
-    margin-bottom: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 .error {
@@ -91,4 +91,12 @@ form input {
 	font-weight: bold;
 	color: #000000;
 }
+
+.about {
+	background: #fff;
+	padding: 10px;
+}
+
+.about img {
+	max-height: 200px;
 }
