@@ -52,7 +52,7 @@ class Excel extends CI_Controller {
 	public function admin_generate()
 	{
 		// Security
-		if (!$this->admin_id)
+		if (!$this->admin_id || !$this->department_context)
 			redirect('main');
 		
 		$this->load->library('excel');
@@ -70,6 +70,8 @@ class Excel extends CI_Controller {
 		$filepath = 'excelsheets/'.$d->id . '/' . $year . '/' . $month . '/';
 		$this->check_filepath($filepath);
 
+		$start_day = "'$yval-$mval-01'";
+		$end_day = "'$yval-$mval-31'";
 		$emps = $d->employee->get();
 
 		foreach ($emps as $e)
@@ -86,12 +88,12 @@ class Excel extends CI_Controller {
 			->setCellValue('C7',$e->student_id)
 			->setCellValue('H5',$d->name)
 			->setCellValue('H7',$d->dept_id)
-			->setCellValue('H9','supervisor name')
+			->setCellValue('H9',$d->supervisors)
 			->setCellValue('G47',$r->hourly);
 				
 				
 			$hrs = $e->hour;
-			$hrs->where_between("date","'2013-05-01'","'2013-05-31'")->get();
+			$hrs->where_between("date","$start_day","$end_day")->get();
 			$total = 0.0;
 			foreach ($hrs as $h)
 			{

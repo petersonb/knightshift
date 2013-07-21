@@ -1,0 +1,1 @@
+<?php $this->load->view('forms/departments/edit');

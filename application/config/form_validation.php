@@ -116,5 +116,12 @@ $config = array (
 						'label'=>'Login name',
 						'rules'=>'required|is_unique[departments.login_name]'
 				)
-		)
+		),
+		'departments_edit' => array(
+				array(
+						'field'=>'login_name',
+						'label'=>'Login name',
+						'rules'=>'required'
+				)
+		),
 );

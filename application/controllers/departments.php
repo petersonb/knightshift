@@ -190,6 +190,42 @@ class Departments extends CI_Controller {
 		$data['content'] = 'departments/create';
 		$this->load->view('master',$data);
 	}
+	
+	public function edit()
+	{
+		// Security
+		if (!$this->admin_id || !$this->department_context)
+			redirect('main');
+		
+		$this->load->helper('form');
+		
+		// Load
+		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
+		
+		$this->load->helper('form');
+		$dept = new Department($this->department_context);
+		
+		if ($this->form_validation->run('departments_edit'))
+		{
+			$dept->name = $this->input->post('name');
+			$dept->login_name = $this->input->post('login_name');
+			$dept->dept_id = $this->input->post('id');
+			$dept->supervisors = $this->input->post('supervisors');
+			$dept->save();
+		}
+		
+		$data['department'] = array(
+				'name'=>$dept->name,
+				'login_name'=>$dept->login_name,
+				'id' => $dept->dept_id,
+				'supervisors' => $dept->supervisors,
+		);
+		
+		$data['title'] = 'Edit Department';
+		$data['content'] = 'departments/edit';
+		$this->load->view('master',$data);
+	}
 
 	public function employee_panel()
 	{
