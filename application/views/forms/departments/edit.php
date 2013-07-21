@@ -28,7 +28,7 @@ $inputs = array(
 <table>
 	<?php form_input_bank($inputs); ?>
 	<tr>
-		<td><?php echo form_submit('submit','Create Department'); ?>
+		<td><?php echo form_submit('submit','Update Department'); ?>
 		</td>
 	</tr>
 </table>
