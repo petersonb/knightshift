@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 05, 2013 at 12:45 AM
+-- Generation Time: Jul 21, 2013 at 05:30 AM
 -- Server version: 5.1.67-log
--- PHP Version: 5.4.8--pl0-gentoo
+-- PHP Version: 5.4.17-pl0-gentoo
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -26,6 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `admins`
 --
 
+DROP TABLE IF EXISTS `admins`;
 CREATE TABLE IF NOT EXISTS `admins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(16) NOT NULL,
@@ -43,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `admins` (
 -- Table structure for table `admins_departments`
 --
 
+DROP TABLE IF EXISTS `admins_departments`;
 CREATE TABLE IF NOT EXISTS `admins_departments` (
   `admin_id` int(11) DEFAULT NULL,
   `department_id` int(11) DEFAULT NULL
@@ -54,11 +56,13 @@ CREATE TABLE IF NOT EXISTS `admins_departments` (
 -- Table structure for table `departments`
 --
 
+DROP TABLE IF EXISTS `departments`;
 CREATE TABLE IF NOT EXISTS `departments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `login_name` varchar(32) NOT NULL,
   `dept_id` int(10) NOT NULL,
+  `supervisors` varchar(256) NOT NULL,
   `password` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -69,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `departments` (
 -- Table structure for table `employees`
 --
 
+DROP TABLE IF EXISTS `employees`;
 CREATE TABLE IF NOT EXISTS `employees` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(32) NOT NULL,
@@ -86,9 +91,11 @@ CREATE TABLE IF NOT EXISTS `employees` (
 -- Table structure for table `employees_departments`
 --
 
+DROP TABLE IF EXISTS `employees_departments`;
 CREATE TABLE IF NOT EXISTS `employees_departments` (
   `employee_id` int(11) DEFAULT NULL,
-  `department_id` int(11) DEFAULT NULL
+  `department_id` int(11) DEFAULT NULL,
+  `rate_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -97,6 +104,7 @@ CREATE TABLE IF NOT EXISTS `employees_departments` (
 -- Table structure for table `hours`
 --
 
+DROP TABLE IF EXISTS `hours`;
 CREATE TABLE IF NOT EXISTS `hours` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
@@ -111,11 +119,25 @@ CREATE TABLE IF NOT EXISTS `hours` (
 -- Table structure for table `hour_relations`
 --
 
+DROP TABLE IF EXISTS `hour_relations`;
 CREATE TABLE IF NOT EXISTS `hour_relations` (
   `hour_id` int(11) DEFAULT NULL,
   `employee_id` int(11) DEFAULT NULL,
   `department_id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rates`
+--
+
+DROP TABLE IF EXISTS `rates`;
+CREATE TABLE IF NOT EXISTS `rates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `hourly` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
