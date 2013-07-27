@@ -94,7 +94,7 @@ endif;
 			</div>
 		</div>
 		<div class="footer">
-			<p>KnightShift</p>
+			<?php $this->load->view('main/footer')?>
 		</div>
 	</div>
 </body>

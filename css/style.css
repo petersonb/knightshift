@@ -49,15 +49,21 @@ body {
 
 .footer {
 	background: #3f3f3f;
-	color: #fff;
 	padding-top: 3px;
 	padding-bottom: 3px;
 	padding-left: 10px;
 	padding-right: 10px;
 }
 
-.footer p {
+.footer a {
 	font-size: 13px;
+	color: #fff;
+}
+
+.footer td {
+	padding-left: 5px;
+	padding-right: 5px;
+	border-left: solid 1px white;
 }
 
 li {

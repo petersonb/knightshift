@@ -179,9 +179,9 @@ class Hours extends CI_Controller {
 			foreach($emp as $e)
 			{
 				$data['employees'][$e->firstname] = array(
-						'id'=>$e->id,
 						'firstname'=>$e->firstname,
-						'lastname'=>$e->lastname
+						'lastname'=>$e->lastname,
+						'id'=>$e->id,
 				);
 			}
 			
