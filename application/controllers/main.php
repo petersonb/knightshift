@@ -112,7 +112,6 @@ class Main extends CI_Controller {
 				$message .= "<p>If you did not request a password change, please contact <a href=\"support@knightshift-track.com\">KnightShift Support</a>.</p>";
 				$message .= "<br /><p>Thanks,<br />KnightShift Support</p>";
 				$this->email->from('support@knightshift-track.com', 'KnightShift Master');
-				$this->email="html";
 				$this->email->to($email);
 				$this->email->subject('Password Reset');
 				$this->email->message($message);
