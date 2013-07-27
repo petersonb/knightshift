@@ -11,6 +11,8 @@ class Employee extends DataMapper {
 			)
 	);
 
+	
+	var $has_one = array('password_change_request');
 	var $has_many = array(
 			'department' => array('join_table'=>'employees_departments'),
 			'rate'=>array('join_table'=>'employees_departments'),

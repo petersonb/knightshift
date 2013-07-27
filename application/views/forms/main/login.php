@@ -20,5 +20,7 @@ $pass = array(
 <?php echo form_password($pass); ?>
 
 <br />
+<a href="<?php echo base_url("main/forgot_password"); ?>">Forgot Password</a>
+<br />
 <?php echo form_submit('submit','Login'); ?>
 </form>

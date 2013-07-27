@@ -124,4 +124,11 @@ $config = array (
 						'rules'=>'required'
 				)
 		),
+		'main_forgot_password' => array(
+				array(
+						'field'=>'email',
+						'label'=>'Email',
+						'rules'=>'required'
+				),
+		),
 );

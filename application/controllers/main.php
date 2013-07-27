@@ -48,6 +48,66 @@ class Main extends CI_Controller {
 		$this->load->view('master',$data);
 	}
 
+	/**
+	 * Forgot Password
+	 *
+	 * Page for sending out email for forgotten passwords
+	 *
+	 * Related to:
+	 * 	email/forgot_password.php
+	 *
+	 * Loads success or failure page at end
+	 */
+	public function forgot_password()
+	{
+		$this->load->library('form_validation');
+		$this->load->helper('form');
+
+		if ($this->form_validation->run('main_forgot_password'))
+		{
+			$email = $this->input->post('email');
+			$a = new Admin();
+			$a->where('email',$email)->get();
+				
+				
+			if (!$a->exists())
+			{
+				$e = new Employee();
+				$e->where('email',$email)->get();
+
+				if (!$e->exists())
+				{
+					$data['content'] = 'main/forgot_password_fail';
+				}
+				else
+				{
+					$pwc = new Password_change_request();
+					$code = md5(uniqid(mt_rand(), true));
+					echo $code;
+					$pwc->code = $code;
+					$pwc->save($e);
+					$data['content'] = 'main/forgot_password_success';
+				}
+			}
+			else
+			{
+				$data['email'] = $email;
+				$pwc = new Password_change_request();
+				$code = md5(uniqid(mt_rand(), true));
+				$pwc->code = $code;
+				$pwc->save($a);
+				$data['content'] = 'main/forgot_password_success';
+			}
+		}
+		else
+		{
+			$data['content'] = 'main/forgot_password';
+		}
+
+		$data['title'] = 'Forgot Password';
+		$this->load->view('master',$data);
+	}
+
 
 	/**
 	 * Login
@@ -81,7 +141,7 @@ class Main extends CI_Controller {
 			$this->session->set_userdata('employee_id', $e->id);
 			redirect('employees');
 		}
-		
+
 		// Check Admin Login
 		$a = new Admin();
 
@@ -93,7 +153,7 @@ class Main extends CI_Controller {
 			$this->session->set_userdata('admin_id',$a->id);
 			redirect('admins');
 		}
-		
+
 		// Check Department Login
 		$d = new Department();
 
@@ -110,7 +170,7 @@ class Main extends CI_Controller {
 
 	/**
 	 * Logout
-	 * 
+	 *
 	 * Unset all user data and redirect to main.
 	 */
 	public function logout()
