@@ -108,8 +108,8 @@ class Main extends CI_Controller {
 			{
 				$message = "<h3>Dear {$user->firstname},</h3>";
 				$message .= "<p>You have requested to have your password reset. Please click the following link.</p>";
-				$message .= "<a href=\"".base_url('main/password_reset')."?pwrc=".$code."\">Click here</a>";
-				$message .= "<p>If you did not request a password change, please contact <a href=\"support@knightshift-track.com\">KnightShift Support</a>.</p>";
+				$message .= "<a href=\"".base_url('main/password_reset')."?pwrc=".$code."\">Click here to reset your password.</a>";
+				$message .= "<p>If you did not request a password change, please contact KnightShift Support at support@knightshift-track.com</p>";
 				$message .= "<br /><p>Thanks,<br />KnightShift Support</p>";
 				$this->email->from('support@knightshift-track.com', 'KnightShift Master');
 				$this->email->to($email);
@@ -160,10 +160,10 @@ class Main extends CI_Controller {
 			}
 			if ($this->form_validation->run('main_password_reset'))
 			{
+				$pcr->delete();
 				$password = $this->input->post('new');
 				$user->password = $password;
 				$user->save();
-				$pcr->delete();
 				if ($type=="admin")
 				{
 					$this->session->set_userdata('admin_id',$user->id);
