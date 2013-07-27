@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 21, 2013 at 05:30 AM
+-- Generation Time: Jul 27, 2013 at 02:51 PM
 -- Server version: 5.1.67-log
 -- PHP Version: 5.4.17-pl0-gentoo
 
@@ -26,7 +26,6 @@ SET time_zone = "+00:00";
 -- Table structure for table `admins`
 --
 
-DROP TABLE IF EXISTS `admins`;
 CREATE TABLE IF NOT EXISTS `admins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(16) NOT NULL,
@@ -36,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `admins` (
   `phone` varchar(16) NOT NULL,
   `password` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -44,7 +43,6 @@ CREATE TABLE IF NOT EXISTS `admins` (
 -- Table structure for table `admins_departments`
 --
 
-DROP TABLE IF EXISTS `admins_departments`;
 CREATE TABLE IF NOT EXISTS `admins_departments` (
   `admin_id` int(11) DEFAULT NULL,
   `department_id` int(11) DEFAULT NULL
@@ -56,7 +54,6 @@ CREATE TABLE IF NOT EXISTS `admins_departments` (
 -- Table structure for table `departments`
 --
 
-DROP TABLE IF EXISTS `departments`;
 CREATE TABLE IF NOT EXISTS `departments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
@@ -65,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `departments` (
   `supervisors` varchar(256) NOT NULL,
   `password` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -73,7 +70,6 @@ CREATE TABLE IF NOT EXISTS `departments` (
 -- Table structure for table `employees`
 --
 
-DROP TABLE IF EXISTS `employees`;
 CREATE TABLE IF NOT EXISTS `employees` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(32) NOT NULL,
@@ -83,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `phone` varchar(16) NOT NULL,
   `password` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -91,7 +87,6 @@ CREATE TABLE IF NOT EXISTS `employees` (
 -- Table structure for table `employees_departments`
 --
 
-DROP TABLE IF EXISTS `employees_departments`;
 CREATE TABLE IF NOT EXISTS `employees_departments` (
   `employee_id` int(11) DEFAULT NULL,
   `department_id` int(11) DEFAULT NULL,
@@ -104,14 +99,13 @@ CREATE TABLE IF NOT EXISTS `employees_departments` (
 -- Table structure for table `hours`
 --
 
-DROP TABLE IF EXISTS `hours`;
 CREATE TABLE IF NOT EXISTS `hours` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `time_in` time NOT NULL,
   `time_out` time NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 -- --------------------------------------------------------
 
@@ -119,7 +113,6 @@ CREATE TABLE IF NOT EXISTS `hours` (
 -- Table structure for table `hour_relations`
 --
 
-DROP TABLE IF EXISTS `hour_relations`;
 CREATE TABLE IF NOT EXISTS `hour_relations` (
   `hour_id` int(11) DEFAULT NULL,
   `employee_id` int(11) DEFAULT NULL,
@@ -129,15 +122,28 @@ CREATE TABLE IF NOT EXISTS `hour_relations` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `password_change_requests`
+--
+
+CREATE TABLE IF NOT EXISTS `password_change_requests` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(32) NOT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `rates`
 --
 
-DROP TABLE IF EXISTS `rates`;
 CREATE TABLE IF NOT EXISTS `rates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `hourly` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
