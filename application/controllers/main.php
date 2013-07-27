@@ -68,8 +68,8 @@ class Main extends CI_Controller {
 			$email = $this->input->post('email');
 			$a = new Admin();
 			$a->where('email',$email)->get();
-				
-				
+
+			$success = TRUE;
 			if (!$a->exists())
 			{
 				$e = new Employee();
@@ -77,10 +77,12 @@ class Main extends CI_Controller {
 
 				if (!$e->exists())
 				{
+					$success = FALSE;
 					$data['content'] = 'main/forgot_password_fail';
 				}
 				else
 				{
+					$user = $e;
 					$pwc = new Password_change_request();
 					$code = md5(uniqid(mt_rand(), true));
 					echo $code;
@@ -91,12 +93,27 @@ class Main extends CI_Controller {
 			}
 			else
 			{
+				$user = $a;
 				$data['email'] = $email;
 				$pwc = new Password_change_request();
 				$code = md5(uniqid(mt_rand(), true));
 				$pwc->code = $code;
 				$pwc->save($a);
 				$data['content'] = 'main/forgot_password_success';
+
+
+			}
+			// Email the user
+			if ($success)
+			{
+				$message = "<p>Dear {$user->firstname},</p><br />";
+				$message .= "<p>You have requested to have your password reset. Please clicke the link below.</p><br />";
+				$message .= "<a href=\"".base_url('main/reset_password')."?pwrc=".$code."\">Click here.</a>";
+				$this->email->from('brett@petersonb.com', 'Brett Peterson');
+				$this->email->to($email);
+				$this->email->subject('Password Reset');
+				$this->email->message($message);
+				$this->email->send();
 			}
 		}
 		else
@@ -105,6 +122,74 @@ class Main extends CI_Controller {
 		}
 
 		$data['title'] = 'Forgot Password';
+		$this->load->view('master',$data);
+	}
+
+	public function password_reset()
+	{
+		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
+
+		$code = $this->input->get("pwrc");
+		$pcr = new Password_change_request();
+		$pcr->where('code',$code)->get();
+
+		if ($pcr->exists())
+		{
+			$type=null;
+			$a = $pcr->admin->get();
+			if ($a->exists())
+			{
+				$type="admin";
+				$user = $a;
+			}
+			else
+			{
+				$e = $pcr->employee->get();
+				if ($e->exists())
+				{
+					$type="employee";
+					$user = $e;
+				}
+				else
+				{
+					redirect('main');
+				}
+			}
+			if ($this->form_validation->run('main_password_reset'))
+			{
+				$password = $this->input->post('new');
+				$user->password = $password;
+				$user->save();
+				$pcr->delete();
+				if ($type=="admin")
+				{
+					$this->session->set_userdata('admin_id',$user->id);
+					redirect('admins');
+				}
+				elseif($type=="employee")
+				{
+					$this->session->set_userdata('employee_id',$user->id);
+					redirect('employees');
+				}
+				else
+				{
+					redirect('main');
+				}
+			}
+			$this->load->helper('form');
+		}
+		else
+		{
+			redirect('main');
+		}
+		$data['firstname'] = $user->firstname;
+		$data['lastname'] = $user->lastname;
+		$data['email'] = $user->email;
+		$data['code'] = $code;
+
+		$data['title'] = "Password Reset";
+		$data['content'] = "main/password_reset";
 		$this->load->view('master',$data);
 	}
 

@@ -131,4 +131,16 @@ $config = array (
 						'rules'=>'required'
 				),
 		),
+		'main_password_reset' => array(
+				array(
+						'field' => 'new',
+						'label' => 'New Password',
+						'rules' => 'required|matches[confirm]'
+				),
+				array(
+						'field' => 'confirm',
+						'label' => 'Confirm Password',
+						'rules' => 'required'
+				),
+		),
 );
