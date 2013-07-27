@@ -60,7 +60,7 @@ class Main extends CI_Controller {
 	 */
 	public function forgot_password()
 	{
-		$this->load->library('form_validation');
+		$this->load->library(array('form_validation','email'));
 		$this->load->helper('form');
 
 		if ($this->form_validation->run('main_forgot_password'))
@@ -109,7 +109,7 @@ class Main extends CI_Controller {
 				$message = "<p>Dear {$user->firstname},</p><br />";
 				$message .= "<p>You have requested to have your password reset. Please clicke the link below.</p><br />";
 				$message .= "<a href=\"".base_url('main/reset_password')."?pwrc=".$code."\">Click here.</a>";
-				$this->email->from('brett@petersonb.com', 'Brett Peterson');
+				$this->email->from('master@knightshift-track.com', 'KnightShift Master');
 				$this->email->to($email);
 				$this->email->subject('Password Reset');
 				$this->email->message($message);
