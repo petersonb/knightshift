@@ -106,11 +106,13 @@ class Main extends CI_Controller {
 			// Email the user
 			if ($success)
 			{
-				$message = "Dear {$user->firstname},";
-				$message .= "You have requested to have your password reset. Please click following link.";
-				$message .= base_url('main/reset_password')."?pwrc=".$code;
-				$message .= "If you did not request a password change, and have received more than one of these messages, please contact support@knightshift-track.com";
-				$this->email->from('master@knightshift-track.com', 'KnightShift Master');
+				$message = "<h3>Dear {$user->firstname},</h3>";
+				$message .= "<p>You have requested to have your password reset. Please click the following link.</p>";
+				$message .= "<a href=\"".base_url('main/reset_password')."?pwrc=".$code."\">Click here</a>";
+				$message .= "<p>If you did not request a password change, please contact <a href=\"support@knightshift-track.com\">KnightShift Support</a>.</p>";
+				$message .= "<br /><p>Thanks,<br />KnightShift Support</p>";
+				$this->email->from('support@knightshift-track.com', 'KnightShift Master');
+				$this->mailtype="html";
 				$this->email->to($email);
 				$this->email->subject('Password Reset');
 				$this->email->message($message);
