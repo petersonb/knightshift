@@ -85,9 +85,9 @@ class Main extends CI_Controller {
 					$user = $e;
 					$pwc = new Password_change_request();
 					$code = md5(uniqid(mt_rand(), true));
-					echo $code;
 					$pwc->code = $code;
 					$pwc->save($e);
+					$data['email'] = $email;
 					$data['content'] = 'main/forgot_password_success';
 				}
 			}
@@ -106,9 +106,10 @@ class Main extends CI_Controller {
 			// Email the user
 			if ($success)
 			{
-				$message = "<p>Dear {$user->firstname},</p><br />";
-				$message .= "<p>You have requested to have your password reset. Please clicke the link below.</p><br />";
-				$message .= "<a href=\"".base_url('main/reset_password')."?pwrc=".$code."\">Click here.</a>";
+				$message = "Dear {$user->firstname},";
+				$message .= "You have requested to have your password reset. Please click following link.";
+				$message .= base_url('main/reset_password')."?pwrc=".$code;
+				$message .= "If you did not request a password change, and have received more than one of these messages, please contact support@knightshift-track.com";
 				$this->email->from('master@knightshift-track.com', 'KnightShift Master');
 				$this->email->to($email);
 				$this->email->subject('Password Reset');
