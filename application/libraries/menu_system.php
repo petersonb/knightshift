@@ -21,6 +21,10 @@ class menu_system {
 		{
 			return $this->get_employee_menu_data();
 		}
+		if ($this->department_id)
+		{
+			return $this->get_department_menu_data();
+		}
 		return $this->get_main_menu_data();
 	}
 
@@ -141,7 +145,76 @@ class menu_system {
 
 	private function get_employee_menu_data()
 	{
+		$data = array(
+				'hours' => array('base'=>'hours',
+						'name'=>'Hours',
+						'dropdown' => array(
 
+								array('base'=>'hours/view_all',
+										'name'=>'View All',
+										'context'=>'no'
+								),
+						)
+				),
+				'departments' => array('base'=>'departments',
+						'name'=>'Departments',
+						'dropdown'=>array(),
+				),
+				'employees' => array('base'=>'employees',
+						'name'=>'Profile',
+						'dropdown' => array(
+								array('base'=>'employees/edit_profile',
+										'name'=>'Edit Profile',
+										'context'=>'no',
+								),
+								array('base'=>'employees/change_password',
+										'name'=>'Change Password',
+										'context'=>'no'
+								),
+								array('base'=>'main/logout',
+										'name'=>'Logout',
+										'context'=>'no'
+								),
+						),
+				),
+
+		);
+
+		if ($this->department_context)
+		{
+			$hours = array('base'=>'hours/log_time',
+					'name'=>'Log Time',
+					'context'=>'yes'
+			);
+
+			$unset = array('base'=>'departments/unset_context',
+					'name'=>'Unset Context',
+					'dropdown'=>array(),
+			);
+
+			array_splice($data['hours']['dropdown'],0,0,array($hours));
+			array_splice($data,count($data),0,array($unset));
+		}
+
+		return $data;
+	}
+
+	private function get_department_menu_data ()
+	{
+		$data = array(
+				array('base'=>'departments',
+						'name'=>'Home'),
+				array('base'=>'hours/log_time',
+						'name'=>'Log Time'),
+				array('base'=>'hours/view_all',
+						'name'=>'View Hours'),
+				array('base'=>'employees/view_all',
+						'name'=>'View Employees'),
+				array('base'=>'main/logout',
+						'name'=>'Logout'
+				)
+		);
+		return $data;
 	}
 
 }
