@@ -28,6 +28,12 @@ body {
 	color: #000000;
 }
 
+.statusBar {
+	background: #fff;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
 .body {
 	background: #8f8f8f;
 	padding-left: 20px;
