@@ -19,7 +19,7 @@ class Hours extends CI_Controller {
 		{
 			redirect('main');
 		}
-
+		$this->menu_data = $this->menu_system->get_menu_data();
 	}
 
 	/**

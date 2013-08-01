@@ -9,6 +9,12 @@
 */
 class Register extends CI_Controller {
 
+	public function __construct()
+	{
+		parent::__construct();
+		$this->menu_data = $this->menu_system->get_menu_data();
+	}
+	
 	public function index()
 	{
 		$data['content'] = 'register/main';

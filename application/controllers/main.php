@@ -17,6 +17,8 @@ class Main extends CI_Controller {
 		$this->employee_id = $this->session->userdata('employee_id');
 		$this->admin_id = $this->session->userdata('admin_id');
 		$this->department_id = $this->session->userdata('department_id');
+		
+		$this->menu_data = $this->menu_system->get_menu_data();
 	}
 
 	/**
