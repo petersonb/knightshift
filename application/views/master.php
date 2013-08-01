@@ -54,24 +54,7 @@ endif;
 		</div>
 
 		<div class="nav">
-			<?php
-			if ($this->session->userdata('employee_id'))
-			{
-				$this->load->view('menus/employees');
-			}
-			elseif ($this->session->userdata('admin_id'))
-			{
-				$this->load->view('menus/admins');
-			}
-			elseif ($this->session->userdata('department_id'))
-			{
-				$this->load->view('menus/departments');
-			}
-			else
-			{
-				$this->load->view('menus/main');
-			}
-			?>
+			<?php $this->load->view('menus/main'); ?>
 		</div>
 		<div class="body">
 			<div class="content">
