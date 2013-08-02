@@ -54,10 +54,10 @@ endif;
 		</div>
 		
 
+		<?php $this->load->view('main/status_bar',$this->status->get()); ?>
 		<div class="nav">
 			<?php $this->load->view('menus/main'); ?>
 		</div>
-		<?php $this->load->view('main/status_bar',$this->status->get()); ?>
 		<div class="body">
 			<div class="content">
 				<?php

@@ -147,7 +147,10 @@ class Departments extends CI_Controller {
 			$did = $this->department_context;
 			$e = new Employee($eid);
 			$d = new Department($did);
-
+            
+            $r = $d->rate->where('employee_id',$eid)->get();
+            // Delete the employee and their rate
+            $r->delete();
 			$d->delete($e);
 		}
 
@@ -161,6 +164,18 @@ class Departments extends CI_Controller {
 		$data['css'] = 'dataTables/jquery.dataTables';
 		$this->load->view('master',$data);
 	}
+    
+    public function rate_testing()
+    {
+        $eid = '1';
+        $did = $this->department_context;
+        $e = new Employee($eid);
+        $d = new Department($did);
+        
+        $r = $d->rate->where('employee_id',$eid)->get();
+        echo $r->id;
+        
+    }
 
 	public function create ()
 	{
