@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 27, 2013 at 02:51 PM
--- Server version: 5.1.67-log
+-- Generation Time: Aug 05, 2013 at 07:21 PM
+-- Server version: 5.1.70-log
 -- PHP Version: 5.4.17-pl0-gentoo
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `admins` (
   `phone` varchar(16) NOT NULL,
   `password` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `departments` (
   `supervisors` varchar(256) NOT NULL,
   `password` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `phone` varchar(16) NOT NULL,
   `password` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `hours` (
   `time_in` time NOT NULL,
   `time_out` time NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -122,6 +122,35 @@ CREATE TABLE IF NOT EXISTS `hour_relations` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE IF NOT EXISTS `notifications` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `message` varchar(560) NOT NULL,
+  `priority` int(1) NOT NULL,
+  `expires` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notification_relations`
+--
+
+CREATE TABLE IF NOT EXISTS `notification_relations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `notification_id` int(11) NOT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `department_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `password_change_requests`
 --
 
@@ -131,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `password_change_requests` (
   `admin_id` int(11) DEFAULT NULL,
   `employee_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -143,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `rates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `hourly` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
