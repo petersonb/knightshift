@@ -119,7 +119,10 @@ class menu_system {
 					),
 					array('base'=>'departments/edit',
 							'name'=>'Edit Department',
-					)
+					),
+					array('base'=>'departments/notify_employees',
+							'name'=>'Notify Employees'
+			)
 			);
 
 			$hours = array (

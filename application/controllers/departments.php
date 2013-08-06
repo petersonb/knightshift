@@ -147,10 +147,10 @@ class Departments extends CI_Controller {
 			$did = $this->department_context;
 			$e = new Employee($eid);
 			$d = new Department($did);
-            
-            $r = $d->rate->where('employee_id',$eid)->get();
-            // Delete the employee and their rate
-            $r->delete();
+
+			$r = $d->rate->where('employee_id',$eid)->get();
+			// Delete the employee and their rate
+			$r->delete();
 			$d->delete($e);
 		}
 
@@ -164,18 +164,6 @@ class Departments extends CI_Controller {
 		$data['css'] = 'dataTables/jquery.dataTables';
 		$this->load->view('master',$data);
 	}
-    
-    public function rate_testing()
-    {
-        $eid = '1';
-        $did = $this->department_context;
-        $e = new Employee($eid);
-        $d = new Department($did);
-        
-        $r = $d->rate->where('employee_id',$eid)->get();
-        echo $r->id;
-        
-    }
 
 	public function create ()
 	{
@@ -207,22 +195,22 @@ class Departments extends CI_Controller {
 		$data['content'] = 'departments/create';
 		$this->load->view('master',$data);
 	}
-	
+
 	public function edit()
 	{
 		// Security
 		if (!$this->admin_id || !$this->department_context)
 			redirect('main');
-		
+
 		$this->load->helper('form');
-		
+
 		// Load
 		$this->load->library('form_validation');
 		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
-		
+
 		$this->load->helper('form');
 		$dept = new Department($this->department_context);
-		
+
 		if ($this->form_validation->run('departments_edit'))
 		{
 			$dept->name = $this->input->post('name');
@@ -231,27 +219,57 @@ class Departments extends CI_Controller {
 			$dept->supervisors = $this->input->post('supervisors');
 			$dept->save();
 		}
-		
+
 		$data['department'] = array(
 				'name'=>$dept->name,
 				'login_name'=>$dept->login_name,
 				'id' => $dept->dept_id,
 				'supervisors' => $dept->supervisors,
 		);
-		
+
 		$data['title'] = 'Edit Department';
 		$data['content'] = 'departments/edit';
 		$this->load->view('master',$data);
 	}
 
-	public function employee_panel()
+	public function notify_employees()
 	{
 		// Security
-		if (!$this->employee_id)
-			rediect('main');
+		if (!$this->admin_id || !$this->department_context)
+			redirect('main');
+		
+		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="error"><p>','</p></div>');
+		
+		$this->load->helper('form');
 
-		$data['title'] = 'Employee Panel';
-		$data['context'] = 'departments/employee_panel';
+		if ($this->form_validation->run('departments_notify_employees'))
+		{
+			// Get input
+			$message = $this->input->post('message');
+			$priority = $this->input->post('priority');
+			
+			// Create notificiation
+			$n = new Notification();
+			$n->message = $this->input->post('message');
+			$n->priority = $this->input->post('priority');
+			$n->save();
+			
+			// Get dept from context
+			$d = new Department($this->department_context);
+
+			// Get employees
+			$employees = $d->employee->get_iterated();
+
+			// Relate message to each employee
+			foreach ($employees as $e)
+			{
+				$e->save($n);
+			}
+		}
+		
+		$data['title'] = 'Notify Employees';
+		$data['content'] = 'departments/notify_employees';
 		$this->load->view('master',$data);
 	}
 

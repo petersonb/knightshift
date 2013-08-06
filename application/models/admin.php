@@ -12,7 +12,10 @@ class Admin extends DataMapper {
 	);
 
 	var $has_one = array('password_change_request');
-	var $has_many = array('department'=>array('join_table'=>'admins_departments'));
+	var $has_many = array(
+			'department'=>array('join_table'=>'admins_departments'),
+			'notification'=>array('join_table'=>'notification_relations')	
+	);
 
 	function __construct($id = NULL)
 	{

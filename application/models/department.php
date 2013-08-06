@@ -15,7 +15,8 @@ class Department extends DataMapper {
 			'admin' => array('join_table' => 'admins_departments'),
 			'employee' => array('join_table' => 'employees_departments'),
 			'rate'=>array('join_table'=>'employees_departments'),
-			'hour' => array('join_table' => 'hour_relations')
+			'hour' => array('join_table' => 'hour_relations'),
+			'notification'=>array('join_table'=>'hour_relations')
 	);
 
 	function __construct($id = NULL)

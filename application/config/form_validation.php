@@ -124,6 +124,18 @@ $config = array (
 						'rules'=>'required'
 				)
 		),
+		'departments_notify_employees' => array(
+				array(
+						'field'=>'message',
+						'label'=>'Message',
+						'rules'=>'required',
+				),
+				array(
+						'field'=>'priority',
+						'label'=>'Priority',
+						'rules'=>'required'
+				)
+		),
 		'main_forgot_password' => array(
 				array(
 						'field'=>'email',
