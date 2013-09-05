@@ -69,6 +69,7 @@ class Excel extends CI_Controller {
 
 		$d = new Department($this->department_context);
 		$filepath = 'excelsheets/'.$d->id . '/' . $year . '/' . $month . '/';
+		$this->clean_filepath($filepath);
 		$this->check_filepath($filepath);
 
 		$start_day = "'$yval-$mval-01'";
@@ -196,6 +197,14 @@ class Excel extends CI_Controller {
 			{
 				shell_exec("mkdir " . "$fpa[0]/$fpa[1]/$fpa[2]/$fpa[3]");
 			}
+		}
+	}
+	
+	public function clean_filepath($filepath)
+	{
+		if (file_exists($filepath))
+		{
+			shell_exec("rm -rf " . $filepath);
 		}
 	}
 
