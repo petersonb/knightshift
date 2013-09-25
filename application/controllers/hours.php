@@ -207,6 +207,8 @@ class Hours extends CI_Controller {
 
 		// TODO MORE RULES
 		$this->form_validation->set_rules('date','Date','required');
+		if (!$this->employee_id)
+			$this->form_validation->set_rules('employee_id','Employee','required');
 
 		if ($this->form_validation->run())
 		{
