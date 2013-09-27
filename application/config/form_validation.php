@@ -154,4 +154,13 @@ $config = array (
 						      'rules' => 'required'
 						      ),
 						),
+
+		 // TODO ADD MORE RULES
+		 'shift_add' => array(
+				      array(
+					    'field' => 'day_of_week',
+					    'label' => 'Day of Week',
+					    'rules' => 'required',
+					    ),
+				      ),
 		 );

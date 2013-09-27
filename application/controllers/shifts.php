@@ -25,13 +25,23 @@ class Shifts extends CI_Controller {
   {
     $this->load->library('form_validation');
 
-    if ($this->form_validation->run('shifts_add'))
+    if ($this->form_validation->run('shift_add'))
       {
-	echo 'FORM VALIDATION RUN';
+	$day_of_week = $this->input->post('day_of_week');
+	$emp_id = '1';
+	$dep_id = '1';
+	$s = new Shift();
+
+	$e = new Employee($emp_id);
+	$d = new Department($dep_id);
+
+	$s->day = $day_of_week;
+	$s->save($d);
+	$s->save($e);
       }
       else
 	{
-	  
+	  echo 'FORM VALIDATION DID NOT RUN';
 	}
     
       $data['title'] = 'Add Shift';
