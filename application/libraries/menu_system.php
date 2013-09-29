@@ -87,6 +87,14 @@ class menu_system {
 							      )
 							)
 				    ),
+		  'shifts' => array('base'=>'shifts',
+				    'name'=>'Shifts',
+				    'dropdown' => array(
+							array('base'=>'shifts/add',
+							      'name'=>'Add Shift',
+							      ),
+							)
+				    ),
 		  );
 
     if ($this->department_context)
