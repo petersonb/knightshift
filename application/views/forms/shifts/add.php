@@ -25,13 +25,13 @@
 		    <?php endfor;?>
       </select>
       :
-      <select value="minute_in">
+      <select name="minute_in">
 	<?php for ($i = 0; $i < 60; $i+=15):?>
 	      <?php if ($i < 10) $i = "0".$i; ?>
 		    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
 		    <?php endfor; ?>
       </select>
-    <select name="day_out">
+    <select name="day_in">
       <option value="am">AM</option>
       <option value="pm">PM</option>
     </select>
@@ -48,7 +48,7 @@
 		  <?php endfor;?>
     </select>
     :
-    <select value="mintute_out">
+    <select name="minute_out">
       <?php for ($i = 0; $i < 60; $i+=15):?>
 	    <?php if ($i < 10) $i = "0".$i; ?>
 		  <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
