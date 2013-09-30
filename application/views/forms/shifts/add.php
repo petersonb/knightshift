@@ -1,6 +1,18 @@
 <?php echo validation_errors(); ?>
 <?php echo form_open('shifts/add'); ?>
+<h3>Adding shift for <?php echo $department['name']; ?></h3>
 <table>
+  <?php if(isset($employees)): ?>
+  <tr>
+    <td>Employee:</td>
+    <td>
+      <select name="employee_id">
+	<?php foreach ($employees as $e): ?>
+	<option value="<?php echo $e['id']; ?>"><?php echo $e['firstname']. ' ' . $e['lastname']; ?></option>
+	<?php endforeach; ?>
+      </select>
+  </tr>
+  <?php endif; ?>
   <tr>
     <td>Day of week: </td>
     <td>
