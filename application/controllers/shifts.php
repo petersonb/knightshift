@@ -116,6 +116,13 @@ class Shifts extends CI_Controller {
 
   public function view_all()
   {
+    // Security
+    //   Must be admin and have department context
+
+    if (!$this->admin_id or !$this->department_context) {
+      redirect('main');
+    }
+
     $data['title'] = 'View All Shifts';
     $data['content'] = 'shifts/view_all';
     $data['javascript'] = array(
@@ -130,10 +137,14 @@ class Shifts extends CI_Controller {
 
   public function department_shifts()
   {
+    // Security
+    if (!$this->department_context) {
+      echo "No Department Context";
+      return;
+    }
     $d = new Department($this->department_context);
     $shifts = $d->shift;
     $shifts->get();
-
 
     $data = array();
     foreach ($shifts as $s)
