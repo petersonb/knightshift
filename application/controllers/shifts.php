@@ -58,6 +58,10 @@ class Shifts extends CI_Controller {
 	  {
 	    $emp_id = $this->input->post('employee_id');
 	  }
+	else
+	  {
+	    $emp_id = $this->employee_id;
+	  }
 	
 	// Convert time to mysql format
 	$time_in = date_twelve_to_24("$hour_in:$minute_in $day_in");
@@ -109,6 +113,45 @@ class Shifts extends CI_Controller {
     $data['content'] = 'shifts/view';
     $this->load->view('master',$data);
   }
+
+  public function view_all()
+  {
+    $data['title'] = 'View All Shifts';
+    $data['content'] = 'shifts/view_all';
+    $data['javascript'] = array(
+				'datatables/media/js/jquery',
+				'datatables/media/js/jquery.dataTables',
+				'shifts/view_all'
+				);
+    $data['css'] = 'dataTables/jquery.dataTables';
+    $this->load->view('master',$data);
+  }
+
+
+  public function department_shifts()
+  {
+    $d = new Department($this->department_context);
+    $shifts = $d->shift;
+    $shifts->get();
+
+
+    $data = array();
+    foreach ($shifts as $s)
+      {
+	$e = $s->employee->get();
+	array_push($data,
+		   array(
+			 $e->firstname,
+			 $e->lastname,
+			 $s->day,
+			 $s->time_in,
+			 $s->time_out,
+			 )
+		   );
+      }
+
+    echo json_encode(array('aaData'=>$data));
+  }    
 }
 
 /* End of file shifts.php */
