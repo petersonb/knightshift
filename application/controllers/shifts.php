@@ -115,6 +115,95 @@ class Shifts extends CI_Controller {
   }
 
 
+  public function confirm($sid = null)
+  {
+    // Security
+    if (!$sid)
+      {
+	redirect('main');
+      }
+
+    if ($this->employee_id && $this->department_context)
+      {
+	$e = new Employee($this->employee_id);
+	$shr = $e->shift_hour;
+	$shr->where('id',$sid)->get();
+	$d = new Department($this->department_context);
+      }
+
+    elseif ($this->department_id)
+      {
+	$d = new Department($this->department_id);
+	$shr = $d->shift_hour;
+	$shr->where('id',$sid)->get();
+	$e = $shr->employee;
+	$e->get();
+      }
+    else
+      {
+	redirect('main');
+      }
+
+
+    if (!$shr->exists() or !$e->exists() or !$d->exists()) 
+      {
+	redirect('main');
+      }
+
+    $date = date('Y-m-d');
+    $tin  = $shr->time_in;
+    $tout = $shr->time_out;
+
+    $h = new Hour();
+    $h->date = $date;
+    $h->time_in = $tin;
+    $h->time_out = $tout;
+    $h->save(array($d,$e));
+
+    $shr->delete();
+    redirect('hours/view_all');
+  }
+
+
+  public function deny($sid = null)
+  {
+    // Security
+    if (!$sid)
+      {
+	redirect('main');
+      }
+
+    if ($this->employee_id && $this->department_context)
+      {
+	$e = new Employee($this->employee_id);
+	$shr = $e->shift_hour;
+	$shr->where('id',$sid)->get();
+	$d = new Department($this->department_context);
+      }
+
+    elseif ($this->department_id)
+      {
+	$d = new Department($this->department_id);
+	$shr = $d->shift_hour;
+	$shr->where('id',$sid)->get();
+	$e = $shr->employee;
+	$e->get();
+      }
+    else
+      {
+	redirect('main');
+      }
+
+
+    if (!$shr->exists() or !$e->exists() or !$d->exists()) 
+      {
+	redirect('main');
+      }
+
+    $shr->delete();
+    redirect('shifts/today');
+  }
+
   public function delete($sid = null)
   {
     // Security
@@ -232,6 +321,26 @@ class Shifts extends CI_Controller {
     $this->load->view('master',$data);
   }
 
+  public function today()
+  {
+    // Security
+    if (!$this->department_context and !$this->department_id)
+      {
+	redirect('main');
+      }
+
+    $data['title'] = 'Shifts Today';
+    $data['content'] = 'shifts/today';
+    $data['javascript'] = array(
+				'datatables/media/js/jquery',
+				'datatables/media/js/jquery.dataTables',
+				'shifts/today'
+				);
+    $data['css'] = 'dataTables/jquery.dataTables';
+    $this->load->view('master',$data);
+    
+  }
+
 
   public function update_day()
   {
@@ -326,7 +435,43 @@ class Shifts extends CI_Controller {
       }
 
     echo json_encode(array('aaData'=>$data));
-  }    
+  }
+
+  public function todays_shifts()
+  {
+    // Security
+    if (!$this->department_context and !$this->department_id)
+      {
+	echo "No department";
+      }
+    if ($this->department_id)
+      {
+	$d = new Department($this->department_id);
+      }
+
+    $this->load->helper('date');
+
+    $data = array();
+    
+    $shrs = $d->shift_hour;
+    $shrs->get();
+
+    foreach ($shrs as $h)
+      {
+	$e = $h->employee;
+	$e->get();
+	array_push($data,array(
+			       $e->firstname,
+			       $e->lastname,
+			       date_24_to_twelve($h->time_in),
+			       date_24_to_twelve($h->time_out),
+			       "<a href='".base_url('shifts/confirm/'.$h->id)."'><img src='".base_url('/css/icons/checkmark.png')."'/></a><a href='".base_url('shifts/deny/'.$h->id)."'><img src='".base_url('/css/icons/delete.png')."'/></a"
+			       )
+		   );
+      }
+
+    echo json_encode(array('aaData'=>$data));
+  }
 }
 
 /* End of file shifts.php */

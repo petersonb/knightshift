@@ -19,6 +19,7 @@ class Employee extends DataMapper {
 			'hour' => array('join_table'=>'hour_relations'),
 			'notification' => array('join_table'=>'notification_relations'),
 			'shift'=>array('join_table'=>'shift_relations'),
+			'shift_hour'=>array('join_table'=>'shift_hour_relations'),
 			);
 
   function __construct($id = NULL)

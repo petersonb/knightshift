@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 27, 2013 at 12:58 PM
+-- Generation Time: Oct 21, 2013 at 12:43 PM
 -- Server version: 5.1.70-log
--- PHP Version: 5.5.2-pl0-gentoo
+-- PHP Version: 5.5.4-pl0-gentoo
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -189,6 +189,31 @@ CREATE TABLE IF NOT EXISTS `shifts` (
   `end_date` date NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shift_hours`
+--
+
+CREATE TABLE IF NOT EXISTS `shift_hours` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `time_in` time NOT NULL,
+  `time_out` time NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shift_hour_relations`
+--
+
+CREATE TABLE IF NOT EXISTS `shift_hour_relations` (
+  `shift_hour_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `department_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
