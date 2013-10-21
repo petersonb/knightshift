@@ -161,7 +161,75 @@ class Shifts extends CI_Controller {
 
   public function edit($sid = null)
   {
-    echo $sid;
+    // Security
+    if (!$sid || !$this->department_context)
+      {
+	redirect('main');
+      }
+    
+    // TODO: Security for employees (can't edit other emps stuff)
+      
+    // Get department through context
+    $d = new Department($this->department_context);
+
+    $s = $d->shift;
+    $s->where('id',$sid)->get();
+
+    // Security cont...
+    // Check shift exists
+    if (!$s->exists()) 
+      redirect('main');
+
+    $this->load->library('form_validation');
+    $this->load->helper('date');
+
+    $this->form_validation->set_rules('day_of_week',"Day",'required');
+    if ($this->form_validation->run())
+      {
+	$hour_in = $this->input->post('hour_in');
+	$hour_out = $this->input->post('hour_out');
+
+	$min_in = $this->input->post('minute_in');
+	$min_out = $this->input->post('minute_out');
+	
+	$pm_in = $this->input->post('pm_in');
+	$pm_out = $this->input->post('pm_out');
+
+
+	$itime = date_twelve_to_24("$hour_in:$min_in $pm_in");
+	$otime = date_twelve_to_24("$hour_out:$min_out $pm_out");
+
+	$day = $this->input->post('day_of_week');
+
+	$s->time_in = $itime;
+	$s->time_out = $otime;
+	$s->day = $day;
+
+	$s->save();
+      }
+
+
+    $data['shift'] = array(
+			   'id'=>$s->id,
+			   'day'=>$s->day
+			   );
+
+    $in_split = preg_split('/[\s,:]+/',date_24_to_twelve($s->time_in));
+    $data['time_in'] = array(
+			     'hour'=>$in_split[0],
+			     'minute'=>$in_split[1],
+			     'period'=>$in_split[2]
+			     );
+    
+    $out_split = preg_split('/[\s,:]+/',date_24_to_twelve($s->time_out));
+    $data['time_out'] = array(
+			      'hour'=>$out_split[0],
+			      'minute'=>$out_split[1],
+			      'period'=>$out_split[2]
+			      );
+    
+    $data['content'] = 'shifts/edit';
+    $this->load->view('master',$data);
   }
 
   public function view_all()
@@ -192,6 +260,8 @@ class Shifts extends CI_Controller {
       echo "No Department Context";
       return;
     }
+    $this->load->helper('date');
+
     $d = new Department($this->department_context);
     $shifts = $d->shift;
     $shifts->get();
@@ -205,8 +275,8 @@ class Shifts extends CI_Controller {
 			 $e->firstname,
 			 $e->lastname,
 			 $s->day,
-			 $s->time_in,
-			 $s->time_out,
+			 date_24_to_twelve($s->time_in),
+			 date_24_to_twelve($s->time_out),
 			 "<a href='".base_url('shifts/edit/'.$s->id)."'><img src='".base_url('/css/icons/edit.png')."'/></a><a href='".base_url('shifts/delete/'.$s->id)."'><img src='".base_url('/css/icons/delete.png')."'/></a"
 				 
 			 )
