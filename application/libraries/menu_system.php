@@ -232,8 +232,8 @@ class menu_system {
   private function get_department_menu_data ()
   {
     $data = array(
-		  array('base'=>'departments',
-			'name'=>'Home'),
+		  array('base'=>'shifts/today',
+			'name'=>'Today'),
 		  array('base'=>'hours/log_time',
 			'name'=>'Log Time'),
 		  array('base'=>'hours/view_all',

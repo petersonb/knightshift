@@ -249,7 +249,7 @@ class Main extends CI_Controller {
     if ($d->login())
       {
 	$this->session->set_userdata('department_id', $d->id);
-	redirect('departments');
+	redirect('shifts/today');
       }
     // Redirect to main if no successful logins
     redirect('main');
