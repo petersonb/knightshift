@@ -80,7 +80,7 @@ class Shifts extends CI_Controller {
 	$s->save($d);
 	$s->save($e);
 
-	//redirect('shifts/view_all');
+	redirect('shifts/view_all');
       }
     
     $data['department'] = array(
@@ -235,9 +235,9 @@ class Shifts extends CI_Controller {
   public function view_all()
   {
     // Security
-    //   Must be admin and have department context
+    //   Must have department context
 
-    if (!$this->admin_id or !$this->department_context) {
+    if (!$this->department_context) {
       redirect('main');
     }
 
@@ -262,8 +262,17 @@ class Shifts extends CI_Controller {
     }
     $this->load->helper('date');
 
-    $d = new Department($this->department_context);
-    $shifts = $d->shift;
+    if ($this->admin_id)
+      {
+	$d = new Department($this->department_context);
+	$shifts = $d->shift;
+      }
+    elseif ($this->employee_id)
+      {
+	$e = new Employee($this->employee_id);
+	$shifts = $e->shifts;
+      }
+    $shifts->where('department_id',$this->department_context);
     $shifts->get();
 
     $data = array();

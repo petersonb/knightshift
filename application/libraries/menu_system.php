@@ -204,12 +204,25 @@ class menu_system {
 		       'context'=>'yes'
 		       );
 
+	$shifts = array('base'=>'shifts/view_all',
+			'name'=>'Shifts',
+			'dropdown' => array(
+					    array('base'=>'shifts/add',
+						  'name'=>'Add Shift',
+						  ),
+					    array('base'=>'shifts/view_all',
+						  'name'=>'View All',
+						  ),
+					    ),
+			);
+
 	$unset = array('base'=>'departments/unset_context',
 		       'name'=>'Unset Context',
 		       'dropdown'=>array(),
 		       );
 
 	array_splice($data['hours']['dropdown'],0,0,array($hours));
+	array_splice($data,-1,0,array($shifts));
 	array_splice($data,count($data),0,array($unset));
       }
 
