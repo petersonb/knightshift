@@ -114,6 +114,56 @@ class Shifts extends CI_Controller {
     $this->load->view('master',$data);
   }
 
+
+  public function delete($sid = null)
+  {
+    // Security
+    if (!$sid || !$this->department_context)
+      {
+	redirect('main');
+      }
+    
+    // TODO: Security for employees (can't edit other emps stuff)
+      
+    // Get department through context
+    $d = new Department($this->department_context);
+
+    $s = $d->shift;
+    $s->where('id',$sid)->get();
+
+    // Security cont...
+    // Check shift exists
+    if (!$s->exists()) 
+      redirect('main');
+    
+    // Load libs
+    $this->load->helper(array('form','date'));
+
+    if ($this->input->post())
+      {
+	if ($this->input->post('confirm'))
+	  {
+	    $s->delete();
+	    redirect('shifts/view_all');
+	  }
+      }
+
+    $data['shift'] = array(
+			   'id'=>$s->id,
+			   'day'=>$s->day,
+			   'time_in'=>date_24_to_twelve($s->time_in),
+			   'time_out'=>date_24_to_twelve($s->time_out),
+			   );
+
+    $data['content'] = 'shifts/delete';
+    $this->load->view('master',$data);
+  }
+
+  public function edit($sid = null)
+  {
+    echo $sid;
+  }
+
   public function view_all()
   {
     // Security
@@ -157,6 +207,8 @@ class Shifts extends CI_Controller {
 			 $s->day,
 			 $s->time_in,
 			 $s->time_out,
+			 "<a href='".base_url('shifts/edit/'.$s->id)."'><img src='".base_url('/css/icons/edit.png')."'/></a><a href='".base_url('shifts/delete/'.$s->id)."'><img src='".base_url('/css/icons/delete.png')."'/></a"
+				 
 			 )
 		   );
       }

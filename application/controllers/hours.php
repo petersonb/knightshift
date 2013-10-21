@@ -131,8 +131,8 @@ class Hours extends CI_Controller {
 	  {
 	    $h = new Hour($id);
 	    $h->delete();
+	    redirect('hours/view_all');
 	  }
-	redirect('hours/view_all');
       }
 
     $h = new Hour($id);

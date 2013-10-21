@@ -8,6 +8,7 @@
       <th>Day</th>
       <th>Time In</th>
       <th>Time Out</th>
+      <th width="10px">Edit</th>
     </tr>
   </thead>
   <tbody>
