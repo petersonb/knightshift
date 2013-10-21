@@ -87,14 +87,7 @@ class menu_system {
 							      )
 							)
 				    ),
-		  'shifts' => array('base'=>'shifts',
-				    'name'=>'Shifts',
-				    'dropdown' => array(
-							array('base'=>'shifts/add',
-							      'name'=>'Add Shift',
-							      ),
-							)
-				    ),
+
 		  );
 
     if ($this->department_context)
@@ -144,9 +137,22 @@ class menu_system {
 		       'dropdown' => array()
 		       );
 
+	$shifts = array('base'=>'shifts/view_all',
+			'name'=>'Shifts',
+			'dropdown' => array(
+					    array('base'=>'shifts/add',
+						  'name'=>'Add Shift',
+						  ),
+					    array('base'=>'shifts/view_all',
+						  'name'=>'View All',
+						  ),
+					    ),
+			);
+
 	array_splice($data,1,0,array($employees));
 	array_splice($data['departments']['dropdown'],-1,0,$departments);
 	array_splice($data['hours']['dropdown'],0,0,$hours);
+	array_splice($data,-1,0,array($shifts));
 	array_splice($data,-1,0,array($excel));
 	array_splice($data,count($data),0,array($unset));
       }
