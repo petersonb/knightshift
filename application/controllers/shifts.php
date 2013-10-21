@@ -232,6 +232,39 @@ class Shifts extends CI_Controller {
     $this->load->view('master',$data);
   }
 
+
+  public function update_day()
+  {
+    // Delete all old shift_hours
+    $shrs = new Shift_hour();
+    $shrs->get();
+    $shrs->delete_all();
+
+
+    // Create hours for today
+    $day = strtolower(substr(date('l'),0,3));
+    echo $day;
+    echo '<hr>';
+    $employees = new Employee();
+    $employees->get();
+    foreach ($employees as $e)
+      {
+	echo $e->firstname;
+	$shifts = $e->shift;
+	$shifts->where('day',$day)->get();
+	foreach ($shifts as $s)
+	  {
+	    $d = $s->department;
+	    $d->get();
+	    echo $s->day. '<br />';
+	    $sh = new Shift_hour();
+	    $sh->time_in = $s->time_in;
+	    $sh->time_out = $s->time_out;
+	    $sh->save(array($e,$d));
+	  }
+      }
+  }
+
   public function view_all()
   {
     // Security
