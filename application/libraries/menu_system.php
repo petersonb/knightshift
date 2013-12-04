@@ -163,6 +163,9 @@ class menu_system {
   private function get_employee_menu_data()
   {
     $data = array(
+		  'shifts'=> array('base'=>'shifts/employee_view_all',
+				   'name'=>'Today',
+				   ),
 		  'hours' => array('base'=>'hours',
 				   'name'=>'Hours',
 				   'dropdown' => array(

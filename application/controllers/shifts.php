@@ -123,12 +123,12 @@ class Shifts extends CI_Controller {
 	redirect('main');
       }
 
-    if ($this->employee_id && $this->department_context)
+    if ($this->employee_id)
       {
 	$e = new Employee($this->employee_id);
 	$shr = $e->shift_hour;
 	$shr->where('id',$sid)->get();
-	$d = new Department($this->department_context);
+	$d = $shr->department->get();
       }
 
     elseif ($this->department_id)
@@ -145,7 +145,7 @@ class Shifts extends CI_Controller {
       }
 
 
-    if (!$shr->exists() or !$e->exists() or !$d->exists()) 
+    if (!$shr->exists() or !$e->exists()) 
       {
 	redirect('main');
       }
@@ -173,12 +173,11 @@ class Shifts extends CI_Controller {
 	redirect('main');
       }
 
-    if ($this->employee_id && $this->department_context)
+    if ($this->employee_id)
       {
 	$e = new Employee($this->employee_id);
 	$shr = $e->shift_hour;
 	$shr->where('id',$sid)->get();
-	$d = new Department($this->department_context);
       }
 
     elseif ($this->department_id)
@@ -195,7 +194,7 @@ class Shifts extends CI_Controller {
       }
 
 
-    if (!$shr->exists() or !$e->exists() or !$d->exists()) 
+    if (!$shr->exists() or !$e->exists()) 
       {
 	redirect('main');
       }
@@ -251,7 +250,7 @@ class Shifts extends CI_Controller {
   public function edit($sid = null)
   {
     // Security
-    if (!$sid || !$this->department_context)
+    if (!$sid)
       {
 	redirect('main');
       }
@@ -259,10 +258,28 @@ class Shifts extends CI_Controller {
     // TODO: Security for employees (can't edit other emps stuff)
       
     // Get department through context
-    $d = new Department($this->department_context);
+    if ($this->admin_id)
+      {
+	$d = new Department($this->department_context);
+	$s = $d->shift;
+	$s->where('id',$sid)->get();
+      }
+    elseif ($this->employee_id)
+      {
+	$e = new Employee($this->employee_id);
+	$s = $e->shift;
+	$s->where('id',$sid)->get();
+      }
 
-    $s = $d->shift;
-    $s->where('id',$sid)->get();
+    else
+      {
+	redirect('main');
+      }
+
+    if (!$s->exists())
+      {
+	redirect('main');
+      }
 
     // Security cont...
     // Check shift exists
@@ -295,7 +312,10 @@ class Shifts extends CI_Controller {
 	$s->day = $day;
 
 	$s->save();
-	redirect('shifts/view_all');
+	if (!$this->employee_id)
+	  redirect('shifts/view_all');
+	else
+	  redirect('shifts/employee_view_all');
       }
 
 
@@ -395,6 +415,27 @@ class Shifts extends CI_Controller {
     $this->load->view('master',$data);
   }
 
+  public function employee_view_all()
+  {
+    // Security
+    //   Must have department context
+    
+    if (!$this->employee_id) {
+      redirect('main');
+    }
+    
+    $data['title'] = 'View All Shifts';
+    $data['content'] = 'shifts/employee_view_all';
+    $data['javascript'] = array(
+				'datatables/media/js/jquery',
+				'datatables/media/js/jquery.dataTables',
+				'shifts/employee_view_all'
+				);
+    $data['css'] = 'dataTables/jquery.dataTables';
+    $this->load->view('master',$data);
+  }
+
+
 
   public function department_shifts()
   {
@@ -432,6 +473,40 @@ class Shifts extends CI_Controller {
 			 "<a href='".base_url('shifts/edit/'.$s->id)."'><img src='".base_url('/css/icons/edit.png')."'/></a><a href='".base_url('shifts/delete/'.$s->id)."'><img src='".base_url('/css/icons/delete.png')."'/></a"
 				 
 			 )
+		   );
+      }
+
+    echo json_encode(array('aaData'=>$data));
+  }
+
+  public function employee_today_shifts()
+  {
+    // Security
+    if (!$this->employee_id)
+      {
+	redirect('main');
+      }
+
+    $this->load->helper('date');
+
+    $e = new Employee($this->employee_id);
+
+    $data = array();
+    
+    $shrs = $e->shift_hour;
+    $shrs->get();
+
+    foreach ($shrs as $h)
+      {
+	$d = $h->department->get();
+	$e = $h->employee;
+	$e->get();
+	array_push($data,array(
+			       $d->name,
+			       date_24_to_twelve($h->time_in),
+			       date_24_to_twelve($h->time_out),
+			       "<a href='".base_url('shifts/confirm/'.$h->id)."'><img src='".base_url('/css/icons/checkmark.png')."'/></a><a href='".base_url('shifts/deny/'.$h->id)."'><img src='".base_url('/css/icons/delete.png')."'/></a"
+			       )
 		   );
       }
 
