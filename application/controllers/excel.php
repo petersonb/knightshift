@@ -61,11 +61,24 @@ class Excel extends CI_Controller {
 
     $template = "excelsheets/template.xlsx";
 
+    $MONTH_FIELD = 'F2';
+    $EMP_NAME_FIELD = 'C5';
+    $EMP_ID_FIELD = 'C7';
+    $DEP_NAME_FIELD = 'H5';
+    $DEP_ID_FIELD = 'H7';
+    $SUPERVISORS_FIELD = 'H9';
+    $RATE_FIELD = 'G47';
+
+    $HOUR_TOTAL_FIELD = 'G44';
+    $PAY_TOTAL_FIELD = 'G49';
+
     $mval = $this->input->post('month');
     $yval = $this->input->post('year');
     $time = mktime('0','0','0',$mval,'1',$yval);
     $month = date('F',$time);
     $year = date('Y',$time);
+
+
 
     $d = new Department($this->department_context);
     $filepath = 'excelsheets/'.$d->id . '/' . $year . '/' . $month . '/';
@@ -85,13 +98,13 @@ class Excel extends CI_Controller {
 	$excel = PHPExcel_IOFactory::load($template);
 
 	$excel->setActiveSheetIndex(0)
-	  ->setCellValue('F2',$month)
-	  ->setCellValue('C5',$name)
-	  ->setCellValue('C7',$e->student_id)
-	  ->setCellValue('H5',$d->name)
-	  ->setCellValue('H7',$d->dept_id)
-	  ->setCellValue('H9',$d->supervisors)
-	  ->setCellValue('G47',$r->hourly);
+	  ->setCellValue($MONTH_FIELD,$month)
+	  ->setCellValue($EMP_NAME_FIELD,$name)
+	  ->setCellValue($EMP_ID_FIELD,$e->student_id)
+	  ->setCellValue($DEP_NAME_FIELD,$d->name)
+	  ->setCellValue($DEP_ID_FIELD,$d->dept_id)
+	  ->setCellValue($SUPERVISORS_FIELD,$d->supervisors)
+	  ->setCellValue($RATE_FIELD,$r->hourly);
 				
 				
 	$hrs = $e->hour;
@@ -145,8 +158,8 @@ class Excel extends CI_Controller {
 	$writer = PHPExcel_IOFactory::createWriter($excel,'Excel2007');
 	$name = str_replace(' ', '', $name);
 	$excel->setActiveSheetIndex(0)
-	  ->setCellValue('G44',$total)
-	  ->setCellValue('G49',$r->hourly*$total);
+	  ->setCellValue($HOUR_TOTAL_FIELD,$total)
+	  ->setCellValue($PAY_TOTAL_FIELD,$r->hourly*$total);
 	$writer->save($filepath.$month.$name.'.xlsx');
       }
     $zip_path = "$filepath../$month";
