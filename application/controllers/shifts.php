@@ -295,6 +295,7 @@ class Shifts extends CI_Controller {
 	$s->day = $day;
 
 	$s->save();
+	redirect('shifts/view_all');
       }
 
 
