@@ -80,6 +80,7 @@ class Main extends CI_Controller {
 	    if (!$e->exists())
 	      {
 		$success = FALSE;
+		$data['email'] = $email;
 		$data['content'] = 'main/forgot_password_fail';
 	      }
 	    else
