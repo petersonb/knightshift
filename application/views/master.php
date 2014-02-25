@@ -49,10 +49,10 @@ endif;
 </head>
 <body>
     <div style="position:fixed; top:30px; left:30px">
-	<img style="width : 200px" src="/images/ads/lemon.png" alt="ad" />
+	<img style="width : 200px" src="/images/birds/lemon.png" alt="ad" />
     </div>
     <div style="position:fixed; top:30px; right:30px">
-	<img style="width : 200px" src="/images/ads/obey.png" alt="ad" />
+	<img style="width : 200px" src="/images/birds/obey.png" alt="ad" />
     </div>
     
 	<div id="wrapper">
