@@ -296,18 +296,26 @@ class Hours extends CI_Controller {
   }
 
 
-  public function employee_hours()
+  public function employee_hours($limit = null)
   {
+		if (!$limit)
+		{
+			$limit = 100;
+		}
     $this->load->helper('date');
     $e = new Employee($this->employee_id);
 
     if ($this->department_context)
       {
-	$hours = $e->hour->where("department_id",$this->department_context)->get();
+	$hours = $e->hour->where("department_id",$this->department_context);
+			$hours->limit($limit);
+			$hours->get();
       }
     else
       {
-	$hour = $e->hour->get();
+	$hour = $e->hour;
+			$hour->limit($limit);
+			$hour->get();
       }
 
 
