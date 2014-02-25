@@ -48,6 +48,13 @@ endif;
 
 </head>
 <body>
+    <div style="position:fixed; top:30px; left:30px">
+	<img style="width : 200px" src="/images/ads/lemon.png" alt="ad" />
+    </div>
+    <div style="position:fixed; top:30px; right:30px">
+	<img style="width : 200px" src="/images/ads/obey.png" alt="ad" />
+    </div>
+    
 	<div id="wrapper">
 		<div class="header">
 			<?php $this->load->view('main/header'); ?>
