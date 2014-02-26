@@ -48,10 +48,10 @@ endif;
 
 </head>
 <body>
-    <div style="position:fixed; top:30px; left:30px">
+    <div style="position:fixed; top:30px; left:30px; z-index:-100">
 	<img style="width : 200px" src="/images/birds/lemon.png" alt="ad" />
     </div>
-    <div style="position:fixed; top:30px; right:30px">
+    <div style="position:fixed; top:30px; right:30px; z-index:-100">
 	<img style="width : 200px" src="/images/birds/obey.png" alt="ad" />
     </div>
     
