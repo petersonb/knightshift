@@ -296,25 +296,19 @@ class Hours extends CI_Controller {
   }
 
 
-  public function employee_hours($limit = null)
+  public function employee_hours()
   {
-		if (!$limit)
-		{
-			$limit = 100;
-		}
     $this->load->helper('date');
     $e = new Employee($this->employee_id);
 
     if ($this->department_context)
       {
 	$hours = $e->hour->where("department_id",$this->department_context);
-			$hours->limit($limit);
 			$hours->get();
       }
     else
       {
 	$hour = $e->hour;
-			$hour->limit($limit);
 			$hour->get();
       }
 
@@ -355,12 +349,8 @@ class Hours extends CI_Controller {
     echo json_encode(array('aaData'=>$aaData));
   }
 
-  public function department_hours($limit = null)
+  public function department_hours()
   {
-		if (!$limit)
-		{
-			$limit = 100;
-		}
     $this->load->helper('date');
 
     $aaData = array();
@@ -382,7 +372,6 @@ class Hours extends CI_Controller {
     foreach ($depts as $d)
       {
 	$hours = $d->hour;
-			$hours->limit($limit);
 			$hours->get();
 	if ($this->department_id)
 	  {
@@ -403,7 +392,6 @@ class Hours extends CI_Controller {
 	elseif ($this->department_context)
 	  {
 	    $hours = $d->hour;
-				$hours->limit($limit);
 				$hours->get();
 	    foreach ($hours as $h)
 	      {
