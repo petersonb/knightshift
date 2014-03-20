@@ -48,46 +48,39 @@ endif;
 
 </head>
 <body>
-    <div style="position:fixed; top:30px; left:30px; z-index:-100">
-	<img style="width : 200px" src="/images/birds/lemon.png" alt="ad" />
-    </div>
-    <div style="position:fixed; top:30px; right:30px; z-index:-100">
-	<img style="width : 200px" src="/images/birds/obey.png" alt="ad" />
-    </div>
-    
-	<div id="wrapper">
-		<div class="header">
-			<?php $this->load->view('main/header'); ?>
-		</div>
-		
-
-		<?php $this->load->view('main/status_bar',$this->status->get()); ?>
-		<div class="nav">
-			<?php $this->load->view('menus/main'); ?>
-		</div>
-		<div class="body">
-			<div class="content">
-				<?php
-				if (isset($content))
-				{
-					if (is_array($content))
-					{
-						foreach ($content as $c_view)
-						{
-							$this->load->view('content/'.$c_view);
-						}
-					}
-					else
-					{
-						$this->load->view('content/'.$content);
-					}
-				}
-				?>
-			</div>
-		</div>
-		<div class="footer">
-			<?php $this->load->view('main/footer')?>
-		</div>
+    <div id="wrapper">
+	<div class="header">
+	    <?php $this->load->view('main/header'); ?>
 	</div>
+	
+	
+	<?php $this->load->view('main/status_bar',$this->status->get()); ?>
+	<div class="nav">
+	    <?php $this->load->view('menus/main'); ?>
+	</div>
+	<div class="body">
+	    <div class="content">
+		<?php
+		if (isset($content))
+		{
+			if (is_array($content))
+			{
+				foreach ($content as $c_view)
+				{
+					$this->load->view('content/'.$c_view);
+				}
+			}
+			else
+			{
+				$this->load->view('content/'.$content);
+			}
+		}
+		?>
+	    </div>
+	</div>
+	<div class="footer">
+	    <?php $this->load->view('main/footer')?>
+	</div>
+    </div>
 </body>
 </html>
